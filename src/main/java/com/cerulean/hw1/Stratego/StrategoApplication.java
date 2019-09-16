@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class StrategoApplication {
 
 	public static void main(String[] args) {
+	    System.out.println("a statement");
 		SpringApplication.run(StrategoApplication.class, args);
 
 	}
