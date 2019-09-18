@@ -1,5 +1,6 @@
 package cerulean.hw1;
 
+import cerulean.hw1.controllers.PlayerController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

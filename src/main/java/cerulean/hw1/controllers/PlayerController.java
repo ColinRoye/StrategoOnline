@@ -1,6 +1,6 @@
-package controllers;
-import models.Player;
-import repositories.PlayerRepository;
+package cerulean.hw1.controllers;
+import cerulean.hw1.models.Player;
+import cerulean.hw1.repositories.PlayerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,15 +19,14 @@ public class PlayerController {
 
     @RequestMapping(value ="/{id}", method = RequestMethod.GET)
     public Player getPlayerById(@PathVariable("id") ObjectId id) {
-        System.out.println("test");
         return repository.findBy_id(id);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
-    public Player createPlayer(@Valid @RequestBody Player player) {
-        player.set_id(ObjectId.get());
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public void modifyPlayerById(@PathVariable("id") String id, @Valid @RequestBody Player player) {
+        player.set_id(new ObjectId(id));
         repository.save(player);
-        System.out.println("test2");
-        return player;
+        //return player;
     }
+
 }
