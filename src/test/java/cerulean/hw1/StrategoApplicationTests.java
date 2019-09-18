@@ -1,4 +1,4 @@
-package com.cerulean.hw1.Stratego;
+package cerulean.hw1;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
