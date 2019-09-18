@@ -4,6 +4,7 @@ import cerulean.hw1.controllers.PlayerController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 @ComponentScan
@@ -12,7 +13,6 @@ import org.springframework.context.annotation.ComponentScan;
 public class StrategoApplication {
 
 	public static void main(String[] args) {
-	    System.out.println("a statement");
 		SpringApplication.run(StrategoApplication.class, args);
 	}
 
