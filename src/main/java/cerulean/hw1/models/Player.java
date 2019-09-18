@@ -1,15 +1,16 @@
-package models;
+package cerulean.hw1.models;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 public class Player {
     @Id
     public ObjectId _id;
-
+    public String name;
     // Constructors
     public Player() {}
 
-    public Player(ObjectId _id) {
+    public Player(ObjectId _id, String name) {
         this._id = _id;
+        this.name = name;
     }
 
     // ObjectId needs to be converted to string
