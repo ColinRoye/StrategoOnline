@@ -47,10 +47,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .csrf().disable()
+            .csrf()
+                .ignoringAntMatchers("/register")
+                .and()
             .authorizeRequests()
                 .antMatchers("/login").permitAll()
-                     .antMatchers("/register").permitAll()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
                 .and()
              // TODO: Replace this with REST login if you wanna be fancy

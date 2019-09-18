@@ -14,7 +14,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 
 /**
@@ -32,12 +35,12 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @RequestMapping(value="/register", method = RequestMethod.POST, consumes = {"application/json"})
-    public void register(@RequestBody Account account) {
+    @RequestMapping(value="/register", method = RequestMethod.POST)
+    public void register(@RequestParam String username, @RequestParam String password ) {
         UserDetails newUser = User.builder()
                 .passwordEncoder(passwordEncoder::encode)
-                .username(account.getUsername())
-                .password(account.getPassword())
+                .username(username)
+                .password(password)
                 .authorities(new SimpleGrantedAuthority(UserRoles.ROLE_USER))
                 .build();
         userDetailsManager.createUser(newUser);
