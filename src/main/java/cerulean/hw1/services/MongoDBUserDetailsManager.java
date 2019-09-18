@@ -4,12 +4,14 @@ import cerulean.hw1.models.Account;
 import cerulean.hw1.repositories.AccountRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
@@ -22,6 +24,7 @@ import java.util.Collections;
  * https://medium.com/@gtommee97/rest-authentication-with-spring-security-and-mongodb-28c06da25fb1
  */
 @Component
+@Service
 public class MongoDBUserDetailsManager implements UserDetailsManager {
 
     @Autowired
@@ -47,8 +50,8 @@ public class MongoDBUserDetailsManager implements UserDetailsManager {
     @Override
     public void createUser(UserDetails user) {
         // TODO: Add validation
-        Account newAccount = new Account(ObjectId.get(), user.getUsername(), user.getPassword());
-        accountRepository.insert(newAccount);
+        Account newAccount = new Account(user.getUsername(), user.getPassword());
+        accountRepository.save(newAccount);
 
     }
 
