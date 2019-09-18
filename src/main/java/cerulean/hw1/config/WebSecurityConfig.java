@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf().disable()
             .authorizeRequests()
                 .antMatchers("/login").permitAll()
-                .antMatchers("/register").permitAll()
+                     .antMatchers("/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
              // TODO: Replace this with REST login if you wanna be fancy
