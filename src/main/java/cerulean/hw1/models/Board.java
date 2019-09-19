@@ -2,7 +2,7 @@ package cerulean.hw1.models;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import java.util.*;
-import cerulean.hw1.models.Piece
+import cerulean.hw1.models.Piece;
 
 public class Board{
 
