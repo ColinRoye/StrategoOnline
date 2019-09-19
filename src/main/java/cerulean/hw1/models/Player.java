@@ -1,6 +1,7 @@
 package cerulean.hw1.models;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+
 public class Player {
     @Id
     public ObjectId _id;
