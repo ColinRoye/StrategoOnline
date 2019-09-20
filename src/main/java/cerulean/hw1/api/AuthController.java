@@ -1,15 +1,10 @@
-package cerulean.hw1.controllers;
+package cerulean.hw1.api;
 
-import cerulean.hw1.config.WebSecurityConfig;
-import cerulean.hw1.models.Account;
-import cerulean.hw1.repositories.AccountRepository;
 import cerulean.hw1.services.MongoDBUserDetailsManager;
 import cerulean.hw1.services.UserRoles;
-import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

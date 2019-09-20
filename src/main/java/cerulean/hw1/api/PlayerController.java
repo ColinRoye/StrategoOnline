@@ -1,4 +1,4 @@
-package cerulean.hw1.controllers;
+package cerulean.hw1.api;
 import cerulean.hw1.models.Player;
 import cerulean.hw1.repositories.PlayerRepository;
 

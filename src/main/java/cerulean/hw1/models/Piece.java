@@ -12,7 +12,7 @@ public class Piece{
     public boolean hidden;
     public int dof; //degree of freedom
 
-    //COnstructor
+    //Constructor
     public Piece(){}
 
     public Piece(String type,int value,int dof){
