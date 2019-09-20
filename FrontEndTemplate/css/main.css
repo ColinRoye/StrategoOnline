@@ -33,9 +33,7 @@ body #header #hamburger {
 
 body #header #hamburger img {
   padding: 0;
-  min-width: 40px;
-  min-height: 40px;
-  height: 5vh;
+  height: 7vh;
 }
 
 body #main {
