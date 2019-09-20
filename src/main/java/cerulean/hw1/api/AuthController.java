@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * As of now /login is omitted because I'm using the default form login
  */
 @RestController
+@RequestMapping("api/auth")
 public class AuthController {
 
     Logger logger = LoggerFactory.getLogger(AuthController.class);

@@ -9,7 +9,7 @@ import org.bson.types.ObjectId;
 
 import javax.validation.Valid;
 @RestController
-@RequestMapping("player")
+@RequestMapping("api/player")
 public class PlayerController {
     @Autowired
     private PlayerRepository repository;
