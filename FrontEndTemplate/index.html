@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Stratego!</title>
+
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="js/stratego.js"></script>
+</head>
+<body>
+    <div id="header">
+        <a href="#"><img src="img/cover.png"></a>
+        <button id="hamburger"><img src="img/hamburger.png"></button>
+    </div>
+    <div id="main">
+        <div class="piece blue-team"></div>
+        <div id="gameboard">
+            <div class="cell A 0" id="A0"></div>
+            <div class="cell A 1" id="A1"></div>
+            <div class="cell A 2" id="A2"></div>
+            <div class="cell A 3" id="A3"></div>
+            <div class="cell A 4" id="A4"></div>
+            <div class="cell A 5" id="A5"></div>
+            <div class="cell A 6" id="A6"></div>
+            <div class="cell A 7" id="A7"></div>
+            <div class="cell A 8" id="A8"></div>
+            <div class="cell A 9" id="A9"></div>
+            <div class="cell B 0" id="B0"></div>
+            <div class="cell B 1" id="B1"></div>
+            <div class="cell B 2" id="B2"></div>
+            <div class="cell B 3" id="B3"></div>
+            <div class="cell B 4" id="B4"></div>
+            <div class="cell B 5" id="B5"></div>
+            <div class="cell B 6" id="B6"></div>
+            <div class="cell B 7" id="B7"></div>
+            <div class="cell B 8" id="B8"></div>
+            <div class="cell B 9" id="B9"></div>
+            <div class="cell C 0" id="C0"></div>
+            <div class="cell C 1" id="C1"></div>
+            <div class="cell C 2" id="C2"></div>
+            <div class="cell C 3" id="C3"></div>
+            <div class="cell C 4" id="C4"></div>
+            <div class="cell C 5" id="C5"></div>
+            <div class="cell C 6" id="C6"></div>
+            <div class="cell C 7" id="C7"></div>
+            <div class="cell C 8" id="C8"></div>
+            <div class="cell C 9" id="C9"></div>
+            <div class="cell D 0" id="D0"></div>
+            <div class="cell D 1" id="D1"></div>
+            <div class="cell D 2" id="D2"></div>
+            <div class="cell D 3" id="D3"></div>
+            <div class="cell D 4" id="D4"></div>
+            <div class="cell D 5" id="D5"></div>
+            <div class="cell D 6" id="D6"></div>
+            <div class="cell D 7" id="D7"></div>
+            <div class="cell D 8" id="D8"></div>
+            <div class="cell D 9" id="D9"></div>
+            <div class="cell E 0" id="E0"></div>
+            <div class="cell E 1" id="E1"></div>
+            <div class="cell E 2" id="E2"></div>
+            <div class="cell E 3" id="E3"></div>
+            <div class="cell E 4" id="E4"></div>
+            <div class="cell E 5" id="E5"></div>
+            <div class="cell E 6" id="E6"></div>
+            <div class="cell E 7" id="E7"></div>
+            <div class="cell E 8" id="E8"></div>
+            <div class="cell E 9" id="E9"></div>
+            <div class="cell F 0" id="F0"></div>
+            <div class="cell F 1" id="F1"></div>
+            <div class="cell F 2" id="F2"></div>
+            <div class="cell F 3" id="F3"></div>
+            <div class="cell F 4" id="F4"></div>
+            <div class="cell F 5" id="F5"></div>
+            <div class="cell F 6" id="F6"></div>
+            <div class="cell F 7" id="F7"></div>
+            <div class="cell F 8" id="F8"></div>
+            <div class="cell F 9" id="F9"></div>
+            <div class="cell G 0" id="G0"></div>
+            <div class="cell G 1" id="G1"></div>
+            <div class="cell G 2" id="G2"></div>
+            <div class="cell G 3" id="G3"></div>
+            <div class="cell G 4" id="G4"></div>
+            <div class="cell G 5" id="G5"></div>
+            <div class="cell G 6" id="G6"></div>
+            <div class="cell G 7" id="G7"></div>
+            <div class="cell G 8" id="G8"></div>
+            <div class="cell G 9" id="G9"></div>
+            <div class="cell H 0" id="H0"></div>
+            <div class="cell H 1" id="H1"></div>
+            <div class="cell H 2" id="H2"></div>
+            <div class="cell H 3" id="H3"></div>
+            <div class="cell H 4" id="H4"></div>
+            <div class="cell H 5" id="H5"></div>
+            <div class="cell H 6" id="H6"></div>
+            <div class="cell H 7" id="H7"></div>
+            <div class="cell H 8" id="H8"></div>
+            <div class="cell H 9" id="H9"></div>
+            <div class="cell I 0" id="I0"></div>
+            <div class="cell I 1" id="I1"></div>
+            <div class="cell I 2" id="I2"></div>
+            <div class="cell I 3" id="I3"></div>
+            <div class="cell I 4" id="I4"></div>
+            <div class="cell I 5" id="I5"></div>
+            <div class="cell I 6" id="I6"></div>
+            <div class="cell I 7" id="I7"></div>
+            <div class="cell I 8" id="I8"></div>
+            <div class="cell I 9" id="I9"></div>
+            <div class="cell J 0" id="J0"></div>
+            <div class="cell J 1" id="J1"></div>
+            <div class="cell J 2" id="J2"></div>
+            <div class="cell J 3" id="J3"></div>
+            <div class="cell J 4" id="J4"></div>
+            <div class="cell J 5" id="J5"></div>
+            <div class="cell J 6" id="J6"></div>
+            <div class="cell J 7" id="J7"></div>
+            <div class="cell J 8" id="J8"></div>
+            <div class="cell J 9" id="J9"></div>
+        </div>
+    </div>
+</body>
+</html>

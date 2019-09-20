@@ -1,0 +1,89 @@
+$blue: #1DACD6;
+$red: #990000;
+$bg: white;
+$base: #ae95bb;
+$base-transparent: #ae95bb6c;
+$cell-color: #858585;
+
+$font: "Roboto", sans-serif;
+
+body {
+	padding: 0;
+    margin: 0;
+    
+    font-family: $font;
+
+    #header {
+        margin: 0;
+        display: flex;
+        width: 100%;
+        height: 7vh;
+        background-image: linear-gradient(top left, lighten($base, 10%), $base);
+
+        a {
+            display: contents;
+            img {
+                margin-left: 10vw;
+                max-height: 100%;
+            }
+        }
+        #hamburger {
+            margin-left: auto;
+            margin-right: 10vw;
+            background: transparent;
+            border: none;
+
+            img{
+                padding: 0;
+                min-width: 40px;
+                min-height: 40px;
+                height: 5vh;
+            }
+        }
+    }
+
+    #main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+        height: 93vh;
+        background-color: $bg;
+        
+        #gameboard {
+            display: grid;
+            grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+            border-radius: 5vmin;
+            box-shadow: 10px 10px 8px $base-transparent;
+            width: 80vmin;
+            height: 80vmin;
+            padding: 3vmax 2vmax 2vmax 3vmax;
+            margin: 0;
+            background-image: linear-gradient(bottom right, darken($base, 10%), $base);
+
+            .cell {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 7vmin;
+                height: 7vmin;
+                background-color: $cell-color;
+            }
+
+            .piece {
+                width: 6vmin;
+                height: 6vmin;
+                border-radius: 1vmin;
+            }
+
+            .selected {
+                border: 1vmin solid white;
+            }
+
+            .blue-team {
+                background-color: $blue;
+            }
+        }
+    }
+}
