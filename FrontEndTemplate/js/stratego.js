@@ -17,7 +17,6 @@ function pieceClickHandler() {
 function cellClickHandler() {
     let selectedPiece = $('.selected');
     if ($(this).is(':empty') && selectedPiece.length) {
-        let parent = selectedPiece.parent();
         selectedPiece.removeClass('selected');
         let x = selectedPiece.offset().left;
         let y = selectedPiece.offset().top;
@@ -38,7 +37,6 @@ function cellClickHandler() {
             selectedPiece.show();
             animatedPiece.remove();
         });
-        parent.children().remove();
     }
 }
 
