@@ -7,11 +7,12 @@ function playerPieceClickHandler() {
 }
 
 class PlayerMove {
-    constructor(valid, battle = false, defendingPieceValue = '0', playerLost){
+    constructor(valid, battle = false, defendingPieceValue = '0', playerLost, defenderLost){
         this.valid = valid;
         this.battle = battle;
         this.defendingPieceValue = defendingPieceValue;
         this.playerLost = playerLost;
+        this.defenderLost = defenderLost;
     }
 }
 
@@ -21,7 +22,7 @@ function cellClickHandler() {
     if (selectedPiece.length){
         //To Do: send post request with the parent of selectedPiece (it's current cell) 
         //       and cell (the destination cell)
-        var move = new PlayerMove(true, false, '0', false);
+        var move = new PlayerMove(true, false, '0', false, false);
     }
     else {
         //To Do: Toast user with message "Please Select a Piece"
@@ -65,22 +66,32 @@ function cellClickHandler() {
             }, function() {
                 defendingPiece.text(move.defendingPieceValue);
                 setTimeout(1000, function() {
-                    let losingPiece = move.playerLost ? animatedPiece : defendingPiece;
-                    losingPiece.animate({
-                        'width' : 0, 
-                        'height' : 0
-                    }, function(){
+                    setTimeout(400, function() {
                         animatedPiece.remove();
+                        if (move.defenderLost) {
+                            defendingPiece.remove();
+                        }
                         if (move.playerLost){
                             selectedPiece.remove();
                         }
                         else {
-                            defendingPiece.remove();
                             selectedPiece.appendTo(cell);
                             selectedPiece.show();
                         }
                     });
-                })
+                    if (move.defenderLost){
+                        defendingPiece.animate({
+                            'width' : 0, 
+                            'height' : 0
+                        },{queue: false});
+                    }
+                    if (move.playerLost) {
+                        animatedPiece.animate({
+                            'width' : 0, 
+                            'height' : 0
+                        },{queue: false});
+                    }
+                });
             });
         }
         else {
