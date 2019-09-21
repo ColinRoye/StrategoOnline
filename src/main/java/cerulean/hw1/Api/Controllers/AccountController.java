@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/account")
+//@RequestMapping("api/account")
 public class AccountController {
     Logger logger = LoggerFactory.getLogger(AccountController.class);
     @Autowired
