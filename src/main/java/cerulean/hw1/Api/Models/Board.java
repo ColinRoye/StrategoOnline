@@ -1,8 +1,5 @@
-package cerulean.hw1.models;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import java.util.*;
-import cerulean.hw1.models.Piece;
+package cerulean.hw1.Api.Models;
+import cerulean.hw1.Api.Models.Piece;
 
 public class Board{
 

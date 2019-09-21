@@ -1,6 +1,6 @@
-package cerulean.hw1.repositories;
+package cerulean.hw1.Database.Repositories;
 
-import cerulean.hw1.models.Player;
+import cerulean.hw1.Api.Models.Player;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

@@ -1,7 +1,4 @@
-package cerulean.hw1.models;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import java.util.*;
+package cerulean.hw1.Api.Models;
 
 
 public class Piece{

@@ -1,13 +1,12 @@
-package cerulean.hw1.api;
-import cerulean.hw1.models.Player;
-import cerulean.hw1.repositories.PlayerRepository;
+package cerulean.hw1.Api.Controllers;
 
+import cerulean.hw1.Api.Models.Player;
+import cerulean.hw1.Database.Repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.bson.types.ObjectId;
 
-import javax.validation.Valid;
 @RestController
 @RequestMapping("api/player")
 public class PlayerController {

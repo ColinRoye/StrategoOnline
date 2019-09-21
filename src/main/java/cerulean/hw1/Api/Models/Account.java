@@ -1,5 +1,6 @@
-package cerulean.hw1.models;
+package cerulean.hw1.Api.Models;
 
+import com.google.gson.Gson;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,22 +13,23 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Account {
 
     @Id
-    private ObjectId _id;
+    //private ObjectId _id;
     private String username;
     private String password;
 
     public Account(String username, String password) {
         this.username = username;
         this.password = password;
+
     }
 
-    public String get_id() {
-        return _id.toHexString();
-    }
+//    public String get_id() {
+//        return _id.toHexString();
+//    }
 
-    public void set_id(ObjectId _id) {
-        this._id = _id;
-    }
+//    public void set_id(ObjectId _id) {
+//        this._id = _id;
+//    }
 
     public String getUsername() {
         return username;
@@ -44,4 +46,10 @@ public class Account {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String toJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
+
 }
