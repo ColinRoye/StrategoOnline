@@ -1,14 +1,14 @@
-package cerulean.hw1.Api.Models;
-import org.bson.types.ObjectId;
+package cerulean.hw1.Api.Models.Game;
+import cerulean.hw1.Api.Models.Account.Account;
 import org.springframework.data.annotation.Id;
 
 
 public class Game{
 
     @Id
-    public ObjectId _id;
+    public String sessionId;
 
-    public Player player;
+    public Account player;
     public int moveCounter;
     public int winner;
     public Board board;
@@ -16,22 +16,26 @@ public class Game{
     //Constructor
     public Game(){}
 
-    public Game(ObjectId _id,Player player){
-        this._id = _id;
+    public Game(String sessionId, Account player){
+        this.sessionId = sessionId;
         this.player = player;
         this.moveCounter = 0;
         this.winner = 0;
         this.board = new Board(); //Board Size Needs to be set!
     }
+    //TODO: implement move
+    public void move(Account account, String gameSession, int from, int to){
 
-    public String get_id() { return _id.toHexString(); }
-    public void set_id(ObjectId _id) { this._id = _id; }
+    }
 
-    public Player getPlayer() {
+    public String getsessionId() { return sessionId; }
+    public void setsessionId(String sessionId) { this.sessionId = sessionId; }
+
+    public Account getPlayer() {
         return player;
     }
 
-    public void setPlayer(Player player) {
+    public void setPlayer(Account player) {
         this.player = player;
     }
 

@@ -1,32 +1,27 @@
-package cerulean.hw1.Api.Models;
-import org.bson.types.ObjectId;
+package cerulean.hw1.Api.Models.Account;
+import com.google.gson.Gson;
 import org.springframework.data.annotation.Id;
 import java.util.*;
-public class Player {
+public class Account {
     @Id
-    public ObjectId _id;
-    public String name;
+    //public ObjectId _id;
+    public String username;
+    public String password;
     public double winLoss;
     public ArrayList<Integer> prevGames;
 
 
 
 
-    // Constructors
-    public Player() {}
 
-    public Player(ObjectId _id, String name) {
-        this._id = _id;
-        this.name = name;
+    public Account(String username, String password) {
+        this.username = username;
+        this.password = password;
         this.winLoss = 0;
         this.prevGames = new ArrayList<Integer>();
     }
 
     // ObjectId needs to be converted to string
-    public String get_id() { return _id.toHexString(); }
-    public void set_id(ObjectId _id) { this._id = _id; }
-
-
 
     public double getWinLoss() { return winLoss; }
 
@@ -35,5 +30,15 @@ public class Player {
     public ArrayList<Integer> getPrevGames() { return prevGames; }
 
     public void setPrevGames(ArrayList<Integer> prevGames) { this.prevGames = prevGames; }
+    public String getUsername(){
+        return this.username;
+    }
+    public String getPassword(){
+        return this.password;
+    }
+    public String toJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
 }
 

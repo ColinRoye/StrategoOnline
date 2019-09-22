@@ -1,5 +1,4 @@
-package cerulean.hw1.Api.Models;
-import cerulean.hw1.Api.Models.Piece;
+package cerulean.hw1.Api.Models.Game;
 
 public class Board{
 
