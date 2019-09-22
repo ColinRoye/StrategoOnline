@@ -1,14 +1,15 @@
-package cerulean.hw1.controllers;
+package cerulean.hw1.api;
 import cerulean.hw1.models.Player;
 import cerulean.hw1.repositories.PlayerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.bson.types.ObjectId;
 
 import javax.validation.Valid;
 @RestController
-@RequestMapping("player")
+@RequestMapping("api/player")
 public class PlayerController {
     @Autowired
     private PlayerRepository repository;
@@ -24,6 +25,13 @@ public class PlayerController {
         //repository.save(player);
         //return player;
         System.out.println(id);
+    }
+
+    @Value("${testingvalue}")
+    private String testingvalue;
+    @RequestMapping(value="/lamepage", method = RequestMethod.GET)
+    public String hello() {
+        return "Some dumb page for " + testingvalue;
     }
 
 }

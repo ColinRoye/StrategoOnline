@@ -2,13 +2,12 @@ package cerulean.hw1.models;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import java.util.*;
-
 public class Player {
     @Id
     public ObjectId _id;
     public String name;
     public double winLoss;
-    public ArrayList<int> prevGames;
+    public ArrayList<Integer> prevGames;
 
 
 
@@ -20,7 +19,7 @@ public class Player {
         this._id = _id;
         this.name = name;
         this.winLoss = 0;
-        this.prevGames = new ArrayList<int>();
+        this.prevGames = new ArrayList<Integer>();
     }
 
     // ObjectId needs to be converted to string
@@ -28,11 +27,13 @@ public class Player {
     public void set_id(ObjectId _id) { this._id = _id; }
 
 
+
     public double getWinLoss() { return winLoss; }
 
     public void setWinLoss(double winLoss) { this.winLoss = winLoss; }
 
-    public ArrayList<int> getPrevGames() { return prevGames; }
+    public ArrayList<Integer> getPrevGames() { return prevGames; }
 
-    public void setPrevGames(ArrayList<int> prevGames) { this.prevGames = prevGames; }
+    public void setPrevGames(ArrayList<Integer> prevGames) { this.prevGames = prevGames; }
 }
+
