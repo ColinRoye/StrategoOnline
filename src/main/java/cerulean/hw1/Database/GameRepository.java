@@ -1,11 +1,9 @@
 package cerulean.hw1.Database;
-import cerulean.hw1.Api.Models.Account;
+import cerulean.hw1.Api.Models.Game;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-interface GameRepository extends MongoRepository<Account, String> {
-    public String get(String gameSessionId);
-    public void save(String gameSessionJson);
-    public void remove(String gameSessionId);
+public interface GameRepository extends MongoRepository<Game, String> {
+    Game findByGameId(String gameId);
 }

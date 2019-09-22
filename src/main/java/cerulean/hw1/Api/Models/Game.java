@@ -1,12 +1,15 @@
-package cerulean.hw1.Api.Models.Game;
-import cerulean.hw1.Api.Models.Account;
+package cerulean.hw1.Api.Models;
+import cerulean.hw1.Api.Models.GameComponents.Board;
+import cerulean.hw1.Api.Models.GameComponents.Piece;
+
+import com.google.gson.Gson;
 import org.springframework.data.annotation.Id;
 
 
 public class Game{
 
     @Id
-    public String sessionId;
+    public String gameId;
 
     public Account player;
     public int moveCounter;
@@ -17,7 +20,7 @@ public class Game{
     public Game(){}
 
     public Game(String sessionId, Account player){
-        this.sessionId = sessionId;
+        this.gameId = gameId;
         this.player = player;
         this.moveCounter = 0;
         this.winner = 0;
@@ -28,8 +31,8 @@ public class Game{
 
     }
 
-    public String getsessionId() { return sessionId; }
-    public void setsessionId(String sessionId) { this.sessionId = sessionId; }
+    public String getsessionId() { return gameId; }
+    public void setsessionId(String sessionId) { this.gameId = sessionId; }
 
     public Account getPlayer() {
         return player;
@@ -61,5 +64,10 @@ public class Game{
 
     public void setBoard(Board board) {
         this.board = board;
+    }
+
+    public String toJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }

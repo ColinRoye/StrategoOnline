@@ -1,9 +1,8 @@
 package cerulean.hw1.Api.Controllers;
 
-import cerulean.hw1.Api.Models.Account.Account;
+import cerulean.hw1.Api.Models.Account;
 import cerulean.hw1.Database.AccountRepository;
-import cerulean.hw1.Database.GameSessionRepository;
-import cerulean.hw1.Database.LoginSessionRepository;
+import cerulean.hw1.Database.GameRepository;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,24 +14,22 @@ import java.util.UUID;
 @RequestMapping("/api/games")
 public class GameController {
     @Autowired
-    private LoginSessionRepository loginSessionRepository;
-    @Autowired
     private AccountRepository accountRepository;
     @Autowired
-    private GameSessionRepository gameSessionRepository;
+    private GameRepository gameSessionRepository;
 
     @RequestMapping(value ="/", method = RequestMethod.GET)
     public String getGames(@RequestBody String username, String password) {
         Gson gson = new Gson();
-        Account account = gson.fromJson(accountRepository.get(username, password), Account.class);
+        Account account = gson.fromJson(accountRepository.findByUsername(username).toJson(), Account.class);
         return new Gson().toJson(account.getGameSessions());
     }
     @RequestMapping(value ="/{gameSessionId}", method = RequestMethod.GET)
-    public String getGame(@RequestBody String gameSessionId) {
-        return gameSessionRepository.get(gameSessionId);
+    public String getGame(@RequestBody String gameId) {
+        return gameSessionRepository.findByGameId(gameId).toJson();
     }
     @RequestMapping(value ="/game", method = RequestMethod.POST)
-    public String newGame(@RequestBody String username, String loginSession) {
+    public String newGame(@RequestBody String username) {
         //TODO: verify logged in session
 
         //create game session id

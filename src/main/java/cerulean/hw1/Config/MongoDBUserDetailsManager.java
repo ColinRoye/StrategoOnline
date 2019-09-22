@@ -1,11 +1,8 @@
-package cerulean.hw1.Database.Config;
+package cerulean.hw1.Config;
 
 import cerulean.hw1.Api.Models.Account;
-import cerulean.hw1.Database.Repositories.AccountRepository;
-import org.bson.types.ObjectId;
+import cerulean.hw1.Database.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -74,7 +71,7 @@ public class MongoDBUserDetailsManager implements UserDetailsManager {
 
     @Override
     public boolean userExists(String username) {
-        return accountRepository.exists(username);
+        return accountRepository.findByUsername(username) != null;
     }
 
 }

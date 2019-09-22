@@ -1,4 +1,4 @@
-package cerulean.hw1.Database.Config;
+package cerulean.hw1.Config;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package cerulean.hw1.Api.Models.Game;
+package cerulean.hw1.Api.Models.GameComponents;
 
 
 public class Piece{
