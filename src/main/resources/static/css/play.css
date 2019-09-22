@@ -4,38 +4,6 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
-body #header {
-  margin: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  height: 7vh;
-  background-image: -webkit-gradient(linear, left top, right bottom, from(#c6b4cf), to(#ae95bb));
-  background-image: linear-gradient(to bottom right, #c6b4cf, #ae95bb);
-}
-
-body #header a {
-  display: contents;
-}
-
-body #header a img {
-  margin-left: 10vw;
-  max-height: 100%;
-}
-
-body #header #hamburger {
-  margin-left: auto;
-  margin-right: 10vw;
-  background: transparent;
-  border: none;
-}
-
-body #header #hamburger img {
-  padding: 0;
-  height: 7vh;
-}
-
 body #main {
   display: -webkit-box;
   display: -ms-flexbox;
