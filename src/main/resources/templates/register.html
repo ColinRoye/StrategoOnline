@@ -1,14 +1,38 @@
-<html>
-<head><title>Register</title></head>
-<body>
-Register
-<form action="/register" method="POST" name="registerForm">
-    <p><label for="username">username</label>
-        <input type="text" name="username" id="usernameinput"></p>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Stratego: Register</title>
 
-    <p><label for="password">password</label>
-        <input type="text" name="password" id="passwordinput"></p>
-    <input value="Submit" type="submit" />
-</form>
+    <link rel="stylesheet" th:href="@{css/main.css}">
+    <link rel="stylesheet" th:href="@{css/register.css}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="header" th:replace="fragments :: header"></div>
+    <div id="main">
+        <form action="/register" method="POST" name="registerForm">
+            <h1>Register</h1>
+            <label id="username-label" for="username"><b>Username</b></label>
+            <input id="username-input" 
+                    class="text-field"
+                    type="text" 
+                    name="username" 
+                    placeholder="Enter Username" 
+                    required>
+
+            <label id="password-label" for="password"><b>Password</b></label>
+            <input id="password-input" 
+                    class="text-field" 
+                    type="password" 
+                    name="password" 
+                    placeholder="Enter Password" 
+                    required>
+
+            <input id="submit" value="Submit" type="submit">
+        </form>
+    </div>
 </body>
 </html>

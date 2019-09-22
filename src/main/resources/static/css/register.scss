@@ -1,0 +1,79 @@
+$bg: white;
+$text-color: white;
+$base: #ae95bb;
+$base-transparent: #ae95bb9d;
+
+$font: "Roboto", sans-serif;
+
+body {
+    font-family: $font;
+    padding: 0;
+    margin: 0;
+
+    #main {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 0;
+        margin: 0;
+        height: 93vh;
+        background-color: $bg;
+            
+        form {
+            margin: 10vh;
+            padding: 20px;
+            background-image: linear-gradient(to bottom right, lighten($base, 10%), darken($base, 10%));
+            box-shadow: 10px 10px 8px $base-transparent;
+            border-radius: 25px;
+            font-size: 2rem;
+
+            display: grid;
+            gap: 10px;
+            grid-template-areas:
+                'h1             h1'
+                'username-label username-input'
+                'password-label password-input'
+                'submit         submit';
+            align-items: center;
+                
+            h1 {
+                grid-area: h1;
+                color: $text-color;
+                margin: 0;
+                justify-self: center;
+            }
+            #username-label {grid-area: username-label;}
+            #username-input {grid-area: username-input;}
+            #password-label {grid-area: password-label;}
+            #password-input {grid-area: password-input;}
+            #submit {
+                grid-area: submit;
+                font-weight: bold;
+                background-color: $bg;
+                width: 100%;
+            }
+
+            label {
+                color: $text-color;
+            }
+            input {
+                font-size: 2rem;
+                border-radius: 25px;
+                border: none;
+                padding: 10px;
+            }
+            @media screen and (max-width: 740px){
+                font-size: 1rem;
+                input {
+                    font-size: 1rem;
+                }
+            }
+            @media screen and (max-width: 400px){
+                font-size: .5rem;
+                input {
+                    font-size: .5rem;
+                }
+            }
+        }
+    }
+}

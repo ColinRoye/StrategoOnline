@@ -26,8 +26,8 @@ body #main #gameboard {
   -ms-grid-columns: auto auto auto auto auto auto auto auto auto auto;
       grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
   border-radius: 5vmin;
-  -webkit-box-shadow: 10px 10px 8px #ae95bb6c;
-          box-shadow: 10px 10px 8px #ae95bb6c;
+  -webkit-box-shadow: 10px 10px 8px #ae95bb9d;
+          box-shadow: 10px 10px 8px #ae95bb9d;
   width: 80vmin;
   height: 80vmin;
   padding: 3vmax 2vmax 2vmax 3vmax;
