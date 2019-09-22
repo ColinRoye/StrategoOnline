@@ -1,6 +1,6 @@
-package cerulean.hw1.config;
+package cerulean.hw1.Config;
 
-import cerulean.hw1.services.MongoDBUserDetailsManager;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,24 +47,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .csrf()
+                .csrf()
                 .ignoringAntMatchers("/register")
                 .and()
-            .authorizeRequests()
+                .authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
                 .and()
-             // TODO: Replace this with REST login if you wanna be fancy
-            .formLogin()
-                .permitAll()
-                .and()
-            .logout()
-                .permitAll()
-                .and()
+                // TODO: Replace this with REST login if you wanna be fancy
                 .formLogin()
-                .loginPage("/login");
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll()
         ;
     }
 
