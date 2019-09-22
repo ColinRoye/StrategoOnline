@@ -1,4 +1,4 @@
-package cerulean.hw1.Api.Models.Game;
+package cerulean.hw1.Api.Models.Sessions.Game;
 import cerulean.hw1.Api.Models.Account.Account;
 import org.springframework.data.annotation.Id;
 

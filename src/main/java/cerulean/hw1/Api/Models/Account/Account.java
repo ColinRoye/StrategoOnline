@@ -8,7 +8,7 @@ public class Account {
     public String username;
     public String password;
     public double winLoss;
-    public ArrayList<Integer> prevGames;
+    public ArrayList<String> games;
 
 
 
@@ -18,7 +18,7 @@ public class Account {
         this.username = username;
         this.password = password;
         this.winLoss = 0;
-        this.prevGames = new ArrayList<Integer>();
+        this.games = new ArrayList<String>();
     }
 
     // ObjectId needs to be converted to string
@@ -27,9 +27,9 @@ public class Account {
 
     public void setWinLoss(double winLoss) { this.winLoss = winLoss; }
 
-    public ArrayList<Integer> getPrevGames() { return prevGames; }
+    public ArrayList<String> getGames() { return games; }
 
-    public void setPrevGames(ArrayList<Integer> prevGames) { this.prevGames = prevGames; }
+    public void setgames(ArrayList<String> games) { this.games = games; }
     public String getUsername(){
         return this.username;
     }
@@ -39,6 +39,10 @@ public class Account {
     public String toJson(){
         Gson gson = new Gson();
         return gson.toJson(this);
+    }
+
+    public ArrayList<String> getGameSessions() {
+        return games;
     }
 }
 
