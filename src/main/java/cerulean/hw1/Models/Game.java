@@ -1,6 +1,5 @@
-package cerulean.hw1.Api.Models;
-import cerulean.hw1.Api.Models.GameComponents.Board;
-import cerulean.hw1.Api.Models.GameComponents.Piece;
+package cerulean.hw1.Models;
+import cerulean.hw1.Models.GameComponents.Board;
 
 import com.google.gson.Gson;
 import org.springframework.data.annotation.Id;
