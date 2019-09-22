@@ -1,6 +1,6 @@
-package cerulean.hw1.Api.Controllers;
-import cerulean.hw1.Config.UserRoles;
-import cerulean.hw1.Config.MongoDBUserDetailsManager;
+package cerulean.hw1.Controllers;
+import cerulean.hw1.Services.UserRoles;
+import cerulean.hw1.Services.MongoDBUserDetailsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

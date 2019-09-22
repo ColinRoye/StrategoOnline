@@ -1,6 +1,7 @@
 package cerulean.hw1.Config;
 
 
+import cerulean.hw1.Services.MongoDBUserDetailsManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

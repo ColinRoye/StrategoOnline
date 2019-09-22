@@ -1,4 +1,4 @@
-package cerulean.hw1.Config;
+package cerulean.hw1.Services;
 
 
 public class UserRoles {

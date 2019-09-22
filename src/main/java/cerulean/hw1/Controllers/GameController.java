@@ -1,6 +1,6 @@
-package cerulean.hw1.Api.Controllers;
+package cerulean.hw1.Controllers;
 
-import cerulean.hw1.Api.Models.Account;
+import cerulean.hw1.Models.Account;
 import cerulean.hw1.Database.AccountRepository;
 import cerulean.hw1.Database.GameRepository;
 import com.google.gson.Gson;
