@@ -5,6 +5,7 @@ import cerulean.hw1.repositories.AccountRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,7 +37,7 @@ public class MongoDBUserDetailsManager implements UserDetailsManager {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = accountRepository.findByUsername(username);
-        if (account == null) {
+        if (!userExists(username)) {
             throw new UsernameNotFoundException("User not found");
         }
         return new User(
@@ -49,10 +50,11 @@ public class MongoDBUserDetailsManager implements UserDetailsManager {
 
     @Override
     public void createUser(UserDetails user) {
-        // TODO: Add validation
+        if (userExists(user.getUsername())) {
+            throw new RuntimeException("Username already exists");
+        }
         Account newAccount = new Account(user.getUsername(), user.getPassword());
         accountRepository.save(newAccount);
-
     }
 
     @Override
@@ -72,7 +74,7 @@ public class MongoDBUserDetailsManager implements UserDetailsManager {
 
     @Override
     public boolean userExists(String username) {
-        return false;
+        return accountRepository.findByUsername(username) != null;
     }
 
 }
