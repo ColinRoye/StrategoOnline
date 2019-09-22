@@ -1,4 +1,4 @@
-package cerulean.hw1.Api.Models;
+package cerulean.hw1.Models;
 import com.google.gson.Gson;
 import org.springframework.data.annotation.Id;
 import java.util.*;
