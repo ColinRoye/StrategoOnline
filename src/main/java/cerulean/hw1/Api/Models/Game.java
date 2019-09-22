@@ -1,17 +1,17 @@
-package cerulean.hw1.models;
-import org.bson.types.ObjectId;
+package cerulean.hw1.Api.Models;
+import cerulean.hw1.Api.Models.GameComponents.Board;
+import cerulean.hw1.Api.Models.GameComponents.Piece;
+
+import com.google.gson.Gson;
 import org.springframework.data.annotation.Id;
-import java.util.*;
-import cerulean.hw1.models.Board;
-import cerulean.hw1.models.Player;
 
 
 public class Game{
 
     @Id
-    public ObjectId _id;
+    public String gameId;
 
-    public Player player;
+    public Account player;
     public int moveCounter;
     public int winner;
     public Board board;
@@ -19,22 +19,26 @@ public class Game{
     //Constructor
     public Game(){}
 
-    public Game(ObjectId _id,Player player){
-        this._id = _id;
+    public Game(String sessionId, Account player){
+        this.gameId = gameId;
         this.player = player;
         this.moveCounter = 0;
         this.winner = 0;
         this.board = new Board(); //Board Size Needs to be set!
     }
+    //TODO: implement move
+    public void move(Account account, String gameSession, int from, int to){
 
-    public String get_id() { return _id.toHexString(); }
-    public void set_id(ObjectId _id) { this._id = _id; }
+    }
 
-    public Player getPlayer() {
+    public String getsessionId() { return gameId; }
+    public void setsessionId(String sessionId) { this.gameId = sessionId; }
+
+    public Account getPlayer() {
         return player;
     }
 
-    public void setPlayer(Player player) {
+    public void setPlayer(Account player) {
         this.player = player;
     }
 
@@ -60,5 +64,10 @@ public class Game{
 
     public void setBoard(Board board) {
         this.board = board;
+    }
+
+    public String toJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }

@@ -1,8 +1,7 @@
-package cerulean.hw1.view;
+package cerulean.hw1.Pages;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 public class ViewController {
@@ -18,4 +17,5 @@ public class ViewController {
     public String play() {
         return "play";
     }
+
 }
