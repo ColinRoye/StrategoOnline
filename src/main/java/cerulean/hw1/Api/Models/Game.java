@@ -1,5 +1,5 @@
-package cerulean.hw1.Api.Models.Sessions.Game;
-import cerulean.hw1.Api.Models.Account.Account;
+package cerulean.hw1.Api.Models.Game;
+import cerulean.hw1.Api.Models.Account;
 import org.springframework.data.annotation.Id;
 
 

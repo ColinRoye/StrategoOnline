@@ -1,4 +1,4 @@
-package cerulean.hw1.Api.Models.Sessions.Game;
+package cerulean.hw1.Api.Models.Game;
 
 public class Board{
 
