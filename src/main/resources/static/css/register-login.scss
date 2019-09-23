@@ -20,7 +20,10 @@ body {
         background-color: $bg;
             
         form {
-            margin: 10vh;
+            margin-top: 1px;
+            @media screen and (min-height: 425px){
+                margin: 10vh;
+            }
             padding: 20px;
             background-image: linear-gradient(to bottom right, lighten($base, 10%), darken($base, 10%));
             box-shadow: 10px 10px 8px $base-transparent;
@@ -33,6 +36,7 @@ body {
                 'h1             h1'
                 'username-label username-input'
                 'password-label password-input'
+                '.              password-confirm'
                 'submit         submit';
             align-items: center;
                 
@@ -46,6 +50,7 @@ body {
             #username-input {grid-area: username-input;}
             #password-label {grid-area: password-label;}
             #password-input {grid-area: password-input;}
+            #password-confirm {grid-area: password-confirm;}
             #submit {
                 grid-area: submit;
                 font-weight: bold;
@@ -68,7 +73,13 @@ body {
                     font-size: 1rem;
                 }
             }
-            @media screen and (max-width: 400px){
+            @media screen and (max-width: 500px) {
+                font-size: .75rem;
+                input {
+                    font-size: .75rem;
+                }
+            }
+            @media screen and (max-width: 319px){
                 font-size: .5rem;
                 input {
                     font-size: .5rem;

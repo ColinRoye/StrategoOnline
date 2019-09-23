@@ -21,7 +21,7 @@ body #main {
 }
 
 body #main form {
-  margin: 10vh;
+  margin-top: 1px;
   padding: 20px;
   background-image: -webkit-gradient(linear, left top, right bottom, from(#c6b4cf), to(#9676a7));
   background-image: linear-gradient(to bottom right, #c6b4cf, #9676a7);
@@ -32,10 +32,16 @@ body #main form {
   display: -ms-grid;
   display: grid;
   gap: 10px;
-      grid-template-areas: 'h1             h1' 'username-label username-input' 'password-label password-input' 'submit         submit';
+      grid-template-areas: 'h1             h1' 'username-label username-input' 'password-label password-input' '.              password-confirm' 'submit         submit';
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+@media screen and (min-height: 425px) {
+  body #main form {
+    margin: 10vh;
+  }
 }
 
 body #main form h1 {
@@ -73,8 +79,14 @@ body #main form #password-input {
   grid-area: password-input;
 }
 
-body #main form #submit {
+body #main form #password-confirm {
   -ms-grid-row: 4;
+  -ms-grid-column: 2;
+  grid-area: password-confirm;
+}
+
+body #main form #submit {
+  -ms-grid-row: 5;
   -ms-grid-column: 1;
   -ms-grid-column-span: 2;
   grid-area: submit;
@@ -103,7 +115,16 @@ body #main form input {
   }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 500px) {
+  body #main form {
+    font-size: .75rem;
+  }
+  body #main form input {
+    font-size: .75rem;
+  }
+}
+
+@media screen and (max-width: 319px) {
   body #main form {
     font-size: .5rem;
   }
@@ -111,4 +132,4 @@ body #main form input {
     font-size: .5rem;
   }
 }
-/*# sourceMappingURL=register.css.map */
+/*# sourceMappingURL=register-login.css.map */
