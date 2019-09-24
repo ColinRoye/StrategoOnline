@@ -37,6 +37,7 @@ public class AuthController {
                 .build();
         userDetailsManager.createUser(newUser);
     }
+
     @GetMapping(value="/sessiontest")
     public String sessionTest() {
         UserDetails principalUser = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

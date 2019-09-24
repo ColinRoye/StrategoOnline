@@ -3,56 +3,62 @@ import cerulean.hw1.Models.GameComponents.Board;
 
 import com.google.gson.Gson;
 import org.springframework.data.annotation.Id;
+import org.springframework.security.core.parameters.P;
+import java.util.UUID;
 
 
 public class Game{
 
     @Id
-    public String gameId;
+    private String gameId;
 
-    public Account player;
-    public int moveCounter;
-    public int winner;
-    public Board board;
+    private String username;
+    private int moveCounter;
+    private int winner;
+    private Board board;
 
     //Constructor
     public Game(){}
 
-    public Game(String sessionId, Account player){
-        this.gameId = gameId;
-        this.player = player;
+    public Game(String username){
+        UUID randId = UUID.randomUUID();
+
+        this.gameId = randId.toString();
+        this.username = username;
         this.moveCounter = 0;
         this.winner = 0;
         this.board = new Board(); //Board Size Needs to be set!
     }
     //TODO: implement move
-    public void move(Account account, String gameSession, int from, int to){
-
+    public void move(int from, int to){
+//        if(isValidMove(from, to)){
+//            moveCounter++;
+//        }
     }
 
-    public String getsessionId() { return gameId; }
-    public void setsessionId(String sessionId) { this.gameId = sessionId; }
 
-    public Account getPlayer() {
-        return player;
+
+    public String getGameId() {
+        return gameId;
     }
-
-    public void setPlayer(Account player) {
-        this.player = player;
+    public String getPlayer() {
+        return username;
     }
-
     public int getMoveCounter() {
         return moveCounter;
     }
-
-    public void setMoveCounter(int moveCounter) {
-        this.moveCounter = moveCounter;
-    }
+    // NO NEED FOR SET USERNAME, game username will never change
+//    public void setUsername(Account player) {
+//        this.username = username;
+//    }
+    // NO MOVE COUNTER SET, should only change when move is called
+//    public void setMoveCounter(int moveCounter) {
+//        this.moveCounter = moveCounter;
+//    }
 
     public int getWinner() {
         return winner;
     }
-
     public void setWinner(int winner) {
         this.winner = winner;
     }
@@ -61,9 +67,10 @@ public class Game{
         return board;
     }
 
-    public void setBoard(Board board) {
-        this.board = board;
-    }
+//    MOVE WILL ONLY CHANGE BOARD
+//    public void setBoard(Board board) {
+//        this.board = board;
+//    }
 
     public String toJson(){
         Gson gson = new Gson();

@@ -44,6 +44,14 @@ public class MongoDBUserDetailsManager implements UserDetailsManager {
 
     }
 
+    public Account loadAccountByUsername(String username) {
+        return accountRepository.findByUsername(username);
+    }
+
+    public void persistAccount(Account account) {
+        accountRepository.save(account);
+    }
+
 
     @Override
     public void createUser(UserDetails user) {

@@ -27,7 +27,6 @@ public class Account {
 
     public void setWinLoss(double winLoss) { this.winLoss = winLoss; }
 
-    public ArrayList<String> getGames() { return games; }
 
     public void setgames(ArrayList<String> games) { this.games = games; }
     public String getUsername(){
@@ -41,7 +40,7 @@ public class Account {
         return gson.toJson(this);
     }
 
-    public ArrayList<String> getGameSessions() {
+    public ArrayList<String> getGames() {
         return games;
     }
 }
