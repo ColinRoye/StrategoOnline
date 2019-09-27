@@ -1,9 +1,12 @@
 package cerulean.hw1.Models;
 import cerulean.hw1.Models.GameComponents.Board;
 
+import cerulean.hw1.Models.GameComponents.Move;
 import com.google.gson.Gson;
 import org.springframework.data.annotation.Id;
 import org.springframework.security.core.parameters.P;
+
+import java.util.ArrayList;
 import java.util.UUID;
 
 
@@ -16,6 +19,7 @@ public class Game{
     private int moveCounter;
     private int winner;
     private Board board;
+    private ArrayList<Move> moves;
 
     //Constructor
     public Game(){}
@@ -28,6 +32,7 @@ public class Game{
         this.moveCounter = 0;
         this.winner = 0;
         this.board = new Board(); //Board Size Needs to be set!
+        moves = new ArrayList<Move>();
     }
     //TODO: implement move
     public void move(int from, int to){
