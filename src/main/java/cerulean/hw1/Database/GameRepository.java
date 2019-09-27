@@ -1,8 +1,6 @@
 package cerulean.hw1.Database;
-import cerulean.hw1.Models.Account;
 import cerulean.hw1.Models.Game;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 @Repository
