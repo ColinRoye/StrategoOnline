@@ -1,0 +1,135 @@
+body {
+  font-family: "Roboto", sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+body #main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  padding: 0;
+  margin: 0;
+  height: 93vh;
+  background-color: white;
+}
+
+body #main form {
+  margin-top: 1px;
+  padding: 20px;
+  background-image: -webkit-gradient(linear, left top, right bottom, from(#c6b4cf), to(#9676a7));
+  background-image: linear-gradient(to bottom right, #c6b4cf, #9676a7);
+  -webkit-box-shadow: 10px 10px 8px #ae95bb9d;
+          box-shadow: 10px 10px 8px #ae95bb9d;
+  border-radius: 25px;
+  font-size: 2rem;
+  display: -ms-grid;
+  display: grid;
+  gap: 10px;
+      grid-template-areas: 'h1             h1' 'username-label username-input' 'password-label password-input' '.              password-confirm' 'submit         submit';
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media screen and (min-height: 425px) {
+  body #main form {
+    margin: 10vh;
+  }
+}
+
+body #main form h1 {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-area: h1;
+  color: white;
+  margin: 0;
+  -ms-grid-column-align: center;
+      justify-self: center;
+}
+
+body #main form #username-label {
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+  grid-area: username-label;
+}
+
+body #main form #username-input {
+  -ms-grid-row: 2;
+  -ms-grid-column: 2;
+  grid-area: username-input;
+}
+
+body #main form #password-label {
+  -ms-grid-row: 3;
+  -ms-grid-column: 1;
+  grid-area: password-label;
+}
+
+body #main form #password-input {
+  -ms-grid-row: 3;
+  -ms-grid-column: 2;
+  grid-area: password-input;
+}
+
+body #main form #password-confirm {
+  -ms-grid-row: 4;
+  -ms-grid-column: 2;
+  grid-area: password-confirm;
+}
+
+body #main form #submit {
+  -ms-grid-row: 5;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-area: submit;
+  font-weight: bold;
+  background-color: white;
+  width: 100%;
+}
+
+body #main form label {
+  color: white;
+}
+
+body #main form input {
+  font-size: 2rem;
+  border-radius: 25px;
+  border: none;
+  padding: 10px;
+}
+
+@media screen and (max-width: 740px) {
+  body #main form {
+    font-size: 1rem;
+  }
+  body #main form input {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  body #main form {
+    font-size: .75rem;
+  }
+  body #main form input {
+    font-size: .75rem;
+  }
+}
+
+@media screen and (max-width: 319px) {
+  body #main form {
+    font-size: .5rem;
+  }
+  body #main form input {
+    font-size: .5rem;
+  }
+}
+/*# sourceMappingURL=register-login.css.map */
