@@ -1,22 +1,24 @@
 package cerulean.hw1.Models.GameComponents;
 
-
 public class Piece{
 
     public String type;
-    public boolean playerPiece;
+
     public int value;
     public boolean hidden;
     public int dof; //degree of freedom
 
+    public boolean is_user;
+
     //Constructor
     public Piece(){}
 
-    public Piece(String type,int value,int dof){
+    public Piece(String type,int value,int dof,boolean is_user){
         this.type = type;
         this.value = value;
         this.dof = dof;
         this.hidden = true;
+        this.is_user = is_user;
     }
 
     public String getType() {
@@ -25,14 +27,6 @@ public class Piece{
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public boolean isPlayerPiece() {
-        return playerPiece;
-    }
-
-    public void setPlayerPiece(boolean playerPiece) {
-        this.playerPiece = playerPiece;
     }
 
     public int getValue() {
@@ -57,5 +51,13 @@ public class Piece{
 
     public void setDof(int dof) {
         this.dof = dof;
+    }
+
+    public boolean isIs_user() {
+        return is_user;
+    }
+
+    public void setIs_user(boolean is_user) {
+        this.is_user = is_user;
     }
 }

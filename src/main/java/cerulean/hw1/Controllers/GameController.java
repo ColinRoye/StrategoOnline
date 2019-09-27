@@ -1,7 +1,6 @@
 package cerulean.hw1.Controllers;
 
 import cerulean.hw1.Models.Account;
-import cerulean.hw1.Database.AccountRepository;
 import cerulean.hw1.Database.GameRepository;
 import cerulean.hw1.Models.Game;
 import cerulean.hw1.Services.GameService;
@@ -31,11 +30,12 @@ public class GameController {
         Gson gson = new Gson();
         return gson.toJson(account.getGames());
     }
-    @RequestMapping(value ="/{gameId}", method = RequestMethod.GET)
+    @RequestMapping(value ="/get/{gameId}", method = RequestMethod.GET)
     public String getGame(@PathVariable String gameId) {
         return gameService.getGame(gameId);
     }
-    @RequestMapping(value ="/game", method = RequestMethod.POST)
+
+    @RequestMapping(value ="/new", method = RequestMethod.GET)
     public String newGame() {
         UserDetails principalUser = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = principalUser.getUsername();
@@ -44,6 +44,7 @@ public class GameController {
         gameService.setGame(new Game(username));
         account.getGames().add(game.getGameId());
         mongoDBUserDetailsManager.persistAccount(account);
+
         return game.getGameId();
     }
     @RequestMapping(value ="/move", method = RequestMethod.POST)

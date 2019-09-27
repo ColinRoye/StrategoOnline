@@ -1,3 +1,4 @@
+
 package cerulean.hw1;
 
 import org.springframework.boot.SpringApplication;
@@ -10,8 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 public class StrategoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(StrategoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(StrategoApplication.class, args);
+    }
 
 }
