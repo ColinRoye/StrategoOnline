@@ -1,17 +1,73 @@
-function playerPieceClickHandler() {
+function playerPieceMove() {
     let isSelected = $(this).hasClass('selected');
-    $('.piece').removeClass('selected');
+    $('.player-piece').removeClass('selected');
     if (!isSelected) {
         $(this).addClass('selected');
     }
+}
+
+function playerPieceSwap() {
+    if ($(this).hasClass('selected')) {
+        $('.player-piece').removeClass('selected');
+        return;
+    }
+    
+    let selectedPiece = $('.selected');
+    $('.piece').removeClass('selected');
+    if (selectedPiece.length === 0){
+        $(this).addClass('selected');
+    }
+    else {
+        let thisPiece = $(this);
+        let thisX = thisPiece.offset().left;
+        let thisY = thisPiece.offset().top;
+        let selectedX = selectedPiece.offset().left;
+        let selectedY = selectedPiece.offset().top;
+        let thisParent = thisPiece.parent();
+        let selectedParent = selectedPiece.parent();
+        let thisAnimated = thisPiece.clone()
+            .appendTo('#gameboard')
+            .css('position', 'fixed')
+            .css('left', thisX)
+            .css('top',  thisY)
+            .animate({
+                'left': selectedX,
+                'top': selectedY
+            }, 
+            {
+                queue: false,
+                complete : function() {
+                    thisPiece.appendTo(selectedParent);
+                    thisPiece.show();
+                    thisAnimated.remove();
+                }
+            });
+        let selectedAnimated = selectedPiece.clone()
+            .appendTo('#gameboard')
+            .css('position', 'fixed')
+            .css('left', selectedX)
+            .css('top',  selectedY)
+            .animate({
+                'left': thisX,
+                'top': thisY
+            }, 
+            {
+                queue: false,
+                complete: function() {
+                    selectedPiece.appendTo(thisParent);
+                    selectedPiece.show();
+                    selectedAnimated.remove();
+                }
+            });
+        thisPiece.hide();
+        selectedPiece.hide();
+    }   
 }
 
 function cellClickHandler() {
     let cell = this;
     let selectedPiece = $('.selected');
     if (selectedPiece.length){
-        //To Do: send post request with the parent of selectedPiece (it's current cell) 
-        //       and cell (the destination cell)
         let fromXIndex = parseInt(selectedPiece.parent().attr('data-col'));
         let fromYIndex = parseInt(selectedPiece.parent().attr('data-row'));
         let toXIndex   = parseInt(cell.getAttribute('data-col'));
@@ -151,8 +207,28 @@ function animatePiece(move, callback, callbackArg){
     }
 }
 
+function startButtonHandler() {
+    let JQrows = [ $('.G'), $('.H'), $('.I'), $('.J') ];
+    let postObject = {
+        0: new Array(10),
+        1: new Array(10),
+        2: new Array(10),
+        3: new Array(10)
+    }
+    for (let i=0; i<4; i++){
+        for (let j=0; j<10; j++){
+            postObject[i][j] = $(JQrows[i][j]).children().first().text();
+        }
+    }
+    $.post('/startgame', postObject, function() {
+        $('.player-piece').on('click', playerPieceMove);
+        $('.cell').on('click', cellClickHandler);
+        $('#start-btn').remove();
+    });
+    console.log(postObject);
+}
+
 $(function() {
-    $('.player-piece').clone().appendTo($('#D7'));
-    $('.player-piece').on('click', playerPieceClickHandler);
-    $('.cell').on('click', cellClickHandler);
+    $('#start-btn').on('click', startButtonHandler);
+    $('.player-piece').on('click', playerPieceSwap);
 });

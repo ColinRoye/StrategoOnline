@@ -46,10 +46,16 @@ body {
                 width: 6vmin;
                 height: 6vmin;
                 border-radius: 1vmin;
-                font-size: 2em;
                 text-align: center;
                 vertical-align: center;
                 color: white;
+                font-size: 2em;
+                @media screen and (max-width: 600px){
+                    font-size: 1em;
+                }
+                @media screen and (max-height: 600px){
+                    font-size: 1em;
+                }
             }
 
             .selected {
@@ -62,6 +68,22 @@ body {
 
             .red-team {
                 background-color: $red;
+            }
+        }
+
+        #start-btn {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -25%);
+            background-color: white;
+            color: $base;
+            font-weight: bold;
+            border-radius: 25px;
+            white-space: nowrap;
+            font-size: 3rem;
+            @media screen and (max-width: 400){
+                font-size: 1rem;
             }
         }
     }

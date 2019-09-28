@@ -55,10 +55,22 @@ body #main #gameboard .piece {
   width: 6vmin;
   height: 6vmin;
   border-radius: 1vmin;
-  font-size: 2em;
   text-align: center;
   vertical-align: center;
   color: white;
+  font-size: 2em;
+}
+
+@media screen and (max-width: 600px) {
+  body #main #gameboard .piece {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-height: 600px) {
+  body #main #gameboard .piece {
+    font-size: 1em;
+  }
 }
 
 body #main #gameboard .selected {
@@ -71,5 +83,25 @@ body #main #gameboard .blue-team {
 
 body #main #gameboard .red-team {
   background-color: #990000;
+}
+
+body #main #start-btn {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -25%);
+          transform: translate(-50%, -25%);
+  background-color: white;
+  color: #ae95bb;
+  font-weight: bold;
+  border-radius: 25px;
+  white-space: nowrap;
+  font-size: 3rem;
+}
+
+@media screen and (max-width: 400) {
+  body #main #start-btn {
+    font-size: 1rem;
+  }
 }
 /*# sourceMappingURL=play.css.map */
