@@ -1,7 +1,7 @@
 package cerulean.hw1.Services;
 
-import cerulean.hw1.Models.Account;
 import cerulean.hw1.Database.AccountRepository;
+import cerulean.hw1.Models.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -42,6 +42,14 @@ public class MongoDBUserDetailsManager implements UserDetailsManager {
                 account.getPassword(),
                 Collections.singletonList(new SimpleGrantedAuthority(UserRoles.ROLE_USER)));
 
+    }
+
+    public Account loadAccountByUsername(String username) {
+        return accountRepository.findByUsername(username);
+    }
+
+    public void persistAccount(Account account) {
+        accountRepository.save(account);
     }
 
 

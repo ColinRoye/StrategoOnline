@@ -1,42 +1,51 @@
 package cerulean.hw1.Controllers;
 
 import cerulean.hw1.Models.Account;
-import cerulean.hw1.Database.AccountRepository;
 import cerulean.hw1.Database.GameRepository;
+import cerulean.hw1.Models.Game;
+import cerulean.hw1.Services.GameService;
+import cerulean.hw1.Services.MongoDBUserDetailsManager;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
-
+@RestController
 @RequestMapping("/api/games")
 public class GameController {
     @Autowired
-    private AccountRepository accountRepository;
+    private MongoDBUserDetailsManager mongoDBUserDetailsManager;
     @Autowired
-    private GameRepository gameSessionRepository;
+    private GameService gameService;
+
 
     @RequestMapping(value ="/", method = RequestMethod.GET)
-    public String getGames(@RequestBody String username, String password) {
+    public String getGames() {
+        UserDetails principalUser = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = principalUser.getUsername();
+        Account account = mongoDBUserDetailsManager.loadAccountByUsername(username);
         Gson gson = new Gson();
-        Account account = gson.fromJson(accountRepository.findByUsername(username).toJson(), Account.class);
-        return new Gson().toJson(account.getGameSessions());
+        return gson.toJson(account.getGames());
     }
-    @RequestMapping(value ="/{gameSessionId}", method = RequestMethod.GET)
-    public String getGame(@RequestBody String gameId) {
-        return gameSessionRepository.findByGameId(gameId).toJson();
+    @RequestMapping(value ="/get/{gameId}", method = RequestMethod.GET)
+    public String getGame(@PathVariable String gameId) {
+        return gameService.getGame(gameId);
     }
-    @RequestMapping(value ="/game", method = RequestMethod.POST)
-    public String newGame(@RequestBody String username) {
-        //TODO: verify logged in session
 
-        //create game session id
-        UUID gameSession = UUID.randomUUID();
-        //TODO: post account.games.gameSession
+    @RequestMapping(value ="/new", method = RequestMethod.GET)
+    public String newGame() {
+        UserDetails principalUser = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = principalUser.getUsername();
+        Account account = mongoDBUserDetailsManager.loadAccountByUsername(username);
+        Game game = new Game(username);
+        gameService.setGame(new Game(username));
+        account.getGames().add(game.getGameId());
+        mongoDBUserDetailsManager.persistAccount(account);
 
-        return gameSession.toString();
+        return game.getGameId();
     }
     @RequestMapping(value ="/move", method = RequestMethod.POST)
     public void move(@RequestBody String gameSession) {

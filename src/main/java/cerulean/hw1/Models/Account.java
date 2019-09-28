@@ -1,17 +1,12 @@
 package cerulean.hw1.Models;
-import com.google.gson.Gson;
-import org.springframework.data.annotation.Id;
+
 import java.util.*;
 public class Account {
-    @Id
-    //public ObjectId _id;
+
     public String username;
     public String password;
     public double winLoss;
     public ArrayList<String> games;
-
-
-
 
 
     public Account(String username, String password) {
@@ -27,7 +22,6 @@ public class Account {
 
     public void setWinLoss(double winLoss) { this.winLoss = winLoss; }
 
-    public ArrayList<String> getGames() { return games; }
 
     public void setgames(ArrayList<String> games) { this.games = games; }
     public String getUsername(){
@@ -36,13 +30,12 @@ public class Account {
     public String getPassword(){
         return this.password;
     }
-    public String toJson(){
-        Gson gson = new Gson();
-        return gson.toJson(this);
-    }
+//    public String toJson(){
+//        Gson gson = new Gson();
+//        return gson.toJson(this);
+//    }
 
-    public ArrayList<String> getGameSessions() {
+    public ArrayList<String> getGames() {
         return games;
     }
 }
-
