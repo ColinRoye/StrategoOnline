@@ -166,6 +166,8 @@ function animatePiece(move, callback, callbackArg){
                     x = defendingPiece.offset().left;
                     y = defendingPiece.offset().top;
                     defendingPiece.animate({
+                        'left': defendingPiece.offset().left + defendingPiece.width() / 2,
+                        'top': defendingPiece.offset().top + defendingPiece.height() / 2,
                         'width' : 0, 
                         'height' : 0
                     }, function() {
@@ -187,6 +189,8 @@ function animatePiece(move, callback, callbackArg){
                 }
                 if (move.result === 'LOST') {
                     animatedPiece.animate({
+                        'left' : animatedPiece.offset().left + animatedPiece.width() / 2,
+                        'top' : animatedPiece.offset().top + animatedPiece.height() / 2,
                         'width' : 0, 
                         'height' : 0
                     }, function() {
@@ -208,6 +212,7 @@ function animatePiece(move, callback, callbackArg){
 }
 
 function startButtonHandler() {
+    $('.player-piece').off('click');
     let JQrows = [ $('.G'), $('.H'), $('.I'), $('.J') ];
     let postObject = {
         0: new Array(10),
