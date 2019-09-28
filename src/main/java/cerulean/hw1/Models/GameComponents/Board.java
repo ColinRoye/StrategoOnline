@@ -40,19 +40,18 @@ public class Board{
         this.setBoard_piece(p1_coord[0],p1_coord[1],p2);
         this.setBoard_piece(p2_coord[0],p2_coord[1],p1);
     }
-    public ArrayList<Piece[]> postBoard(ArrayList result){
+    public void postBoard(ArrayList<Piece> result){
 
         //Player Pieces are rows 6 -> 9
 
-       // ArrayList<Piece[]> result = new ArrayList<>();
+        int counter = 0;
+        for(int i = 6; i < 10; i++){
+            for(int j = 0; j < 9; j++){
+                this.setBoard_piece(i,j,result.get(counter));
+                counter++;
+            }
+        }
 
-        result.add(this.board_pieces[6]);
-        result.add(this.board_pieces[7]);
-        result.add(this.board_pieces[8]);
-        result.add(this.board_pieces[9]);
-
-        return result;
-    }
 
 
     public void printToConsole(){
