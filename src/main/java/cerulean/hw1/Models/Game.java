@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import java.util.*;
 
+
 public class Game{
 
     public String gameId;
@@ -25,6 +26,12 @@ public class Game{
     public Map<Integer, Integer> totalPiece_table = new Hashtable<>();
     public Map<Integer, Integer> foundPiece_table = new Hashtable<>();
     public ArrayList<Move> moves = new ArrayList<Move>();
+
+    public static final String WON = "WON";
+    public static final String LOST = "LOST";
+    public static final String MOVED = "MOVED";
+    public static final String DRAW = "DRAW";
+
 
     //Constructor
     public Game(){}
@@ -80,8 +87,8 @@ public class Game{
 
     }*/
 
-    //TODO: Change Throw to return INVALID, MOVE, BATTLE ETC
-    public Move move(int[] moveFrom, int[] moveTo,boolean is_player){
+
+    public Move move(int[] moveFrom, int[] moveTo,boolean is_player) throws Exception{
 
         Move move = new Move();
 
@@ -93,9 +100,15 @@ public class Game{
         int y = moveTo[1];
         move.setTo(new int[]{x, y});
 
+        if(is_player)
+            move.setActor("PLAYER");
+        else
+            move.setActor("AI");
+
+
         //Check to see if piece if being moved into inaccessible part of board
-        if((x > 3 && x < 6 ) && ((y>1 && y < 4) || (y>5 && y<8) ) )
-            return("INACCESSIBLE PART OF BOARD");
+        if(!validateRegion(x,y))
+            throw new Exception("INACCESSIBLE PART OF BOARD");
 
         Piece moveFrom_piece = this.board.getBoard_piece(i,j);
         move.setSubject(moveFrom_piece.getType());
@@ -105,18 +118,18 @@ public class Game{
 
         //Check if moveFrom_piece is not null
         if(moveFrom_piece == null)
-            return("INVALID");
+            throw new Exception("Chosen Piece is Null");
 
         //Check if move is inside P DOF
         int dof = moveFrom_piece.getDof();
         double desiredDistance = Math.abs(Math.hypot(x-i,y-j));
 
         if(desiredDistance > dof || (desiredDistance != Math.floor(desiredDistance)))
-            return("INVALID");//return("Invalid move RE: dof");
+            throw new Exception("Invalid move RE: dof");
 
         //Running into your own piece
         if(moveTo_piece != null && (moveFrom_piece.isIs_user() == moveTo_piece.isIs_user()) ){
-            return("INVALID");//return("MOVE FROM IS NOT PLAYER PIECE OR MOVE TO IS PLAYER PIECE");
+            throw new Exception("RUNNING INTO SAME USER PIECE");
         }
         //Moving to an empty space
         else if(moveTo_piece == null){
@@ -124,13 +137,14 @@ public class Game{
             this.board.setBoard_piece(x,y,moveFrom_piece);
             //set current position to null
             this.board.setBoard_piece(i,j,null);
-            move.setResult("MOVED");
+            move.setResult(MOVED);
+
 
         }
         else{
             String battleResult = battle(moveFrom_piece,moveTo_piece);
             move.setResult(battleResult);
-            if(battleResult.equals("P1")){  //First Piece won the battle
+            if(battleResult.equals(WON)){  //First Piece won the battle
                 this.board.setBoard_piece(x,y,moveFrom_piece);
                 this.board.setBoard_piece(i,j,null);
                 moveFrom_piece.setHidden(false);
@@ -141,9 +155,9 @@ public class Game{
                     this.board.totalPieces -= 1;
                 }
 
-
+                move.setResult(WON);
             }
-            else if(battleResult.equals("P2")){ //Second Piece won the battle
+            else if(battleResult.equals(LOST)){ //Second Piece won the battle
                 this.board.setBoard_piece(i,j,null);
                 moveTo_piece.setHidden(false);
 
@@ -161,6 +175,8 @@ public class Game{
                     totalPiece_table.put(moveTo_piece.value, totalPiece_table.get(moveTo_piece.value) - 1);
                 }
 
+                move.setResult(LOST);
+
 
             }
             else{// Tie
@@ -170,12 +186,13 @@ public class Game{
                 foundPiece_table.put(moveFrom_piece.value,++currentFound);
                 totalPiece_table.put(moveFrom_piece.value,totalPiece_table.get(moveFrom_piece.value) - 1);
                 this.board.totalPieces -= 2;
+
+                move.setResult(DRAW);
             }
         }
         this.moveCounter++;
-
-        //int[] airesult = runAI();
         moves.add(move);
+
         return move;
     }
 
@@ -216,25 +233,25 @@ public class Game{
                     if(p_above != null && !p_above.is_user) {
                         temp[0] = i-1;
                         temp[1] = j;
-                        if(!potential.contains(temp));
+                        if(!potential.contains(temp) && p_above.getDof() > 0);
                         potential.add(temp.clone());
                     }
-                    if(p_below != null && !p_below.is_user ) {
+                    if(p_below != null && !p_below.is_user) {
                         temp[0] = i+1;
                         temp[1] = j;
-                        if(!potential.contains(temp));
+                        if(!potential.contains(temp) && p_below.getDof() > 0);
                         potential.add(temp.clone());
                     }
                     if(p_left != null && !p_left.is_user) {
                         temp[0] = i;
                         temp[1] = j-1;
-                        if(!potential.contains(temp));
+                        if(!potential.contains(temp) && p_left.getDof() > 0);
                         potential.add(temp.clone());
                     }
-                    if(p_right != null && !p_right.is_user ) {
+                    if(p_right != null && !p_right.is_user) {
                         temp[0] = i;
                         temp[1] = j+1;
-                        if(!potential.contains(temp));
+                        if(!potential.contains(temp) && p_right.getDof() > 0);
                         potential.add(temp.clone());
                     }
 
@@ -297,7 +314,7 @@ public class Game{
 
                             if (!test_piece.isHidden()) {
 
-                                if (battle(attack_piece, test_piece) == "P1") {
+                                if (battle(attack_piece, test_piece) == WON) {
                                     moveTo = moveToward(attack_piece, x, y, i, j);
                                 }
                                 else
@@ -509,9 +526,10 @@ public class Game{
 
 
     public boolean validateRegion(int x,int y){
+        //Outside of board
         if( x < 0 || x > 9 || y > 9 || y < 0)
             return false;
-
+        //inaccessible region
         if((x > 3 && x < 6 ) && ((y>1 && y < 4) || (y>5 && y<8) ) )
             return false;
         else
@@ -548,9 +566,9 @@ public class Game{
 
     public String battle(Piece p1, Piece p2){
 
-        String p1_win = "WON";//p1
-        String p2_win = "LOST";//p2
-        String draw = "DRAW";
+        String p1_win = WON;//p1
+        String p2_win = LOST;//p2
+        String draw = DRAW;
         //First Let's get attacking piece type
         String p1_type = p1.getType();
         String p2_type = p2.getType();
@@ -582,7 +600,7 @@ public class Game{
             return p2_win;
         }
         else {
-            System.out.print("DRAW \n");
+            System.out.println("DRAW");
             return draw;
         }
     }
