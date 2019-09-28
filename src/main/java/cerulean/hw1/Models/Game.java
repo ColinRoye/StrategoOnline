@@ -29,13 +29,14 @@ public class Game{
     //Constructor
     public Game(){}
 
-    public Game(String sessionId, Account player){
-        this.gameId = sessionId;
-        this.player = player;
+    public Game(String gameId){
+        this.gameId = gameId;
+        //this.player = player;
         this.moveCounter = 0;
         this.winner = 0;
         this.board = new Board(10,10);
 
+        //Table for all possible pieces
         this.totalPiece_table.put(0,1);
         this.totalPiece_table.put(1,1);
         this.totalPiece_table.put(2,8);
@@ -48,6 +49,8 @@ public class Game{
         this.totalPiece_table.put(9,1);
         this.totalPiece_table.put(10,1);
         this.totalPiece_table.put(11,6);
+
+        //Table for all pieces that have been found
         this.foundPiece_table.put(0,0);
         this.foundPiece_table.put(1,0);
         this.foundPiece_table.put(2,0);
@@ -61,6 +64,7 @@ public class Game{
         this.foundPiece_table.put(10,0);
         this.foundPiece_table.put(11,0);
     }
+    /*
     public String move(Account account, String gameSession, int[] moveFrom, int[] moveTo){
         String result = makeMove(account, gameSession, moveFrom, moveTo,true);
 
@@ -74,10 +78,10 @@ public class Game{
         System.out.printf("AI MOVED FROM %d,%d TO %d,%d \n ",moveFrom[0],moveFrom[1],moveTo[0],moveTo[1]);
         return result;
 
-    }
+    }*/
 
     //TODO: Change Throw to return INVALID, MOVE, BATTLE ETC
-    public Move move(int[] moveFrom, int[] moveTo) throws Exception{
+    public Move move(int[] moveFrom, int[] moveTo,boolean is_player){
 
         Move move = new Move();
 
