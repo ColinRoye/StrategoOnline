@@ -114,7 +114,10 @@ public class Game{
         move.setSubject(moveFrom_piece.getType());
 
         Piece moveTo_piece = this.board.getBoard_piece(x,y);
-        move.setTarget(moveTo_piece.getType());
+        if(moveTo_piece != null)
+            move.setTarget(moveTo_piece.getType());
+        else
+            move.setTarget(null);
 
         //Check if moveFrom_piece is not null
         if(moveFrom_piece == null)
