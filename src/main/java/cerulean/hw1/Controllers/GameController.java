@@ -54,11 +54,14 @@ public class GameController {
     @RequestMapping(value ="/move", method = RequestMethod.POST)
     public void move(@RequestBody String gameId, int[] to, int[] from) throws Exception {
         Game game = new Gson().fromJson(gameService.getGame(gameId), Game.class);
+
+
         int[] ai_coords = game.runAI();
 
-        Move playeMove = game.move(to, from);
-        Move aiMove = game.move(new int[]{ai_coords[0], ai_coords[1]}, new int[]{ai_coords[2], ai_coords[3]});
+        Move playeMove = game.move(to, from, true);
+        Move aiMove = game.move(new int[]{ai_coords[0], ai_coords[1]}, new int[]{ai_coords[2], ai_coords[3]},false);
         gameService.save(game);
+
     }
 
 }
