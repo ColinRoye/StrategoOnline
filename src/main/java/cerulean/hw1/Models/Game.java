@@ -48,8 +48,6 @@ public class Game{
         this.totalPiece_table.put(9,1);
         this.totalPiece_table.put(10,1);
         this.totalPiece_table.put(11,6);
-
-
         this.foundPiece_table.put(0,0);
         this.foundPiece_table.put(1,0);
         this.foundPiece_table.put(2,0);
