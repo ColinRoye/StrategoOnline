@@ -233,28 +233,33 @@ public class Game{
 
                     int temp[] = new int[2];
 
+                    if((i == 4 && j ==4 )|| (i == 3 && j == 5)){
+                        System.out.println("Sigh...");
+                    }
+
                     if(p_above != null && !p_above.is_user) {
                         temp[0] = i-1;
                         temp[1] = j;
-                        if(!potential.contains(temp) && p_above.getDof() > 0);
-                        potential.add(temp.clone());
+                        if(!p_above.getType().equals("Bomb"));
+                            potential.add(temp.clone());
                     }
                     if(p_below != null && !p_below.is_user) {
                         temp[0] = i+1;
                         temp[1] = j;
-                        if(!potential.contains(temp) && p_below.getDof() > 0);
+                        if(!p_below.getType().equals("Bomb"));
                         potential.add(temp.clone());
                     }
                     if(p_left != null && !p_left.is_user) {
                         temp[0] = i;
                         temp[1] = j-1;
-                        if(!potential.contains(temp) && p_left.getDof() > 0);
+
+                        if(!p_left.getType().equals("Bomb"));
                         potential.add(temp.clone());
                     }
                     if(p_right != null && !p_right.is_user) {
                         temp[0] = i;
                         temp[1] = j+1;
-                        if(!potential.contains(temp) && p_right.getDof() > 0);
+                        if(!p_right.getType().equals("Bomb"));
                         potential.add(temp.clone());
                     }
 
@@ -262,6 +267,7 @@ public class Game{
                     p_below = null;
                     p_right = null;
                     p_left = null;
+                    temp=null;
                 }
             }
         }
@@ -312,7 +318,7 @@ public class Game{
 
                         if(test_piece != null && test_piece.is_user){
                             //At this point we have a target piece to either attack or runaway
-                            System.out.printf("ENEMY FOUND AT %d,%d",i,j);
+                            System.out.printf("ENEMY FOUND AT %d,%d \n",i,j);
                             int[] moveTo = null;
 
                             if (!test_piece.isHidden()) {
