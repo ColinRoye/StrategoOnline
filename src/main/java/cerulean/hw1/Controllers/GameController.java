@@ -42,7 +42,7 @@ public class GameController {
         String username = principalUser.getUsername();
         Account account = mongoDBUserDetailsManager.loadAccountByUsername(username);
         Game game = new Game(username);
-        gameService.setGame(new Game(username));
+        gameService.save(new Game(username));
         account.getGames().add(game.getGameId());
         mongoDBUserDetailsManager.persistAccount(account);
 
@@ -55,7 +55,7 @@ public class GameController {
 
         Move playeMove = game.move(to, from);
         Move aiMove = game.move(new int[]{ai_coords[0], ai_coords[1]}, new int[]{ai_coords[2], ai_coords[3]});
-
+        gameService.save(game);
     }
 
 }

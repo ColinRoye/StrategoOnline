@@ -20,9 +20,10 @@ public class GameService {
         Gson gson = new Gson();
         return gson.toJson(gameRepository.findByGameId(gameId));
     }
-    public void setGame(Game game){
+    public void save(Game game){
         gameRepository.save(game);
     }
+
     public void move(String gameId, String to, String from){
     }
 
