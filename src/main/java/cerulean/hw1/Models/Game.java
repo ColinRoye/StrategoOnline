@@ -28,8 +28,8 @@ public class Game{
     //Constructor
     public Game(){}
 
-    public Game(String gameId, Account player){
-        this.gameId = gameId;
+    public Game(String sessionId, Account player){
+        this.gameId = sessionId;
         this.player = player;
         this.moveCounter = 0;
         this.winner = 0;
@@ -62,12 +62,24 @@ public class Game{
         this.foundPiece_table.put(10,0);
         this.foundPiece_table.put(11,0);
     }
+    public String move(Account account, String gameSession, int[] moveFrom, int[] moveTo){
+        String result = makeMove(account, gameSession, moveFrom, moveTo,true);
 
-    public Game(String username) {
+        int[] ai_move = runAI();
+        moveFrom[0] = ai_move[0];
+        moveFrom[1] = ai_move[1];
+
+        moveTo[0] = ai_move[2];
+        moveTo[1] = ai_move[3];
+        String ai_result = makeMove(account,gameSession,moveFrom,moveTo,false);
+        System.out.printf("AI MOVED FROM %d,%d TO %d,%d \n ",moveFrom[0],moveFrom[1],moveTo[0],moveTo[1]);
+        return result;
+
     }
 
-    //TODO: Change Throw to return INVALID, MOVE, BATTLE ETC
-    public int move(Account account, String gameSession, int[] moveFrom, int[] moveTo) throws Exception{
+
+    //TODO: Rename returns to INVALID, MOVE, BATTLE ETC
+    public String makeMove(Account account, String gameSession, int[] moveFrom, int[] moveTo,boolean is_player) {
 
         int i = moveFrom[0];
         int j = moveFrom[1];
@@ -77,7 +89,7 @@ public class Game{
 
         //Check to see if piece if being moved into inaccessible part of board
         if((x > 3 && x < 6 ) && ((y>1 && y < 4) || (y>5 && y<8) ) )
-            throw new Exception("INACCESSIBLE PART OF BOARD");
+            return("INACCESSIBLE PART OF BOARD");
 
 
         Piece moveFrom_piece = this.board.getBoard_piece(i,j);
@@ -85,18 +97,18 @@ public class Game{
 
         //Check if moveFrom_piece is not null
         if(moveFrom_piece == null)
-            throw new Exception("Chosen Piece is Null");
+            return("INVALID");
 
         //Check if move is inside P DOF
         int dof = moveFrom_piece.getDof();
         double desiredDistance = Math.abs(Math.hypot(x-i,y-j));
 
         if(desiredDistance > dof || (desiredDistance != Math.floor(desiredDistance)))
-            throw new Exception("Invalid move RE: dof");
+            return("INVALID");//return("Invalid move RE: dof");
 
         //Running into your own piece
-        if(moveTo_piece!= null && (!moveFrom_piece.isIs_user() || moveTo_piece.isIs_user()) ){
-            throw new Exception("MOVE FROM IS NOT PLAYER PIECE OR MOVE TO IS PLAYER PIECE RE: dof");
+        if(moveTo_piece != null && (moveFrom_piece.isIs_user() == moveTo_piece.isIs_user()) ){
+            return("INVALID");//return("MOVE FROM IS NOT PLAYER PIECE OR MOVE TO IS PLAYER PIECE");
         }
         //Moving to an empty space
         else if(moveTo_piece == null){
@@ -113,19 +125,32 @@ public class Game{
                 this.board.setBoard_piece(i,j,null);
                 moveFrom_piece.setHidden(false);
 
-                int currentFound = foundPiece_table.get(moveFrom_piece.value);
-                foundPiece_table.put(moveFrom_piece.value,++currentFound);
-                this.board.totalPieces -= 1;
+                if(moveFrom_piece.is_user == is_player) {
+                    int currentFound = foundPiece_table.get(moveFrom_piece.value);
+                    foundPiece_table.put(moveFrom_piece.value, ++currentFound);
+                    this.board.totalPieces -= 1;
+                }
+
 
             }
             else if(battleResult.equals("P2")){ //Second Piece won the battle
                 this.board.setBoard_piece(i,j,null);
                 moveTo_piece.setHidden(false);
-                int currentFound =  foundPiece_table.get(moveFrom_piece.value);
-                foundPiece_table.put(moveFrom_piece.value,++currentFound);
 
-                totalPiece_table.put(moveFrom_piece.value,(int)totalPiece_table.get(moveFrom_piece.value) - 1);
-                this.board.totalPieces -= 1;
+                //Player lost , AI won , moveFrom piece was player is now known
+                if (moveTo_piece.isIs_user() == is_player) {
+                    int currentFound = foundPiece_table.get(moveFrom_piece.value);
+                    foundPiece_table.put(moveFrom_piece.value, ++currentFound);
+                    totalPiece_table.put(moveFrom_piece.value, totalPiece_table.get(moveFrom_piece.value) - 1);
+                    this.board.totalPieces -= 1;
+                }
+                //AI Lost, Player won, moveTo piece is now revealed to AI
+                else{
+                    int currentFound = foundPiece_table.get(moveTo_piece.value);
+                    foundPiece_table.put(moveTo_piece.value, ++currentFound);
+                    totalPiece_table.put(moveTo_piece.value, totalPiece_table.get(moveTo_piece.value) - 1);
+                }
+
 
             }
             else{// Tie
@@ -133,24 +158,22 @@ public class Game{
                 this.board.setBoard_piece(x,y,null);
                 int currentFound = foundPiece_table.get(moveFrom_piece.value);
                 foundPiece_table.put(moveFrom_piece.value,++currentFound);
-                totalPiece_table.put(moveFrom_piece.value,(int)totalPiece_table.get(moveFrom_piece.value) - 1);
+                totalPiece_table.put(moveFrom_piece.value,totalPiece_table.get(moveFrom_piece.value) - 1);
                 this.board.totalPieces -= 2;
             }
         }
         this.moveCounter++;
 
-        //int[] airesult = runAI();
-
-        return 0;
+        return "SUCCESS";
     }
 
 
     public int[] runAI(){
 
         Piece[][] board = this.board.getBoard_pieces();
-        int[] result = new int[2];
+        int[] result = new int[4];
         List<int[]> potential = new ArrayList<>();
-        List<int[]> moveable_potential = new ArrayList<>();
+
 
 
         Piece p_above = null;
@@ -158,11 +181,14 @@ public class Game{
         Piece p_right = null;//new Piece("EMPTY",-1,0,false);
         Piece p_left = null; //new Piece("EMPTY",-1,0,false);
 
+        /* Check board for empty spaces
+           if empty space is found, look for AI piece around it
+         */
+        //TODO: Switch from looking for empty space to looking all pieces and looking to see if empty space is there as well enemy piece
         for(int i = 0 ; i < this.board.num_row ;i++){
             for(int j = 0; j< this.board.num_col;j++){
                 Piece p = board[i][j];
-                if(p == null){
-
+                if(p == null && validateRegion(i,j)){
                     //Check to see if any usable piece that exists around this empty square
                     if(i-1 > -1 && validateRegion(i-1,j))
                         p_above = board[i-1][j];
@@ -178,37 +204,49 @@ public class Game{
                     if(p_above != null && !p_above.is_user) {
                         temp[0] = i-1;
                         temp[1] = j;
-                        potential.add(temp);
+                        if(!potential.contains(temp));
+                        potential.add(temp.clone());
                     }
                     if(p_below != null && !p_below.is_user ) {
                         temp[0] = i+1;
                         temp[1] = j;
-                        potential.add(temp);
+                        if(!potential.contains(temp));
+                        potential.add(temp.clone());
                     }
                     if(p_left != null && !p_left.is_user) {
                         temp[0] = i;
                         temp[1] = j-1;
-                        potential.add(temp);
+                        if(!potential.contains(temp));
+                        potential.add(temp.clone());
                     }
                     if(p_right != null && !p_right.is_user ) {
                         temp[0] = i;
                         temp[1] = j+1;
-                        potential.add(temp);
+                        if(!potential.contains(temp));
+                        potential.add(temp.clone());
                     }
+
+                    p_above = null;
+                    p_below = null;
+                    p_right = null;
+                    p_left = null;
                 }
             }
         }
         //Now there is a list of potential pieces that can be moved
 
+
         int numberOfOptions = potential.size();
-        for(int i = 0;i < 2; i++){
-            int[] opt = potential.get(i);
+        //Look for enemy pieces around potential pieces
+        outerloop:
+        for(int k = 0; k < numberOfOptions; k++){
+            int[] opt = potential.get(k);
             int x = opt[0];
             int y = opt[1];
-            Piece p = this.board.getBoard_piece(x,y);
+            Piece attack_piece = this.board.getBoard_piece(x,y);
 
             //Check to see if there are opponent pieces around
-            Piece test_piece = null;
+            Piece test_piece;
             /*
              Looking at all pieces within a 2 block radius
              X X 0 X X
@@ -219,31 +257,247 @@ public class Game{
             */
 
             int r = 2;
-            double r2 = r^2;
+            double r2 = Math.pow(r,2);
+
+            /*For Testing
             x = 4;
             y = 4;
-            double THRESHOLD = .0001;
-            System.out.printf("----POINT %d, %d\n",x,y);
-            for (i = x-r; i <= x+r; i++) {
-                int xr = (i-x)^2;
-                for (int j = y-r; j <= y+r; j++) {
-                    System.out.printf("POINT %d, %d, %f \n",i,j);
+            */
 
+            //System.out.printf("----POINT %d, %d\n",x,y);
+            for (int i = x-r; i <= x+r; i++) {
+                int xr = (int) Math.pow(i-x,2);
+                for (int j = y-r; j <= y+r; j++) {
+                    int check = (int) (xr + (Math.pow((y-j),2)));
+
+                    //ignore test point
+                    if((i == x && j == y ) || !validateRegion(x,y))
+                        continue;
+                    //Check if within 2 block radius
+                    if(check <= r2 && validateRegion(i,j)){
+                        //Now check if this point is an enemy point
+                        test_piece = this.board.getBoard_piece(i,j);
+
+                        if(test_piece != null && test_piece.is_user){
+                            //At this point we have a target piece to either attack or runaway
+                            System.out.printf("ENEMY FOUND AT %d,%d",i,j);
+                            int[] moveTo = null;
+
+                            if (!test_piece.isHidden()) {
+
+                                if (battle(attack_piece, test_piece) == "P1") {
+                                    moveTo = moveToward(attack_piece, x, y, i, j);
+                                }
+                                else
+                                    moveTo = moveAway(attack_piece, x, y, i, j);
+                            }
+                            else {
+
+                                double prob_smaller = probabilityEqualOrSmaller(attack_piece.getValue());
+                                if (prob_smaller == 0 || (prob_smaller > (1 - prob_smaller)))
+                                    moveTo = moveToward(attack_piece, x, y, i, j);
+                                else if ((1 - prob_smaller) > prob_smaller)
+                                    moveTo = moveAway(attack_piece, x, y, i, j);
+                                else
+                                    moveTo = moveToward(attack_piece, x, y, i, j);
+                            }
+
+                            if (moveTo != null) {
+                                result[0] = x;
+                                result[1] = y;
+                                result[2] = moveTo[0];
+                                result[3] = moveTo[1];
+                                return result;
+                            }
+                        }
+                        else
+                            continue;
+                    }
                 }
             }
             //Now there is a list of potential pieces that can be moved
-
         }
 
+
+        //If no enemies were found make a random move
+        int choice = new Random().nextInt(numberOfOptions);
+        int[] opt = potential.get(choice);
+
+        result[0] = opt[0];
+        result[1] = opt[1];
+
+        //Look around this point and move to an empty spot
+
+        //below
+        if(validateRegion(result[0]-1,result[1])){
+            Piece p = this.board.getBoard_piece(result[0]-1,result[1]);
+            if(p == null){
+                result[2] = result[0]-1;
+                result[3] = result[1];
+                return result;
+            }
+        }
+        //left
+        if(validateRegion(result[0],result[1]-1)){
+            Piece p = this.board.getBoard_piece(result[0],result[1]-1);
+            if(p == null){
+                result[2] = result[0];
+                result[3] = result[1]-1;
+                return result;
+            }
+        }
+
+        //right
+        if(validateRegion(result[0],result[1])){
+            Piece p = this.board.getBoard_piece(result[0],result[1]+1);
+            if(p == null){
+                result[2] = result[0];
+                result[3] = result[1]+1;
+                return result;
+            }
+        }
+
+        //above
+        if(validateRegion(result[0]+1,result[1])){
+            Piece p = this.board.getBoard_piece(result[0]+1,result[1]);
+            if(p == null){
+                result[2] = result[0]+1;
+                result[3] = result[1];
+                return result;
+            }
+        }
         return result;
+    }
+
+    public int[] moveToward(Piece attack, int x1,int y1,int x2,int y2){
+
+        //We can move either forwad,back,left,or right
+        int dof = attack.getDof();
+
+        int[] result = new int[2];
 
 
+        //first check if we are within the dof
+
+        if(((Math.abs(x1-x2) <= dof && Math.abs(y1-y2) == 0 )||((Math.abs(x1-x2) == 0 && Math.abs(y1-y2) <= dof ))  )){
+            result[0] = x2;
+            result[1] = y2;
+            return result;
+        }
+        double[] option_dist = new double[4];
+        double currentDistanceAway = distanceAway(x1,y1,x2,y2);
+        option_dist[0] = distanceAway(x1+1,y1,x2,y2);
+        option_dist[1] = distanceAway(x1-1,y1,x2,y2);
+        option_dist[2] = distanceAway(x1,y1-1,x2,y2);
+        option_dist[3] = distanceAway(x1,y1+1,x2,y2);
+
+        //Not in dof, so we need to move toward the piece
+        Piece option_below;
+        Piece option_above;
+        Piece option_right;
+        Piece option_left;
+
+        if(validateRegion(x1+1,y1)) {
+            option_below = this.board.getBoard_piece(x1 + 1, y1);
+            if(option_below == null && option_dist[0] <currentDistanceAway){
+                result[0] = x1+1;
+                result[1] = y1;
+                return result;
+            }
+        }
+
+        if(validateRegion(x1-1,y1)) {
+            option_above = this.board.getBoard_piece(x1 - 1, y1);
+            if(option_above == null && option_dist[1] <currentDistanceAway){
+                result[0] = x1-1;
+                result[1] = y1;
+                return result;
+            }
+        }
+        if(validateRegion(x1-1,y1)){
+            option_left = this.board.getBoard_piece(x1,y1-1);
+            if(option_left == null && option_dist[2] <currentDistanceAway){
+                result[0] = x1;
+                result[1] = y1-1;
+                return result;
+            }}
+        if(validateRegion(x1-1,y1)){
+            option_right = this.board.getBoard_piece(x1,y1+1);
+            if(option_right == null && option_dist[0] <currentDistanceAway){
+                result[0] = x1+1;
+                result[1] = y1;
+                return result;
+            }
+        }
+        return null;
+    }
+    public int[] moveAway(Piece piece, int x1,int y1,int x2,int y2){
+        //We can move either forwad,back,left,or right
+        int dof = piece.getDof();
+
+        int[] result = new int[2];
+
+        double[] option_dist = new double[4];
+        double currentDistanceAway = distanceAway(x1,y1,x2,y2);
+        option_dist[0] = distanceAway(x1+1,y1,x2,y2);
+        option_dist[1] = distanceAway(x1-1,y1,x2,y2);
+        option_dist[2] = distanceAway(x1,y1-1,x2,y2);
+        option_dist[3] = distanceAway(x1,y1+1,x2,y2);
+
+        //Not in dof, so we need to move toward the piece
+        Piece option_below;
+        Piece option_above;
+        Piece option_right;
+        Piece option_left;
+
+        //go left
+        if(validateRegion(x1,y1-1)){
+            option_left = this.board.getBoard_piece(x1,y1-1);
+            if(option_left == null && option_dist[2] > currentDistanceAway){
+                result[0] = x1;
+                result[1] = y1-1;
+                return result;
+            }}
+        //go right
+        if(validateRegion(x1,y1+1)){
+            option_right = this.board.getBoard_piece(x1,y1+1);
+            if(option_right == null && option_dist[0] > currentDistanceAway){
+                result[0] = x1;
+                result[1] = y1+1;
+                return result;
+            }
+        }
+
+        //go down
+        if(validateRegion(x1+1,y1)) {
+            option_below = this.board.getBoard_piece(x1 + 1, y1);
+            if(option_below == null && option_dist[0] > currentDistanceAway){
+                result[0] = x1+1;
+                result[1] = y1;
+                return result;
+            }
+        }
+        //go up
+        if(validateRegion(x1-1,y1)) {
+            option_above = this.board.getBoard_piece(x1 - 1, y1);
+            if(option_above == null && option_dist[1]  > currentDistanceAway){
+                result[0] = x1-1;
+                result[1] = y1;
+                return result;
+            }
+        }
+        return null;
+    }
+    public double distanceAway(int x1,int y1,int x2,int y2){
+        double ac = Math.abs(y2 - y1);
+        double cb = Math.abs(x2 - x1);
+
+        return Math.hypot(ac, cb);
     }
 
 
-
     public boolean validateRegion(int x,int y){
-        if( x < 0 || y > 9)
+        if( x < 0 || x > 9 || y > 9 || y < 0)
             return false;
 
         if((x > 3 && x < 6 ) && ((y>1 && y < 4) || (y>5 && y<8) ) )
@@ -264,7 +518,7 @@ public class Game{
         if(moveTo_piece == null)
             return true;
         //Are you trying to move into your own piece
-        if(myPiece.is_user== moveTo_piece.is_user)
+        if(myPiece.is_user == moveTo_piece.is_user)
             return false;
 
         return true;
@@ -273,10 +527,10 @@ public class Game{
     public double probabilityEqualOrSmaller(int k){
         int counter = 0;
         for(int i = k; k > -1 ; k--){
-            counter += (int)foundPiece_table.get(i);
+            counter += (totalPiece_table.get(i)-foundPiece_table.get(i));
         }
-
-        return counter/this.board.totalPieces;
+        double result = (double) counter / this.board.totalPieces ;
+        return result;
     }
 
 
@@ -284,6 +538,8 @@ public class Game{
 
         String p1_win = "P1";
         String p2_win = "P2";
+        String p1_game_winner = "P1_Winner";
+        String p2_game_winner = "P2_Winner";
         String draw = "Draw";
         //First Let's get attacking piece type
         String p1_type = p1.getType();
@@ -356,7 +612,6 @@ public class Game{
     public void setBoard(Board board) {
         this.board = board;
     }
-
 
 
     public String toJson(){

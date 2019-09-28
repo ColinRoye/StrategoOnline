@@ -6,7 +6,7 @@ public class Board{
     public Piece[][] board_pieces;
     public int num_row;
     public int num_col;
-    public int totalPieces = 40;
+    public int totalPieces = 40; //player pieces
 
     public Board(){}
 
@@ -38,7 +38,6 @@ public class Board{
         for(int j = 0;j<this.num_col;j++){
             System.out.printf(" %c%-3d ",'A'+j,j);
         }
-
         System.out.print("\n");
 
         for(int i = 0 ; i<this.num_row;i++){
@@ -59,11 +58,13 @@ public class Board{
         }
     }
 
-    // (0,0) -> (3,9) AI
-    //(0,6) -> (9,9) Player
+    /*
+    (0,0) -> (3,9) AI
+    (0,6) -> (9,9) Player
 
-    //i = 9 for PLAYER
-    //i = 3 for AI
+    i = 9 for PLAYER
+    i = 3 for AI
+    */
     public void setDefaultBoard(boolean is_user,int i){
         //new Piece("Flag",0,0,true)
         //new Piece("Spy",1,1,true)
@@ -186,6 +187,32 @@ public class Board{
         board_pieces[i][7] = SCOUT_6;
         board_pieces[i][8] = SCOUT_7;
         board_pieces[i][9] = SCOUT_8;
+
+    }
+
+    public void testBoard(){
+
+        Piece[][] board_pieces = this.board_pieces;
+        Piece TEST_1 = new Piece("TEST",6,1,false);
+        Piece TEST_2 = new Piece("TEST",6,1,false);
+        Piece TEST_3 = new Piece("TEST",6,1,false);
+        Piece TEST_4 = new Piece("TEST",6,1,false);
+        Piece TEST_5 = new Piece("TEST",6,1,false);
+        Piece TEST_6 = new Piece("TEST",6,1,false);
+        Piece TEST_7 = new Piece("TEST",6,1,false);
+        Piece TEST_8 = new Piece("TEST",6,1,false);
+
+
+        board_pieces[4][4] = TEST_1;
+        board_pieces[4][5] = TEST_2;
+        board_pieces[4][8] = TEST_3;
+        board_pieces[4][9] = TEST_4;
+
+        board_pieces[5][4] = TEST_5;
+        board_pieces[5][5] = TEST_6;
+        board_pieces[5][8] = TEST_7;
+        board_pieces[5][9] = TEST_8;
+
 
     }
 }
