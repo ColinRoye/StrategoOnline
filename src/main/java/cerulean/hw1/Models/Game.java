@@ -185,7 +185,7 @@ public class Game{
                 int currentFound = foundPiece_table.get(moveFrom_piece.value);
                 foundPiece_table.put(moveFrom_piece.value,++currentFound);
                 totalPiece_table.put(moveFrom_piece.value,totalPiece_table.get(moveFrom_piece.value) - 1);
-                this.board.totalPieces -= 2;
+                this.board.totalPieces -= 1;
 
                 move.setResult(DRAW);
             }

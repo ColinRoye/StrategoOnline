@@ -1,6 +1,8 @@
 package cerulean.hw1.Models.GameComponents;
 
 
+import java.util.ArrayList;
+
 public class Board{
 
     public Piece[][] board_pieces;
@@ -32,6 +34,27 @@ public class Board{
         return this.board_pieces[i][j];
 
     }
+    public void swap(int[] p1_coord,int[] p2_coord){
+        Piece p1 = this.getBoard_piece(p1_coord[0],p1_coord[1]);
+        Piece p2 = this.getBoard_piece(p2_coord[0],p2_coord[1]);
+        this.setBoard_piece(p1_coord[0],p1_coord[1],p2);
+        this.setBoard_piece(p2_coord[0],p2_coord[1],p1);
+    }
+    public ArrayList<Piece[]> postBoard(){
+
+        //Player Pieces are rows 6 -> 9
+
+        ArrayList<Piece[]> result = new ArrayList<>();
+
+        result.add(this.board_pieces[6]);
+        result.add(this.board_pieces[7]);
+        result.add(this.board_pieces[8]);
+        result.add(this.board_pieces[9]);
+
+        return result;
+    }
+
+
     public void printToConsole(){
         Piece p;
         System.out.printf("    ");
