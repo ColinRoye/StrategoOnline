@@ -55,6 +55,10 @@ body #main #gameboard .piece {
   width: 6vmin;
   height: 6vmin;
   border-radius: 1vmin;
+  font-size: 2em;
+  text-align: center;
+  vertical-align: center;
+  color: white;
 }
 
 body #main #gameboard .selected {
@@ -63,5 +67,9 @@ body #main #gameboard .selected {
 
 body #main #gameboard .blue-team {
   background-color: #1DACD6;
+}
+
+body #main #gameboard .red-team {
+  background-color: #990000;
 }
 /*# sourceMappingURL=play.css.map */

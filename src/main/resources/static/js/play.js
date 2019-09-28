@@ -14,8 +14,8 @@ function cellClickHandler() {
         //       and cell (the destination cell)
         let fromXIndex = parseInt(selectedPiece.parent().attr('data-col'));
         let fromYIndex = parseInt(selectedPiece.parent().attr('data-row'));
-        let toXIndex   = parseInt(cell.attr('data-col'));
-        let toYIndex   = parseInt(cell.attr('data-row'));
+        let toXIndex   = parseInt(cell.getAttribute('data-col'));
+        let toYIndex   = parseInt(cell.getAttribute('data-row'));
         $.post('/move', {
             from: [fromXIndex, fromYIndex],
             to: [toXIndex, toYIndex]
@@ -27,7 +27,7 @@ function cellClickHandler() {
     }
 }
 
-const indexToLetter = ['A','B','C','D','E','F','G','H','I','J']
+const indexToLetter = ['A','B','C','D','E','F','G','H','I','J'];
 
 function indecesToJQ(indeces) {
     return $('#' + indexToLetter[indeces[1]] + indeces[0]);
@@ -58,7 +58,6 @@ function animatePiece(move, callback, callbackArg){
         .css('top', piece.offset().top);
     if (move.result === "MOVED"){
         piece.appendTo(indecesToJQ(move.to));
-        piece.hide();
         animatedPiece.animate({
             'left': piece.offset().left,
             'top': piece.offset().top
@@ -72,8 +71,11 @@ function animatePiece(move, callback, callbackArg){
                 }
             });
         });
+        piece.hide()
     }
     else {
+        let x = piece.offset().left;
+        let y = piece.offset().top;
         piece.hide();
         let defendingPiece = indecesToJQ(move.to).children().first();
         let destinationX = defendingPiece.offset().left;
@@ -92,7 +94,7 @@ function animatePiece(move, callback, callbackArg){
             interumX = destinationX;
             interumY = destinationY - animatedPiece.height();
         }
-        else if (y > distinationY) { //Attacking from below
+        else if (y > destinationY) { //Attacking from below
             interumX = destinationX;
             interumY = destinationY + defendingPiece.height();
         }
@@ -103,18 +105,17 @@ function animatePiece(move, callback, callbackArg){
             piece.text(move.subject);
             animatedPiece.text(move.subject);
             defendingPiece.text(move.target);
-            setTimeout(1000, function() {
+            setTimeout(function() {
                 if (move.result === 'WON'){
+                    x = defendingPiece.offset().left;
+                    y = defendingPiece.offset().top;
                     defendingPiece.animate({
                         'width' : 0, 
                         'height' : 0
                     }, function() {
-                        defendingPiece.remove();
-                        piece.appendTo();
-                        piece.show();
                         animatedPiece.animate({
-                            'left': piece.offset().left,
-                            'top': piece.offset().top
+                            'left': x,
+                            'top': y
                         }, function() {
                             piece.show();
                             animatedPiece.remove();
@@ -124,7 +125,8 @@ function animatePiece(move, callback, callbackArg){
                                 }
                             });
                         });
-                        piece.hide();
+                        defendingPiece.remove();
+                        piece.appendTo(indecesToJQ(move.to));
                     });
                 }
                 if (move.result === 'LOST') {
@@ -144,12 +146,13 @@ function animatePiece(move, callback, callbackArg){
                         });
                     });
                 }
-            });
+            }, 1000);
         });
     }
 }
 
 $(function() {
+    $('.player-piece').clone().appendTo($('#D7'));
     $('.player-piece').on('click', playerPieceClickHandler);
     $('.cell').on('click', cellClickHandler);
 });
