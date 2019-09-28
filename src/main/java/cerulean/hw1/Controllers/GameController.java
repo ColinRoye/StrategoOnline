@@ -3,6 +3,7 @@ package cerulean.hw1.Controllers;
 import cerulean.hw1.Models.Account;
 import cerulean.hw1.Database.GameRepository;
 import cerulean.hw1.Models.Game;
+import cerulean.hw1.Models.GameComponents.Move;
 import cerulean.hw1.Services.GameService;
 import cerulean.hw1.Services.MongoDBUserDetailsManager;
 import com.google.gson.Gson;
@@ -48,9 +49,12 @@ public class GameController {
         return game.getGameId();
     }
     @RequestMapping(value ="/move", method = RequestMethod.POST)
-    public void move(@RequestBody String gameSession) {
-        //TODO: get game by session and deserialize
-        //TODO: return ok or error based on move method on game board
+    public void move(@RequestBody String gameId, int[] to, int[] from) throws Exception {
+        Game game = new Gson().fromJson(gameService.getGame(gameId), Game.class);
+        int[] ai_coords = game.runAI();
+
+        Move playeMove = game.move(to, from);
+        Move aiMove = game.move(new int[]{ai_coords[0], ai_coords[1]}, new int[]{ai_coords[2], ai_coords[3]});
 
     }
 

@@ -2,6 +2,7 @@ package cerulean.hw1.Models;
 import cerulean.hw1.Models.GameComponents.Board;
 
 
+import cerulean.hw1.Models.GameComponents.Move;
 import cerulean.hw1.Models.GameComponents.Piece;
 import com.google.gson.Gson;
 
@@ -23,7 +24,7 @@ public class Game{
     public Board board;
     public Map<Integer, Integer> totalPiece_table = new Hashtable<>();
     public Map<Integer, Integer> foundPiece_table = new Hashtable<>();
-
+    public ArrayList<Move> moves = new ArrayList<Move>();
 
     //Constructor
     public Game(){}
@@ -47,8 +48,6 @@ public class Game{
         this.totalPiece_table.put(9,1);
         this.totalPiece_table.put(10,1);
         this.totalPiece_table.put(11,6);
-
-
         this.foundPiece_table.put(0,0);
         this.foundPiece_table.put(1,0);
         this.foundPiece_table.put(2,0);
@@ -77,23 +76,28 @@ public class Game{
 
     }
 
+    //TODO: Change Throw to return INVALID, MOVE, BATTLE ETC
+    public Move move(int[] moveFrom, int[] moveTo) throws Exception{
 
-    //TODO: Rename returns to INVALID, MOVE, BATTLE ETC
-    public String makeMove(Account account, String gameSession, int[] moveFrom, int[] moveTo,boolean is_player) {
+        Move move = new Move();
 
         int i = moveFrom[0];
         int j = moveFrom[1];
+        move.setFrom(new int[]{i, j});
 
         int x = moveTo[0];
         int y = moveTo[1];
+        move.setTo(new int[]{x, y});
 
         //Check to see if piece if being moved into inaccessible part of board
         if((x > 3 && x < 6 ) && ((y>1 && y < 4) || (y>5 && y<8) ) )
             return("INACCESSIBLE PART OF BOARD");
 
-
         Piece moveFrom_piece = this.board.getBoard_piece(i,j);
+        move.setSubject(moveFrom_piece.getType());
+
         Piece moveTo_piece = this.board.getBoard_piece(x,y);
+        move.setTarget(moveTo_piece.getType());
 
         //Check if moveFrom_piece is not null
         if(moveFrom_piece == null)
@@ -116,10 +120,12 @@ public class Game{
             this.board.setBoard_piece(x,y,moveFrom_piece);
             //set current position to null
             this.board.setBoard_piece(i,j,null);
+            move.setResult("MOVED");
+
         }
         else{
             String battleResult = battle(moveFrom_piece,moveTo_piece);
-
+            move.setResult(battleResult);
             if(battleResult.equals("P1")){  //First Piece won the battle
                 this.board.setBoard_piece(x,y,moveFrom_piece);
                 this.board.setBoard_piece(i,j,null);
@@ -164,7 +170,9 @@ public class Game{
         }
         this.moveCounter++;
 
-        return "SUCCESS";
+        //int[] airesult = runAI();
+        moves.add(move);
+        return move;
     }
 
 
@@ -536,11 +544,9 @@ public class Game{
 
     public String battle(Piece p1, Piece p2){
 
-        String p1_win = "P1";
-        String p2_win = "P2";
-        String p1_game_winner = "P1_Winner";
-        String p2_game_winner = "P2_Winner";
-        String draw = "Draw";
+        String p1_win = "WON";//p1
+        String p2_win = "LOST";//p2
+        String draw = "DRAW";
         //First Let's get attacking piece type
         String p1_type = p1.getType();
         String p2_type = p2.getType();
