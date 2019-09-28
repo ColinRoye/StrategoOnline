@@ -1,21 +1,77 @@
-function playerPieceClickHandler() {
+function playerPieceMove() {
     let isSelected = $(this).hasClass('selected');
-    $('.piece').removeClass('selected');
+    $('.player-piece').removeClass('selected');
     if (!isSelected) {
         $(this).addClass('selected');
     }
+}
+
+function playerPieceSwap() {
+    if ($(this).hasClass('selected')) {
+        $('.player-piece').removeClass('selected');
+        return;
+    }
+    
+    let selectedPiece = $('.selected');
+    $('.piece').removeClass('selected');
+    if (selectedPiece.length === 0){
+        $(this).addClass('selected');
+    }
+    else {
+        let thisPiece = $(this);
+        let thisX = thisPiece.offset().left;
+        let thisY = thisPiece.offset().top;
+        let selectedX = selectedPiece.offset().left;
+        let selectedY = selectedPiece.offset().top;
+        let thisParent = thisPiece.parent();
+        let selectedParent = selectedPiece.parent();
+        let thisAnimated = thisPiece.clone()
+            .appendTo('#gameboard')
+            .css('position', 'fixed')
+            .css('left', thisX)
+            .css('top',  thisY)
+            .animate({
+                'left': selectedX,
+                'top': selectedY
+            }, 
+            {
+                queue: false,
+                complete : function() {
+                    thisPiece.appendTo(selectedParent);
+                    thisPiece.show();
+                    thisAnimated.remove();
+                }
+            });
+        let selectedAnimated = selectedPiece.clone()
+            .appendTo('#gameboard')
+            .css('position', 'fixed')
+            .css('left', selectedX)
+            .css('top',  selectedY)
+            .animate({
+                'left': thisX,
+                'top': thisY
+            }, 
+            {
+                queue: false,
+                complete: function() {
+                    selectedPiece.appendTo(thisParent);
+                    selectedPiece.show();
+                    selectedAnimated.remove();
+                }
+            });
+        thisPiece.hide();
+        selectedPiece.hide();
+    }   
 }
 
 function cellClickHandler() {
     let cell = this;
     let selectedPiece = $('.selected');
     if (selectedPiece.length){
-        //To Do: send post request with the parent of selectedPiece (it's current cell) 
-        //       and cell (the destination cell)
         let fromXIndex = parseInt(selectedPiece.parent().attr('data-col'));
         let fromYIndex = parseInt(selectedPiece.parent().attr('data-row'));
-        let toXIndex   = parseInt(cell.attr('data-col'));
-        let toYIndex   = parseInt(cell.attr('data-row'));
+        let toXIndex   = parseInt(cell.getAttribute('data-col'));
+        let toYIndex   = parseInt(cell.getAttribute('data-row'));
         $.post('/move', {
             from: [fromXIndex, fromYIndex],
             to: [toXIndex, toYIndex]
@@ -27,7 +83,7 @@ function cellClickHandler() {
     }
 }
 
-const indexToLetter = ['A','B','C','D','E','F','G','H','I','J']
+const indexToLetter = ['A','B','C','D','E','F','G','H','I','J'];
 
 function indecesToJQ(indeces) {
     return $('#' + indexToLetter[indeces[1]] + indeces[0]);
@@ -58,7 +114,6 @@ function animatePiece(move, callback, callbackArg){
         .css('top', piece.offset().top);
     if (move.result === "MOVED"){
         piece.appendTo(indecesToJQ(move.to));
-        piece.hide();
         animatedPiece.animate({
             'left': piece.offset().left,
             'top': piece.offset().top
@@ -72,8 +127,11 @@ function animatePiece(move, callback, callbackArg){
                 }
             });
         });
+        piece.hide()
     }
     else {
+        let x = piece.offset().left;
+        let y = piece.offset().top;
         piece.hide();
         let defendingPiece = indecesToJQ(move.to).children().first();
         let destinationX = defendingPiece.offset().left;
@@ -92,7 +150,7 @@ function animatePiece(move, callback, callbackArg){
             interumX = destinationX;
             interumY = destinationY - animatedPiece.height();
         }
-        else if (y > distinationY) { //Attacking from below
+        else if (y > destinationY) { //Attacking from below
             interumX = destinationX;
             interumY = destinationY + defendingPiece.height();
         }
@@ -103,18 +161,19 @@ function animatePiece(move, callback, callbackArg){
             piece.text(move.subject);
             animatedPiece.text(move.subject);
             defendingPiece.text(move.target);
-            setTimeout(1000, function() {
+            setTimeout(function() {
                 if (move.result === 'WON'){
+                    x = defendingPiece.offset().left;
+                    y = defendingPiece.offset().top;
                     defendingPiece.animate({
+                        'left': defendingPiece.offset().left + defendingPiece.width() / 2,
+                        'top': defendingPiece.offset().top + defendingPiece.height() / 2,
                         'width' : 0, 
                         'height' : 0
                     }, function() {
-                        defendingPiece.remove();
-                        piece.appendTo();
-                        piece.show();
                         animatedPiece.animate({
-                            'left': piece.offset().left,
-                            'top': piece.offset().top
+                            'left': x,
+                            'top': y
                         }, function() {
                             piece.show();
                             animatedPiece.remove();
@@ -124,11 +183,14 @@ function animatePiece(move, callback, callbackArg){
                                 }
                             });
                         });
-                        piece.hide();
+                        defendingPiece.remove();
+                        piece.appendTo(indecesToJQ(move.to));
                     });
                 }
                 if (move.result === 'LOST') {
                     animatedPiece.animate({
+                        'left' : animatedPiece.offset().left + animatedPiece.width() / 2,
+                        'top' : animatedPiece.offset().top + animatedPiece.height() / 2,
                         'width' : 0, 
                         'height' : 0
                     }, function() {
@@ -144,12 +206,34 @@ function animatePiece(move, callback, callbackArg){
                         });
                     });
                 }
-            });
+            }, 1000);
         });
     }
 }
 
+function startButtonHandler() {
+    $('.player-piece').off('click');
+    let JQrows = [ $('.G'), $('.H'), $('.I'), $('.J') ];
+    let postObject = {
+        0: new Array(10),
+        1: new Array(10),
+        2: new Array(10),
+        3: new Array(10)
+    }
+    for (let i=0; i<4; i++){
+        for (let j=0; j<10; j++){
+            postObject[i][j] = $(JQrows[i][j]).children().first().text();
+        }
+    }
+    $.post('/startgame', postObject, function() {
+        $('.player-piece').on('click', playerPieceMove);
+        $('.cell').on('click', cellClickHandler);
+        $('#start-btn').remove();
+    });
+    console.log(postObject);
+}
+
 $(function() {
-    $('.player-piece').on('click', playerPieceClickHandler);
-    $('.cell').on('click', cellClickHandler);
+    $('#start-btn').on('click', startButtonHandler);
+    $('.player-piece').on('click', playerPieceSwap);
 });
