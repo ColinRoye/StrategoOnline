@@ -76,11 +76,14 @@ function cellClickHandler() {
             url: '/api/games/move',
             type: 'POST',
             contentType: 'application/json',
-            complete: receiveMove,
+            success: receiveMove,
             data: JSON.stringify({
                 'from' : [fromXIndex, fromYIndex],
                 'to' : [toXIndex, toYIndex]
-            })
+            }),
+            error: function() {
+                // TODO: toast player with error message
+            }
         });
     }
     else {
@@ -95,13 +98,8 @@ function indecesToJQ(indeces) {
 }
 
 function receiveMove(data, textStatus, xhr) {
-    if (true){ // TODO Change to verify if we moved
-        $('.selected').removeClass('selected');
-        animateMove(data.player_move, animateMove, data.ai_move);
-    }
-    else {
-        //ToDo Toast user with message "Invalid Move"
-    }
+    $('.selected').removeClass('selected');
+    animateMove(data.player_move, animateMove, data.ai_move);
 }
 
 function test(optionA, optionB){
@@ -221,7 +219,7 @@ function pieceValueToInt(value){
         case 'F':
             return 0;
         case 'S':
-            return 1;
+            return 2;
         case 'B':
             return 11;
         default:
@@ -243,10 +241,13 @@ function startButtonHandler() {
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(postObject),
-        complete: function() {
+        success: function() {
             $('.player-piece').on('click', playerPieceMove);
             $('.cell').on('click', cellClickHandler);
             $('#start-btn').remove();
+        },
+        error: function() {
+            // TODO: toast player with error message
         }
     });
     console.log(postObject);

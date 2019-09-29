@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @RestController
@@ -41,26 +42,26 @@ public class GameController {
         String username = principalUser.getUsername();
         Account account = mongoDBUserDetailsManager.loadAccountByUsername(username);
         Game game = new Game(username);
-        ArrayList<Integer> b = new Gson().fromJson(board, ArrayList.class);
-        System.out.print(board);
-
-//        game.getBoard().postBoard(b);
-//        gameService.save(new Game(username));
-//        account.getGames().add(game.getGameId());
-//        mongoDBUserDetailsManager.persistAccount(account);
+        ArrayList<ArrayList<Double>> b = new Gson().fromJson(board, ArrayList.class);
+        game.getBoard().postBoard(b);
+        gameService.save(new Game(username));
+        account.getGames().add(game.getGameId());
+        mongoDBUserDetailsManager.persistAccount(account);
 
         return game.getGameId();
     }
     @RequestMapping(value ="/move", method = RequestMethod.POST)
     public void move(@RequestBody String gameId, int[] to, int[] from) throws Exception {
-        Game game = new Gson().fromJson(gameService.getGame(gameId), Game.class);
+          System.out.print(gameId);
+            Game game = new Gson().fromJson(gameService.getGame(gameId), Game.class);
 
 
-        int[] ai_coords = game.runAI();
 
-        Move playeMove = game.move(to, from, true);
-        Move aiMove = game.move(new int[]{ai_coords[0], ai_coords[1]}, new int[]{ai_coords[2], ai_coords[3]},false);
-        gameService.save(game);
+            Move playeMove = game.move(to, from, true);
+
+            int[] ai_coords = game.runAI();
+            Move aiMove = game.move(new int[]{ai_coords[0], ai_coords[1]}, new int[]{ai_coords[2], ai_coords[3]},false);
+            gameService.save(game);
 
     }
 
