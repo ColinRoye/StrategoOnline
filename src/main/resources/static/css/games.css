@@ -1,0 +1,31 @@
+body #main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: white;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 1vh;
+}
+
+body #main #games-table {
+  padding: 1vh 1vw;
+  background-image: -webkit-gradient(linear, left top, right bottom, from(#ae95bb), to(#7d5b8f));
+  background-image: linear-gradient(to bottom right, #ae95bb, #7d5b8f);
+  width: 90vw;
+  border-radius: 25px;
+  -webkit-box-shadow: 10px 10px 8px #ae95bb9d;
+          box-shadow: 10px 10px 8px #ae95bb9d;
+}
+
+body #main #games-table thead th {
+  padding: 3px;
+  background-color: white;
+  border-radius: 20px;
+}
+
+body #main #games-table tbody {
+  color: white;
+}
+/*# sourceMappingURL=games.css.map */

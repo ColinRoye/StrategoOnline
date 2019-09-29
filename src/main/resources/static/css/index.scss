@@ -5,11 +5,7 @@ $base: #ae95bb;
 $base-transparent: #ae95bb9d;
 $cell-color: #858585;
 
-$font: "Roboto", sans-serif;
-
 body {
-    padding: 0;
-    margin: 0;
     background-color: $bg;
     
     #main{
@@ -26,6 +22,7 @@ body {
             padding: 5vmin;
             border-radius: 50px;
             background-image: linear-gradient(to bottom right, $base, darken($base, 20%));
+            box-shadow: 10px 10px 8px $base-transparent;
             margin-top: 5vh;
             @media (min-height: 425px){
                 margin-top: 10vh;

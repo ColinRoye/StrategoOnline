@@ -3,12 +3,7 @@ $text-color: white;
 $base: #ae95bb;
 $base-transparent: #ae95bb9d;
 
-$font: "Roboto", sans-serif;
-
 body {
-    font-family: $font;
-    padding: 0;
-    margin: 0;
 
     #main {
         display: flex;

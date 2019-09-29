@@ -1,7 +1,13 @@
 $base: #ae95bb;
 $base-transparent: #ae95bb6c;
 
+$font: "Roboto", sans-serif;
+
 body {
+    font-family: $font;
+    padding: 0;
+    margin: 0;
+    
     #header {
         margin: 0;
         display: flex;

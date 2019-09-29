@@ -5,13 +5,7 @@ $base: #ae95bb;
 $base-transparent: #ae95bb9d;
 $cell-color: #858585;
 
-$font: "Roboto", sans-serif;
-
 body {
-	padding: 0;
-    margin: 0;
-    
-    font-family: $font;
 
     #main {
         display: flex;
