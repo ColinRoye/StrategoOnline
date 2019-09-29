@@ -56,9 +56,10 @@ public class GameController {
         Game game = new Gson().fromJson(gameService.getGame(gameId), Game.class);
 
 
-        int[] ai_coords = game.runAI();
 
         Move playeMove = game.move(to, from, true);
+
+        int[] ai_coords = game.runAI();
         Move aiMove = game.move(new int[]{ai_coords[0], ai_coords[1]}, new int[]{ai_coords[2], ai_coords[3]},false);
         gameService.save(game);
 
