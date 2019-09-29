@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+<body>
+    <div id="header" th:replace="fragments :: header"></div>
+    <div id="main">
+        <div id="container">
+            <img id="cover-photo" th:src="@{img/cover.png}">
+            <a id="new-game-btn" th:href="@{/play}">NEW GAME</a>
+            <a id="prev-games-btn" th:href="@{/games}">PREVIOUS GAMES</a>
+        </div>      
+    </div>
+</body>

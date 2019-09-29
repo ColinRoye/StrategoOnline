@@ -49,6 +49,7 @@ body #main #gameboard .cell {
   width: 7vmin;
   height: 7vmin;
   background-color: #858585;
+  cursor: pointer;
 }
 
 body #main #gameboard .piece {
@@ -96,12 +97,55 @@ body #main #start-btn {
   font-weight: bold;
   border-radius: 25px;
   white-space: nowrap;
-  font-size: 3rem;
+  cursor: pointer;
+  font-size: 5rem;
 }
 
-@media screen and (max-width: 400) {
+@media screen and (max-height: 660px) {
   body #main #start-btn {
-    font-size: 1rem;
+    font-size: 4em;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  body #main #start-btn {
+    font-size: 4em;
+  }
+}
+
+@media screen and (max-height: 550px) {
+  body #main #start-btn {
+    font-size: 3em;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  body #main #start-btn {
+    font-size: 3em;
+  }
+}
+
+@media screen and (max-height: 430px) {
+  body #main #start-btn {
+    font-size: 2em;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  body #main #start-btn {
+    font-size: 2em;
+  }
+}
+
+@media screen and (max-height: 270px) {
+  body #main #start-btn {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  body #main #start-btn {
+    font-size: 1em;
   }
 }
 /*# sourceMappingURL=play.css.map */

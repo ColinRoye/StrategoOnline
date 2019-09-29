@@ -1,0 +1,70 @@
+$blue: #1DACD6;
+$red: #990000;
+$bg: white;
+$base: #ae95bb;
+$base-transparent: #ae95bb9d;
+$cell-color: #858585;
+
+$font: "Roboto", sans-serif;
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: $bg;
+    
+    #main{
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+
+        #container{
+            display: grid;
+            grid-template-areas: 
+                'cover-photo cover-photo'
+                'play-btn    prev-games-btn';
+            align-items: center;
+            padding: 5vmin;
+            border-radius: 50px;
+            background-image: linear-gradient(to bottom right, $base, darken($base, 20%));
+            @media (min-height: 425px){
+                margin-top: 10vh;
+            }
+            
+            #cover-photo{
+                grid-area: cover-photo;
+                width: 100%;
+                height: 100%;
+                max-width: 84vw;
+            }
+
+            a {
+                background-color: white;
+                padding: 1vh 0 1vh;
+                margin: 4vh 1vw 0 1vw;
+                width: 40vw;
+                max-width: 50vh;
+                text-align: center;
+                text-decoration: none;
+                border-radius: 25px;
+
+                font-family: $font;
+                font-weight: bold;
+                font-size: 2rem;
+                @media screen and (max-width: 909px){
+                    font-size: 1em;
+                }
+                @media screen and (max-height: 727px){
+                    font-size: 1em;
+                }
+            }
+            
+            #new-game-btn {
+                color: $red;
+            }
+
+            #prev-games-btn {
+                color: $blue;
+            }
+        }
+    }
+}

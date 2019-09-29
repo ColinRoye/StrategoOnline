@@ -1,0 +1,81 @@
+body {
+  padding: 0;
+  margin: 0;
+  background-color: white;
+}
+
+body #main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+body #main #container {
+  display: -ms-grid;
+  display: grid;
+      grid-template-areas: 'cover-photo cover-photo' 'play-btn    prev-games-btn';
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 5vmin;
+  border-radius: 50px;
+  background-image: -webkit-gradient(linear, left top, right bottom, from(#ae95bb), to(#7d5b8f));
+  background-image: linear-gradient(to bottom right, #ae95bb, #7d5b8f);
+}
+
+@media (min-height: 425px) {
+  body #main #container {
+    margin-top: 10vh;
+  }
+}
+
+body #main #container #cover-photo {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-area: cover-photo;
+  width: 100%;
+  height: 100%;
+  max-width: 84vw;
+}
+
+body #main #container a {
+  background-color: white;
+  padding: 1vh 0 1vh;
+  margin: 4vh 1vw 0 1vw;
+  width: 40vw;
+  max-width: 50vh;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 25px;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+@media screen and (max-width: 909px) {
+  body #main #container a {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-height: 727px) {
+  body #main #container a {
+    font-size: 1em;
+  }
+}
+
+body #main #container #new-game-btn {
+  color: #990000;
+}
+
+body #main #container #prev-games-btn {
+  color: #1DACD6;
+}
+/*# sourceMappingURL=index.css.map */

@@ -40,6 +40,7 @@ body {
                 width: 7vmin;
                 height: 7vmin;
                 background-color: $cell-color;
+                cursor: pointer;
             }
 
             .piece {
@@ -81,9 +82,31 @@ body {
             font-weight: bold;
             border-radius: 25px;
             white-space: nowrap;
-            font-size: 3rem;
-            @media screen and (max-width: 400){
-                font-size: 1rem;
+            cursor: pointer;
+            font-size: 5rem;
+            @media screen and (max-height: 660px){
+                font-size: 4em;
+            }
+            @media screen and (max-width: 680px){
+                font-size: 4em;
+            }
+            @media screen and (max-height: 550px){
+                font-size: 3em;
+            }
+            @media screen and (max-width: 540px){
+                font-size: 3em;
+            }
+            @media screen and (max-height: 430px){
+                font-size: 2em;
+            }
+            @media screen and (max-width: 400px){
+                font-size: 2em;
+            }
+            @media screen and (max-height: 270px){
+                font-size: 1em;
+            }
+            @media screen and (max-width: 300px){
+                font-size: 1em;
             }
         }
     }
