@@ -1,6 +1,6 @@
 
-package cerulean.hw1.Database;
-import cerulean.hw1.Models.Account;
+package cerulean.hw1.database;
+import cerulean.hw1.models.Account;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

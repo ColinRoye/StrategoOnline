@@ -1,9 +1,9 @@
-package cerulean.hw1.Models;
-import cerulean.hw1.Models.GameComponents.Board;
+package cerulean.hw1.models;
+import cerulean.hw1.models.gameComponents.Board;
 
 
-import cerulean.hw1.Models.GameComponents.Move;
-import cerulean.hw1.Models.GameComponents.Piece;
+import cerulean.hw1.models.gameComponents.Move;
+import cerulean.hw1.models.gameComponents.Piece;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;

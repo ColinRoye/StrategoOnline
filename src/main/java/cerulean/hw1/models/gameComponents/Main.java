@@ -1,6 +1,6 @@
-package cerulean.hw1.Models.GameComponents;
+package cerulean.hw1.models.gameComponents;
 
-import cerulean.hw1.Models.Game;
+import cerulean.hw1.models.Game;
 
 import java.util.Arrays;
 import java.util.Scanner;

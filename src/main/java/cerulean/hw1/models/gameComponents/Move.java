@@ -1,4 +1,4 @@
-package cerulean.hw1.Models.GameComponents;
+package cerulean.hw1.models.gameComponents;
 
 public class Move {
     String actor;
