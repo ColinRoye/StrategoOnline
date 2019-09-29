@@ -1,7 +1,6 @@
 package cerulean.hw1.Controllers;
 
 import cerulean.hw1.Models.Account;
-import cerulean.hw1.Database.GameRepository;
 import cerulean.hw1.Models.Game;
 import cerulean.hw1.Models.GameComponents.Move;
 import cerulean.hw1.Services.GameService;
@@ -10,11 +9,10 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/games")
 public class GameController {
