@@ -57,11 +57,12 @@ public class Board{
         //new Piece("Marshal",10,1,true)
         //new Piece("Bomb",11,0,true)
 
-        int counter = 0;
-        for (int i = 6; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
+
+        for (int i = 0;i < result.size();i++) {
+            for (int j = 0 ;j < result.get(i).size() ; j++) {
                 Piece newPiece = null;
-                switch(result.get(i)){
+
+                switch(result.get(i).get(j)){
 
                     case 0:
                         newPiece = new Piece("Flag",0,0,true);
@@ -100,12 +101,10 @@ public class Board{
                         newPiece = new Piece("Bomb",11,0,true);
                         break;
                 }
-                this.setBoard_piece(i,j,newPiece);
+                this.setBoard_piece(i+6,j,newPiece);
             }
         }
     }
-
-
 
     public void printToConsole(){
         Piece p;

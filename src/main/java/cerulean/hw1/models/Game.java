@@ -233,9 +233,6 @@ public class Game{
 
                     int temp[] = new int[2];
 
-                    if((i == 4 && j ==4 )|| (i == 3 && j == 5)){
-                        System.out.println("Sigh...");
-                    }
 
                     if(p_above != null && !p_above.is_user) {
                         temp[0] = i-1;
@@ -247,20 +244,20 @@ public class Game{
                         temp[0] = i+1;
                         temp[1] = j;
                         if(!p_below.getType().equals("Bomb"));
-                        potential.add(temp.clone());
+                            potential.add(temp.clone());
                     }
                     if(p_left != null && !p_left.is_user) {
                         temp[0] = i;
                         temp[1] = j-1;
 
                         if(!p_left.getType().equals("Bomb"));
-                        potential.add(temp.clone());
+                            potential.add(temp.clone());
                     }
                     if(p_right != null && !p_right.is_user) {
                         temp[0] = i;
                         temp[1] = j+1;
                         if(!p_right.getType().equals("Bomb"));
-                        potential.add(temp.clone());
+                            potential.add(temp.clone());
                     }
 
                     p_above = null;
@@ -282,6 +279,9 @@ public class Game{
             int x = opt[0];
             int y = opt[1];
             Piece attack_piece = this.board.getBoard_piece(x,y);
+
+            if(attack_piece.getType().equals("Bomb"))
+                continue;
 
             //Check to see if there are opponent pieces around
             Piece test_piece;
@@ -321,7 +321,7 @@ public class Game{
                             System.out.printf("ENEMY FOUND AT %d,%d \n",i,j);
                             int[] moveTo = null;
 
-                            if (!test_piece.isHidden()) {
+                            if (!test_piece.isHidden() && !attack_piece.getType().equals("Bomb")) {
 
                                 if (battle(attack_piece, test_piece) == WON) {
                                     moveTo = moveToward(attack_piece, x, y, i, j);
@@ -531,6 +531,7 @@ public class Game{
         double cb = Math.abs(x2 - x1);
 
         return Math.hypot(ac, cb);
+
     }
 
 
