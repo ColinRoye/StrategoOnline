@@ -1,12 +1,14 @@
-package cerulean.hw1.Models.GameComponents;
+package cerulean.hw1.models.gameComponents;
 
+
+import java.util.ArrayList;
 
 public class Board{
 
     public Piece[][] board_pieces;
     public int num_row;
     public int num_col;
-    public int totalPieces = 40;
+    public int totalPieces = 40; //player pieces
 
     public Board(){}
 
@@ -26,19 +28,90 @@ public class Board{
     }
     public void setBoard_piece(int i, int j, Piece p){
         this.board_pieces[i][j] = p;
-
     }
     public Piece getBoard_piece(int i, int j){
         return this.board_pieces[i][j];
 
     }
+    public void swap(int[] p1_coord,int[] p2_coord){
+        Piece p1 = this.getBoard_piece(p1_coord[0],p1_coord[1]);
+        Piece p2 = this.getBoard_piece(p2_coord[0],p2_coord[1]);
+        this.setBoard_piece(p1_coord[0],p1_coord[1],p2);
+        this.setBoard_piece(p2_coord[0],p2_coord[1],p1);
+    }
+    public void postBoard(ArrayList<ArrayList<Double>> result) {
+
+        //Player Pieces are rows 6 -> 9
+
+
+        //new Piece("Flag",0,0,true)
+        //new Piece("Spy",1,1,true)
+        //new Piece("Scout",2,10,true)
+        //new Piece("Miner",3,1,true)
+        //new Piece("Sergeant",4,1,true)
+        //new Piece("Lieutenant",5,1,true)
+        //new Piece("Captain",6,1,true)
+        //new Piece("Major",7,1,true)
+        //new Piece("Colonel",8,1,true)
+        //new Piece("General",9,1,true)
+        //new Piece("Marshal",10,1,true)
+        //new Piece("Bomb",11,0,true)
+
+
+        for (int i = 0;i < result.size();i++) {
+            for (int j = 0 ;j < result.get(i).size() ; j++) {
+                Piece newPiece = null;
+
+                switch(result.get(i).get(j).intValue()){
+
+                    case 0:
+                        newPiece = new Piece("Flag",0,0,true);
+                        break;
+                    case 1:
+                        newPiece = new Piece("Spy",1,1,true);
+                        break;
+                    case 2:
+                        newPiece = new Piece("Scout",2,10,true);
+                        break;
+                    case 3:
+                        newPiece = new Piece("Miner",3,1,true);
+                        break;
+                    case 4:
+                        newPiece = new Piece("Sergeant",4,1,true);
+                        break;
+                    case 5:
+                        newPiece = new Piece("Lieutenant",5,1,true);
+                        break;
+                    case 6:
+                        newPiece = new Piece("Captain",6,1,true);
+                        break;
+                    case 7:
+                        newPiece = new Piece("Major",7,1,true);
+                        break;
+                    case 8:
+                        newPiece = new Piece("Colonel",8,1,true);
+                        break;
+                    case 9:
+                        newPiece = new Piece("General",9,1,true);
+                        break;
+                    case 10:
+                        newPiece = new Piece("Marshal",10,1,true);
+                        break;
+                    case 11:
+                        newPiece = new Piece("Bomb",11,0,true);
+                        break;
+                }
+                this.setBoard_piece(i+6,j,newPiece);
+            }
+        }
+    }
+
     public void printToConsole(){
         Piece p;
         System.out.printf("    ");
         for(int j = 0;j<this.num_col;j++){
             System.out.printf(" %c%-3d ",'A'+j,j);
         }
-
         System.out.print("\n");
 
         for(int i = 0 ; i<this.num_row;i++){
@@ -59,11 +132,13 @@ public class Board{
         }
     }
 
-    // (0,0) -> (3,9) AI
-    //(0,6) -> (9,9) Player
+    /*
+    (0,0) -> (3,9) AI
+    (0,6) -> (9,9) Player
 
-    //i = 9 for PLAYER
-    //i = 3 for AI
+    i = 9 for PLAYER
+    i = 3 for AI
+    */
     public void setDefaultBoard(boolean is_user,int i){
         //new Piece("Flag",0,0,true)
         //new Piece("Spy",1,1,true)
@@ -186,6 +261,32 @@ public class Board{
         board_pieces[i][7] = SCOUT_6;
         board_pieces[i][8] = SCOUT_7;
         board_pieces[i][9] = SCOUT_8;
+
+    }
+
+    public void testBoard(){
+
+        Piece[][] board_pieces = this.board_pieces;
+        Piece TEST_1 = new Piece("TEST",6,1,false);
+        Piece TEST_2 = new Piece("TEST",6,1,false);
+        Piece TEST_3 = new Piece("TEST",6,1,false);
+        Piece TEST_4 = new Piece("TEST",6,1,false);
+        Piece TEST_5 = new Piece("TEST",6,1,false);
+        Piece TEST_6 = new Piece("TEST",6,1,false);
+        Piece TEST_7 = new Piece("TEST",6,1,false);
+        Piece TEST_8 = new Piece("TEST",6,1,false);
+
+
+        board_pieces[4][4] = TEST_1;
+        board_pieces[4][5] = TEST_2;
+        board_pieces[4][8] = TEST_3;
+        board_pieces[4][9] = TEST_4;
+
+        board_pieces[5][4] = TEST_5;
+        board_pieces[5][5] = TEST_6;
+        board_pieces[5][8] = TEST_7;
+        board_pieces[5][9] = TEST_8;
+
 
     }
 }

@@ -1,5 +1,5 @@
 
-package cerulean.hw1.Pages;
+package cerulean.hw1.pages;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ViewController {
     @RequestMapping("/login")
     public String login() {
-        return "login";
-    }
+        return "login"; }
     @RequestMapping("/register")
     public String register() {
         return "register";

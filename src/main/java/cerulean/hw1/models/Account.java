@@ -1,4 +1,4 @@
-package cerulean.hw1.Models;
+package cerulean.hw1.models;
 
 import java.util.*;
 public class Account {

@@ -1,8 +1,7 @@
-package cerulean.hw1.Services;
+package cerulean.hw1.services;
 
-import cerulean.hw1.Database.GameRepository;
-import cerulean.hw1.Models.Account;
-import cerulean.hw1.Models.Game;
+import cerulean.hw1.database.GameRepository;
+import cerulean.hw1.models.Game;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,9 +19,10 @@ public class GameService {
         Gson gson = new Gson();
         return gson.toJson(gameRepository.findByGameId(gameId));
     }
-    public void setGame(Game game){
+    public void save(Game game){
         gameRepository.save(game);
     }
+
     public void move(String gameId, String to, String from){
     }
 

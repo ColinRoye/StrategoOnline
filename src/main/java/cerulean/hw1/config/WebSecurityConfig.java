@@ -1,7 +1,7 @@
-package cerulean.hw1.Config;
+package cerulean.hw1.config;
 
 
-import cerulean.hw1.Services.MongoDBUserDetailsManager;
+import cerulean.hw1.services.MongoDBUserDetailsManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -61,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 // TODO: Replace this with REST login if you wanna be fancy
                 .formLogin()
-                .loginPage("/login.html")
+                .loginPage("/login")
                 .permitAll()
                 .and()
                 .logout()
