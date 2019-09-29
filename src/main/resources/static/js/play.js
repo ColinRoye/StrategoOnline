@@ -66,10 +66,10 @@ function playerPieceSwap() {
 
 function cellClickHandler() {
     let cell = this;
-    let selectedPiece = $('.selected');
-    if ($(cell).attr('id') === selectedPiece.parent().attr('id')){
+    if ($(cell).children().length > 0 && $(cell).children().first().hasClass('player-piece')){
         return;
     }
+    let selectedPiece = $('.selected');
     if (selectedPiece.length){
         let fromXIndex = parseInt(selectedPiece.parent().attr('data-col'));
         let fromYIndex = parseInt(selectedPiece.parent().attr('data-row'));
