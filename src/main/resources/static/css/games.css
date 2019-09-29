@@ -13,7 +13,7 @@ body #main #games-table {
   padding: 1vh 1vw;
   background-image: -webkit-gradient(linear, left top, right bottom, from(#ae95bb), to(#7d5b8f));
   background-image: linear-gradient(to bottom right, #ae95bb, #7d5b8f);
-  width: 90vw;
+  min-width: 50%;
   border-radius: 25px;
   -webkit-box-shadow: 10px 10px 8px #ae95bb9d;
           box-shadow: 10px 10px 8px #ae95bb9d;

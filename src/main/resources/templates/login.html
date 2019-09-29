@@ -13,26 +13,30 @@
 <body>
     <div id="header" th:replace="fragments :: header"></div>
     <div id="main">
-        <form action="/login" method="POST" name="loginForm">
-            <h1>Login</h1>
-            <label id="username-label" for="username"><b>Username</b></label>
-            <input id="username-input" 
-                   class="text-field"
-                   type="text" 
-                   name="username" 
-                   placeholder="Enter Username" 
-                   required>
+        <div id="container">
+            <form action="/login" method="POST" name="loginForm">
+                <h1>Login</h1>
+                <label id="username-label" for="username"><b>Username</b></label>
+                <input id="username-input" 
+                    class="text-field"
+                    type="text" 
+                    name="username" 
+                    placeholder="Enter Username" 
+                    required>
 
-            <label id="password-label" for="password"><b>Password</b></label>
-            <input id="password-input" 
-                   class="text-field" 
-                   type="password" 
-                   name="password" 
-                   placeholder="Enter Password" 
-                   required>
+                <label id="password-label" for="password"><b>Password</b></label>
+                <input id="password-input" 
+                    class="text-field" 
+                    type="password" 
+                    name="password" 
+                    placeholder="Enter Password" 
+                    required>
 
-            <input id="submit" value="Submit" type="submit">
-        </form>
+                <input id="submit" value="Submit" type="submit">
+                <span>or</span>
+                <a id="register" th:href="@{/register}">Register New Account</a>
+            </form>
+        </div>
     </div>
 </body>
 </html>

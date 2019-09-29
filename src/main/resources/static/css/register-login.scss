@@ -3,6 +3,8 @@ $text-color: white;
 $base: #ae95bb;
 $base-transparent: #ae95bb9d;
 
+$font: "Roboto", sans-serif;
+
 body {
 
     #main {
@@ -32,7 +34,9 @@ body {
                 'username-label username-input'
                 'password-label password-input'
                 '.              password-confirm'
-                'submit         submit';
+                'submit         submit'
+                'or             or'
+                'register       register';
             align-items: center;
                 
             h1 {
@@ -51,12 +55,31 @@ body {
                 font-weight: bold;
                 background-color: $bg;
                 width: 100%;
+                font: $font;
+                cursor: pointer;
+            }
+            span {
+                grid-area: or;
+                text-align: center;
+                color: white;
+            }
+            #register {
+                grid-area: register;
+                background-color: $bg;
+                border-radius: 25px;
+                text-align: center;
+                padding: 10px;
+                text-decoration: none;
+                color: #4c4c4c;
+                font-weight: bold;
+                font: $font;
             }
 
             label {
                 color: $text-color;
             }
             input {
+                font: $font;
                 font-size: 2rem;
                 border-radius: 25px;
                 border: none;

@@ -26,7 +26,7 @@ body #main form {
   display: -ms-grid;
   display: grid;
   gap: 10px;
-      grid-template-areas: 'h1             h1' 'username-label username-input' 'password-label password-input' '.              password-confirm' 'submit         submit';
+      grid-template-areas: 'h1             h1' 'username-label username-input' 'password-label password-input' '.              password-confirm' 'submit         submit' 'or             or' 'register       register';
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -87,6 +87,32 @@ body #main form #submit {
   font-weight: bold;
   background-color: white;
   width: 100%;
+  font: "Roboto", sans-serif;
+  cursor: pointer;
+}
+
+body #main form span {
+  -ms-grid-row: 6;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-area: or;
+  text-align: center;
+  color: white;
+}
+
+body #main form #register {
+  -ms-grid-row: 7;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-area: register;
+  background-color: white;
+  border-radius: 25px;
+  text-align: center;
+  padding: 10px;
+  text-decoration: none;
+  color: #4c4c4c;
+  font-weight: bold;
+  font: "Roboto", sans-serif;
 }
 
 body #main form label {
@@ -94,6 +120,7 @@ body #main form label {
 }
 
 body #main form input {
+  font: "Roboto", sans-serif;
   font-size: 2rem;
   border-radius: 25px;
   border: none;
