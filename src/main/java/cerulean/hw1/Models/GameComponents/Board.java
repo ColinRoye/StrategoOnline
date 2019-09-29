@@ -92,6 +92,7 @@ public class Board{
                         break;
                     case 9:
                         newPiece = new Piece("General",9,1,true);
+                        break;
                     case 10:
                         newPiece = new Piece("Marshal",10,1,true);
                         break;
