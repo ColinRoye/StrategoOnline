@@ -219,7 +219,7 @@ function pieceValueToInt(value){
         case 'F':
             return 0;
         case 'S':
-            return 1;
+            return 2;
         case 'B':
             return 11;
         default:
