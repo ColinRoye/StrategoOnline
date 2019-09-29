@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @RestController
@@ -41,14 +42,11 @@ public class GameController {
         String username = principalUser.getUsername();
         Account account = mongoDBUserDetailsManager.loadAccountByUsername(username);
         Game game = new Game(username);
-        System.out.println(board + "TEST");
-//        ArrayList<Integer> b = new Gson().fromJson(board, ArrayList.class);
-//        System.out.print(board);
-//
-//        game.getBoard().postBoard(b);
-//        gameService.save(new Game(username));
-//        account.getGames().add(game.getGameId());
-//        mongoDBUserDetailsManager.persistAccount(account);
+        ArrayList<ArrayList<Integer>> b = new Gson().fromJson(board, ArrayList.class);
+        game.getBoard().postBoard(b);
+        gameService.save(new Game(username));
+        account.getGames().add(game.getGameId());
+        mongoDBUserDetailsManager.persistAccount(account);
 
         return game.getGameId();
     }
