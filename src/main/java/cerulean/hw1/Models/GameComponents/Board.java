@@ -28,7 +28,6 @@ public class Board{
     }
     public void setBoard_piece(int i, int j, Piece p){
         this.board_pieces[i][j] = p;
-
     }
     public Piece getBoard_piece(int i, int j){
         return this.board_pieces[i][j];
@@ -40,15 +39,67 @@ public class Board{
         this.setBoard_piece(p1_coord[0],p1_coord[1],p2);
         this.setBoard_piece(p2_coord[0],p2_coord[1],p1);
     }
-    public void postBoard(ArrayList<Piece> result) {
+    public void postBoard(ArrayList<Integer> result) {
 
         //Player Pieces are rows 6 -> 9
 
+
+        //new Piece("Flag",0,0,true)
+        //new Piece("Spy",1,1,true)
+        //new Piece("Scout",2,10,true)
+        //new Piece("Miner",3,1,true)
+        //new Piece("Sergeant",4,1,true)
+        //new Piece("Lieutenant",5,1,true)
+        //new Piece("Captain",6,1,true)
+        //new Piece("Major",7,1,true)
+        //new Piece("Colonel",8,1,true)
+        //new Piece("General",9,1,true)
+        //new Piece("Marshal",10,1,true)
+        //new Piece("Bomb",11,0,true)
+
         int counter = 0;
         for (int i = 6; i < 10; i++) {
-            for (int j = 0; j < 9; j++) {
-                this.setBoard_piece(i, j, result.get(counter));
-                counter++;
+            for (int j = 0; j < 10; j++) {
+                Piece newPiece = null;
+                switch(result.get(i)){
+
+                    case 0:
+                        newPiece = new Piece("Flag",0,0,true);
+                        break;
+                    case 1:
+                        newPiece = new Piece("Spy",1,1,true);
+                        break;
+                    case 2:
+                        newPiece = new Piece("Scout",2,10,true);
+                        break;
+                    case 3:
+                        newPiece = new Piece("Miner",3,1,true);
+                        break;
+                    case 4:
+                        newPiece = new Piece("Sergeant",4,1,true);
+                        break;
+                    case 5:
+                        newPiece = new Piece("Lieutenant",5,1,true);
+                        break;
+                    case 6:
+                        newPiece = new Piece("Captain",6,1,true);
+                        break;
+                    case 7:
+                        newPiece = new Piece("Major",7,1,true);
+                        break;
+                    case 8:
+                        newPiece = new Piece("Colonel",8,1,true);
+                        break;
+                    case 9:
+                        newPiece = new Piece("General",9,1,true);
+                    case 10:
+                        newPiece = new Piece("Marshal",10,1,true);
+                        break;
+                    case 11:
+                        newPiece = new Piece("Bomb",11,0,true);
+                        break;
+                }
+                this.setBoard_piece(i,j,newPiece);
             }
         }
     }
