@@ -71,8 +71,6 @@ public class Main {
                     System.out.println("Unknown input");
             }
 
-
-
             System.out.println("--------------------------------------\n");
             System.out.print(menuOption);
             input = scanner.nextLine();
