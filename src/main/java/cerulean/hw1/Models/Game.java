@@ -568,8 +568,17 @@ public class Game{
         for(int i = k; k > -1 ; k--){
             counter += (totalPiece_table.get(i)-foundPiece_table.get(i));
         }
+        //Exceptions
+        if(k == 1){
+            counter += (totalPiece_table.get(10)-foundPiece_table.get(10)); //Spy can defeat Marshal(10)
+        }
+
+        if(k == 3){
+            counter += (totalPiece_table.get(11)-foundPiece_table.get(11)); //Miner can defeat bomb
+        }
         double result = (double) counter / this.board.totalPieces ;
         return result;
+
     }
 
 
@@ -584,8 +593,8 @@ public class Game{
 
         //Exceptions
         //Spy attacks Miner or Flag
-        if(p1_type == "Spy" && (p2_type == "Miner" || p2_type == "Flag")) {
-            System.out.println("SPY DEFEATED MINER | FLAG ");
+        if(p1_type == "Spy" && (p2_type == "Marshal" || p2_type == "Flag")) {
+            System.out.println("SPY DEFEATED Marshal | FLAG ");
             return p1_win;
         }
         //Miner Attacks Bomb
