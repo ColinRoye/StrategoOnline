@@ -111,11 +111,11 @@ public class Game{
             throw new Exception("INACCESSIBLE PART OF BOARD");
 
         Piece moveFrom_piece = this.board.getBoard_piece(i,j);
-        move.setSubject(moveFrom_piece.getType());
+        move = setSubjectOrTarget(move,moveFrom_piece,"Subject");//move.setSubject(moveFrom_piece.getType());
 
         Piece moveTo_piece = this.board.getBoard_piece(x,y);
         if(moveTo_piece != null)
-            move.setTarget(moveTo_piece.getType());
+            move = setSubjectOrTarget(move,moveTo_piece,"Target"); //move.setTarget(moveTo_piece.getType());
         else
             move.setTarget(null);
 
@@ -622,6 +622,24 @@ public class Game{
             System.out.println("DRAW");
             return draw;
         }
+    }
+
+    public Move setSubjectOrTarget(Move m, Piece p ,String type){
+        String output = "";
+        if(p.getType() == "Bomb")
+            output = "B";
+        else if(p.getType() == "Flag")
+            output = "F";
+        else if(p.getType() == "Spy")
+            output = "S";
+        else
+            output = Integer.toString(p.getValue());
+        if(type == "Subject")
+            m.setSubject(output);
+        else
+            m.setTarget(output);
+        return m;
+
     }
 
 
