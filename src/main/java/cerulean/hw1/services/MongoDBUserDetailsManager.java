@@ -1,7 +1,7 @@
-package cerulean.hw1.Services;
+package cerulean.hw1.services;
 
-import cerulean.hw1.Database.AccountRepository;
-import cerulean.hw1.Models.Account;
+import cerulean.hw1.database.AccountRepository;
+import cerulean.hw1.models.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

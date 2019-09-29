@@ -1,7 +1,7 @@
-package cerulean.hw1.Services;
+package cerulean.hw1.services;
 
-import cerulean.hw1.Database.GameRepository;
-import cerulean.hw1.Models.Game;
+import cerulean.hw1.database.GameRepository;
+import cerulean.hw1.models.Game;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

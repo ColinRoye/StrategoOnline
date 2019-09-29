@@ -1,10 +1,10 @@
-package cerulean.hw1.Controllers;
+package cerulean.hw1.controllers;
 
-import cerulean.hw1.Models.Account;
-import cerulean.hw1.Models.Game;
-import cerulean.hw1.Models.GameComponents.Move;
-import cerulean.hw1.Services.GameService;
-import cerulean.hw1.Services.MongoDBUserDetailsManager;
+import cerulean.hw1.models.Account;
+import cerulean.hw1.models.Game;
+import cerulean.hw1.models.gameComponents.Move;
+import cerulean.hw1.services.GameService;
+import cerulean.hw1.services.MongoDBUserDetailsManager;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -42,10 +42,12 @@ public class GameController {
         Account account = mongoDBUserDetailsManager.loadAccountByUsername(username);
         Game game = new Game(username);
         ArrayList<Integer> b = new Gson().fromJson(board, ArrayList.class);
-        game.getBoard().postBoard(b);
-        gameService.save(new Game(username));
-        account.getGames().add(game.getGameId());
-        mongoDBUserDetailsManager.persistAccount(account);
+        System.out.print(board);
+
+//        game.getBoard().postBoard(b);
+//        gameService.save(new Game(username));
+//        account.getGames().add(game.getGameId());
+//        mongoDBUserDetailsManager.persistAccount(account);
 
         return game.getGameId();
     }
