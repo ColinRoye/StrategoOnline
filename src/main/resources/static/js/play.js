@@ -215,17 +215,14 @@ function startButtonHandler() {
     $('.player-piece').off('click');
     let JQrows = [ $('.G'), $('.H'), $('.I'), $('.J') ];
     let postObject = {
-        0: new Array(10),
-        1: new Array(10),
-        2: new Array(10),
-        3: new Array(10)
+        arr: [new Array(10), new Array(10), new Array(10), new Array(10)]
     }
     for (let i=0; i<4; i++){
         for (let j=0; j<10; j++){
-            postObject[i][j] = $(JQrows[i][j]).children().first().text();
+            postObject.arr[i][j] = $(JQrows[i][j]).children().first().text();
         }
     }
-    $.post('/startgame', postObject, function() {
+    $.post('/startGame', postObject, function() {
         $('.player-piece').on('click', playerPieceMove);
         $('.cell').on('click', cellClickHandler);
         $('#start-btn').remove();
