@@ -24,7 +24,6 @@ import java.util.Collections;
 @Component
 @Service
 public class MongoDBUserDetailsManager implements UserDetailsManager {
-
     @Autowired
     private AccountRepository accountRepository;
 

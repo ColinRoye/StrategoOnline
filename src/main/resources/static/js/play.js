@@ -72,7 +72,7 @@ function cellClickHandler() {
         let fromYIndex = parseInt(selectedPiece.parent().attr('data-row'));
         let toXIndex   = parseInt(cell.getAttribute('data-col'));
         let toYIndex   = parseInt(cell.getAttribute('data-row'));
-        $.post('/move', {
+        $.post('/api/games//move', {
             from: [fromXIndex, fromYIndex],
             to: [toXIndex, toYIndex]
         }, receiveMove);
@@ -211,21 +211,31 @@ function animatePiece(move, callback, callbackArg){
     }
 }
 
+function pieceValueToInt(value){
+    switch (value){
+        case 'F':
+            return 0;
+        case 'S':
+            return 1;
+        case 'B':
+            return 11;
+        default:
+            return parseInt(value);
+    }
+}
+
 function startButtonHandler() {
     $('.player-piece').off('click');
     let JQrows = [ $('.G'), $('.H'), $('.I'), $('.J') ];
     let postObject = {
-        0: new Array(10),
-        1: new Array(10),
-        2: new Array(10),
-        3: new Array(10)
+        arr: [new Array(10), new Array(10), new Array(10), new Array(10)]
     }
     for (let i=0; i<4; i++){
         for (let j=0; j<10; j++){
-            postObject[i][j] = $(JQrows[i][j]).children().first().text();
+            postObject.arr[i][j] = pieceValueToInt($(JQrows[i][j]).children().first().text());
         }
     }
-    $.post('/startgame', postObject, function() {
+    $.post('/api/games/startGame', postObject, function() {
         $('.player-piece').on('click', playerPieceMove);
         $('.cell').on('click', cellClickHandler);
         $('#start-btn').remove();

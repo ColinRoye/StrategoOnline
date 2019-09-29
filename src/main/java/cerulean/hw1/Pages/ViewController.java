@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ViewController {
     @RequestMapping("/login")
     public String login() {
-        return "login";
-    }
+        return "login"; }
     @RequestMapping("/register")
     public String register() {
         return "register";

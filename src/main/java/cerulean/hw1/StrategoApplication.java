@@ -1,4 +1,3 @@
-
 package cerulean.hw1;
 
 import org.springframework.boot.SpringApplication;

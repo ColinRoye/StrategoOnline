@@ -61,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 // TODO: Replace this with REST login if you wanna be fancy
                 .formLogin()
-                .loginPage("/login.html")
+                .loginPage("/login")
                 .permitAll()
                 .and()
                 .logout()
