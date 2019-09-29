@@ -27,6 +27,7 @@ body #main #container {
   border-radius: 50px;
   background-image: -webkit-gradient(linear, left top, right bottom, from(#ae95bb), to(#7d5b8f));
   background-image: linear-gradient(to bottom right, #ae95bb, #7d5b8f);
+  margin-top: 5vh;
 }
 
 @media (min-height: 425px) {
@@ -43,12 +44,14 @@ body #main #container #cover-photo {
   width: 100%;
   height: 100%;
   max-width: 84vw;
+  background-color: white;
+  border-radius: 50px;
 }
 
 body #main #container a {
   background-color: white;
   padding: 1vh 0 1vh;
-  margin: 4vh 1vw 0 1vw;
+  margin: 4vmin 1vw 0 1vw;
   width: 40vw;
   max-width: 50vh;
   text-align: center;
@@ -61,13 +64,37 @@ body #main #container a {
 
 @media screen and (max-width: 909px) {
   body #main #container a {
-    font-size: 1em;
+    font-size: 1.5em;
   }
 }
 
 @media screen and (max-height: 727px) {
   body #main #container a {
+    font-size: 1.5em;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  body #main #container a {
     font-size: 1em;
+  }
+}
+
+@media screen and (max-height: 540px) {
+  body #main #container a {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  body #main #container a {
+    font-size: .5em;
+  }
+}
+
+@media screen and (max-height: 370px) {
+  body #main #container a {
+    font-size: .5em;
   }
 }
 
