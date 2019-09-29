@@ -39,7 +39,7 @@ public class Board{
         this.setBoard_piece(p1_coord[0],p1_coord[1],p2);
         this.setBoard_piece(p2_coord[0],p2_coord[1],p1);
     }
-    public void postBoard(ArrayList<ArrayList<Integer>> result) {
+    public void postBoard(ArrayList<ArrayList<Double>> result) {
 
         //Player Pieces are rows 6 -> 9
 
@@ -62,7 +62,7 @@ public class Board{
             for (int j = 0 ;j < result.get(i).size() ; j++) {
                 Piece newPiece = null;
 
-                switch(result.get(i).get(j)){
+                switch(result.get(i).get(j).intValue()){
 
                     case 0:
                         newPiece = new Piece("Flag",0,0,true);

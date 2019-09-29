@@ -42,7 +42,7 @@ public class GameController {
         String username = principalUser.getUsername();
         Account account = mongoDBUserDetailsManager.loadAccountByUsername(username);
         Game game = new Game(username);
-        ArrayList<ArrayList<Integer>> b = new Gson().fromJson(board, ArrayList.class);
+        ArrayList<ArrayList<Double>> b = new Gson().fromJson(board, ArrayList.class);
         game.getBoard().postBoard(b);
         gameService.save(new Game(username));
         account.getGames().add(game.getGameId());
@@ -53,15 +53,15 @@ public class GameController {
     @RequestMapping(value ="/move", method = RequestMethod.POST)
     public void move(@RequestBody String gameId, int[] to, int[] from) throws Exception {
           System.out.print(gameId);
-//        Game game = new Gson().fromJson(gameService.getGame(gameId), Game.class);
-//
-//
-//
-//        Move playeMove = game.move(to, from, true);
-//
-//        int[] ai_coords = game.runAI();
-//        Move aiMove = game.move(new int[]{ai_coords[0], ai_coords[1]}, new int[]{ai_coords[2], ai_coords[3]},false);
-//        gameService.save(game);
+            Game game = new Gson().fromJson(gameService.getGame(gameId), Game.class);
+
+
+
+            Move playeMove = game.move(to, from, true);
+
+            int[] ai_coords = game.runAI();
+            Move aiMove = game.move(new int[]{ai_coords[0], ai_coords[1]}, new int[]{ai_coords[2], ai_coords[3]},false);
+            gameService.save(game);
 
     }
 
