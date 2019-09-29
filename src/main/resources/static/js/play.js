@@ -72,11 +72,16 @@ function cellClickHandler() {
         let fromYIndex = parseInt(selectedPiece.parent().attr('data-row'));
         let toXIndex   = parseInt(cell.getAttribute('data-col'));
         let toYIndex   = parseInt(cell.getAttribute('data-row'));
-        $.post('/api/games//move', {
-            from: [fromXIndex, fromYIndex],
-            to: [toXIndex, toYIndex]
-        }, receiveMove);
-
+        $.ajax({
+            url: '/api/games/move',
+            type: 'POST',
+            contentType: 'application/json',
+            complete: receiveMove,
+            data: JSON.stringify({
+                'from' : [fromXIndex, fromYIndex],
+                'to' : [toXIndex, toYIndex]
+            })
+        });
     }
     else {
         //To Do: Toast user with message "Please Select a Piece"
@@ -227,18 +232,22 @@ function pieceValueToInt(value){
 function startButtonHandler() {
     $('.player-piece').off('click');
     let JQrows = [ $('.G'), $('.H'), $('.I'), $('.J') ];
-    let postObject = {
-        arr: [new Array(10), new Array(10), new Array(10), new Array(10)]
-    }
+    let postObject = [new Array(10), new Array(10), new Array(10), new Array(10)];
     for (let i=0; i<4; i++){
         for (let j=0; j<10; j++){
-            postObject.arr[i][j] = pieceValueToInt($(JQrows[i][j]).children().first().text());
+            postObject[i][j] = pieceValueToInt($(JQrows[i][j]).children().first().text());
         }
     }
-    $.post('/api/games/startGame', postObject, function() {
-        $('.player-piece').on('click', playerPieceMove);
-        $('.cell').on('click', cellClickHandler);
-        $('#start-btn').remove();
+    $.ajax({
+        url: '/api/games/startGame',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(postObject),
+        complete: function() {
+            $('.player-piece').on('click', playerPieceMove);
+            $('.cell').on('click', cellClickHandler);
+            $('#start-btn').remove();
+        }
     });
     console.log(postObject);
 }
