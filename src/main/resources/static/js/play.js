@@ -72,7 +72,7 @@ function cellClickHandler() {
         let fromYIndex = parseInt(selectedPiece.parent().attr('data-row'));
         let toXIndex   = parseInt(cell.getAttribute('data-col'));
         let toYIndex   = parseInt(cell.getAttribute('data-row'));
-        $.post('/move', {
+        $.post('/api/games//move', {
             from: [fromXIndex, fromYIndex],
             to: [toXIndex, toYIndex]
         }, receiveMove);
@@ -222,7 +222,7 @@ function startButtonHandler() {
             postObject.arr[i][j] = $(JQrows[i][j]).children().first().text();
         }
     }
-    $.post('/startGame', postObject, function() {
+    $.post('/api/games/startGame', postObject, function() {
         $('.player-piece').on('click', playerPieceMove);
         $('.cell').on('click', cellClickHandler);
         $('#start-btn').remove();
