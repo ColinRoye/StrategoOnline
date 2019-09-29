@@ -67,6 +67,9 @@ function playerPieceSwap() {
 function cellClickHandler() {
     let cell = this;
     let selectedPiece = $('.selected');
+    if ($(cell).attr('id') === selectedPiece.parent().attr('id')){
+        return;
+    }
     if (selectedPiece.length){
         let fromXIndex = parseInt(selectedPiece.parent().attr('data-col'));
         let fromYIndex = parseInt(selectedPiece.parent().attr('data-row'));
@@ -78,6 +81,7 @@ function cellClickHandler() {
             contentType: 'application/json',
             success: receiveMove,
             data: JSON.stringify({
+                'game_id' : window.gameID,
                 'from' : [fromXIndex, fromYIndex],
                 'to' : [toXIndex, toYIndex]
             }),
@@ -219,7 +223,7 @@ function pieceValueToInt(value){
         case 'F':
             return 0;
         case 'S':
-            return 2;
+            return 1;
         case 'B':
             return 11;
         default:
@@ -241,7 +245,8 @@ function startButtonHandler() {
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(postObject),
-        success: function() {
+        success: function(data) {
+            window.gameID = data.game_id;
             $('.player-piece').on('click', playerPieceMove);
             $('.cell').on('click', cellClickHandler);
             $('#start-btn').remove();
