@@ -211,6 +211,19 @@ function animatePiece(move, callback, callbackArg){
     }
 }
 
+function pieceValueToInt(value){
+    switch (value){
+        case 'F':
+            return 0;
+        case 'S':
+            return 1;
+        case 'B':
+            return 11;
+        default:
+            return parseInt(value);
+    }
+}
+
 function startButtonHandler() {
     $('.player-piece').off('click');
     let JQrows = [ $('.G'), $('.H'), $('.I'), $('.J') ];
@@ -219,7 +232,7 @@ function startButtonHandler() {
     }
     for (let i=0; i<4; i++){
         for (let j=0; j<10; j++){
-            postObject.arr[i][j] = $(JQrows[i][j]).children().first().text();
+            postObject.arr[i][j] = pieceValueToInt($(JQrows[i][j]).children().first().text());
         }
     }
     $.post('/api/games/startGame', postObject, function() {
