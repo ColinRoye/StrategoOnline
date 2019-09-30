@@ -19,13 +19,46 @@ body #main #games-table {
           box-shadow: 10px 10px 8px #ae95bb9d;
 }
 
+body #main #games-table thead {
+  padding: 10px;
+}
+
 body #main #games-table thead th {
   padding: 3px;
   background-color: white;
   border-radius: 20px;
 }
 
-body #main #games-table tbody {
+body #main #games-table #games-info {
   color: white;
+}
+
+body #main #games-table #games-info tr td {
+  padding: 10px;
+  text-align: center;
+}
+
+body #main #games-table #games-info tr td a {
+  padding: 5px;
+  width: 100%;
+  border-radius: 25px;
+  background-color: white;
+  -ms-grid-column-align: center;
+      justify-self: center;
+  color: #ae95bb;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+body #main #games-table #games-info tr .result {
+  font-weight: bold;
+}
+
+body #main #games-table #games-info tr .red {
+  color: #990000;
+}
+
+body #main #games-table #games-info tr .blue {
+  color: #1DACD6;
 }
 /*# sourceMappingURL=games.css.map */

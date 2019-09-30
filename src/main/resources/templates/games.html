@@ -11,21 +11,31 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script th:src="@{/js/play.js}"></script>
+    <script th:src="@{/js/games.js}"></script>
 </head>
 <body>
     <div id="header" th:replace="fragments :: header"></div>
     <div id="main">
         <table id="games-table">
-            <tr>
-                <thead>
+            <thead>
+                <tr>
                     <th><span>Game ID</span></th>
                     <th><span>Result</span></th>
                     <th><span>Link</span></th>
-                </thead>
-                <tbody id="games-info">
-                </tbody>
-            </tr>
+                </tr>  
+            </thead>
+            <tbody id="games-info">
+                <tr>
+                    <td class="game-id">Game ID</td>
+                    <td class="result red">LOSS</td>
+                    <td class="link"><a href="#">WATCH</a></td>
+                </tr>
+                <tr>
+                    <td class="game-id">Game ID</td>
+                    <td class="result blue">WON</td>
+                    <td class="link"><a href="#">WATCH</a></td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </body>
