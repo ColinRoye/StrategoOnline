@@ -107,13 +107,14 @@ function animatePiece(move, callback) {
                             piece.show();
                             animatedPiece.remove();
                             setTimeout(function () {
-                                if (callback) {
-                                    callback();
-                                }
                                 if (move.target == 0){
                                     $('.player-piece').off('click');
                                     $('.cell').off('click');
                                     appendBanner(move);
+                                    return;
+                                }
+                                if (callback) {
+                                    callback();
                                 }
                             });
                         });

@@ -104,9 +104,10 @@ function receiveMove(data, textStatus, xhr) {
     data = JSON.parse(data);
 
     animatePiece(data.moves[0], function(){
-        animatePiece(data.moves[1]);
-        $('.player-piece').on('click', playerPieceMove);
-        $('.cell').on('click', cellClickHandler);
+        animatePiece(data.moves[1], function(){
+            $('.player-piece').on('click', playerPieceMove);
+            $('.cell').on('click', cellClickHandler);
+        });
     });
 }
 

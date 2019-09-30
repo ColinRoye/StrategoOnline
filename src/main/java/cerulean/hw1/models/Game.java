@@ -148,7 +148,6 @@ public class Game{
         }
         else{
             String battleResult = battle(moveFrom_piece,moveTo_piece);
-            move.setResult(battleResult);
 
             if(battleResult.equals("FLAG CAPTURED")){
                 if(is_player){
@@ -157,6 +156,7 @@ public class Game{
                 else{
                     this.winner = AI_WIN;
                 }
+                move.setResult(WON);
             }
             else if(battleResult.equals(WON)){  //First Piece won the battle
                 this.board.setBoard_piece(x,y,moveFrom_piece);
