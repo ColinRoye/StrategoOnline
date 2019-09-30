@@ -1,0 +1,67 @@
+$blue: #1DACD6;
+$red: #990000;
+$bg: white;
+$base: #ae95bb;
+$base-transparent: #ae95bb9d;
+$cell-color: #858585;
+
+body {
+
+    #main {
+        display: flex;
+        background-color: $bg;
+        justify-content: center;
+        padding: 1vh;
+        
+        #games-table {
+            padding: 1vh 1vw;
+            background-image: linear-gradient(to bottom right, $base, darken($base, 20%));
+            min-width: 50%;
+            border-radius: 25px;
+            box-shadow: 10px 10px 8px $base-transparent;
+
+            thead {
+                padding: 10px;
+                th {
+                    padding: 3px;
+                    background-color: $bg;
+                    border-radius: 20px;
+                }
+            }
+
+            #games-info {
+                color: white;
+                
+                tr{
+                    
+                    td {
+                        padding: 10px;
+                        text-align: center;
+                        a {
+                            padding: 5px;
+                            width: 100%;
+                            border-radius: 25px;
+                            background-color: $bg;
+                            justify-self: center;
+                            color: $base;
+                            text-decoration: none;
+                            font-weight: bold;
+                        }
+                    }
+                    
+                    .result {
+                        font-weight: bold;
+                    }
+                    
+                    .red {
+                        color: $red;
+                    }
+
+                    .blue {
+                        color: $blue;
+                    }
+                }
+            }
+        }
+    }
+}

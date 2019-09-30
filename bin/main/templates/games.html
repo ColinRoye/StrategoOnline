@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Previous Games - Stratego</title>
+
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/games.css}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script th:src="@{/js/games.js}"></script>
+</head>
+<body>
+    <div id="header" th:replace="fragments :: header"></div>
+    <div id="main">
+        <table id="games-table">
+            <thead>
+                <tr>
+                    <th><span>Game ID</span></th>
+                    <th><span>Result</span></th>
+                    <th><span>Link</span></th>
+                </tr>  
+            </thead>
+            <tbody id="games-info">
+            </tbody>
+        </table>
+    </div>
+</body>
