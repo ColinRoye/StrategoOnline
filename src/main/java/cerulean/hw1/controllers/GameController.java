@@ -89,12 +89,13 @@ public class GameController {
             System.out.println("------------ORGINAL BOARD-----------");
             game.board.printToConsole();
             System.out.println("------------             -----------");
-            Move playeMove = game.move(from,to, true);
+
+            Move playerMove = game.move(from,to, true);
             System.out.println("------------PLAYER MOVE BOARD-----------");
             game.board.printToConsole();
             System.out.println("------------             -----------");
 
-            int[] ai_coords = game.runAI();
+            int[] ai_coords = game.runAI(false);
 
             Move aiMove = game.move(new int[]{ai_coords[0], ai_coords[1]}, new int[]{ai_coords[2], ai_coords[3]},false);
             System.out.printf("\nAI MOVED FROM %d,%d TO %d,%d \n ",ai_coords[0],ai_coords[1],ai_coords[2],ai_coords[3]);
@@ -104,10 +105,12 @@ public class GameController {
             System.out.println("------------             -----------");
             gameService.save(game);
 
-            String moves = "{\"moves\": ["+ new Gson().toJson(playeMove) + ',' +new Gson().toJson(aiMove)+"]}";
+            String moves = "{\"moves\": ["+ new Gson().toJson(playerMove) + ',' +new Gson().toJson(aiMove)+"]}";
             System.out.println("\n"+moves);
             return moves;
 
     }
+
+
 
 }

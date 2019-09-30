@@ -47,7 +47,7 @@ public class Main {
                     Move moveResult = null;
                     try {
                         moveResult = game.move(moveFrom,moveTo,true);
-                        int[] ai_coords = game.runAI();
+                        int[] ai_coords = game.runAI(false);
                         Move aiMove = game.move(new int[]{ai_coords[0], ai_coords[1]}, new int[]{ai_coords[2], ai_coords[3]},false);
                         System.out.printf("\nAI MOVED FROM %d,%d TO %d,%d \n ",ai_coords[0],ai_coords[1],ai_coords[2],ai_coords[3]);
 

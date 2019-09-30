@@ -215,7 +215,7 @@ public class Game{
     }
 
 
-    public int[] runAI(){
+    public int[] runAI(boolean is_player){
 
         Piece[][] board = this.board.getBoard_pieces();
         int[] result = new int[4];
@@ -243,36 +243,45 @@ public class Game{
                         p_below = board[i+1][j];
                     if(j-1 > -1 && validateRegion(i,j-1))
                         p_left = board[i][j-1];
-                    if(j+1 < 9 && validateRegion(i,j+1))
+                    if(j+1 < 10 && validateRegion(i,j+1))
                         p_right = board[i][j+1];
 
                     int temp[] = new int[2];
 
-
-                    if(p_above != null && !p_above.is_user) {
+                    if(i == 4 && j == 4)
+                        System.out.println("JAVA ARHARHAGRGAGRA");
+                    if(p_above != null && p_above.is_user == is_player) {
                         temp[0] = i-1;
                         temp[1] = j;
-                        if(!p_above.getType().equals("Bomb"));
+                        if(p_above.getValue() != 11)
                             potential.add(temp.clone());
+                        /*String type = p_above.getType();
+                        if(!type.equalsIgnoreCase("Bomb"));
+                            potential.add(temp.clone());*/
                     }
-                    if(p_below != null && !p_below.is_user) {
+                    if(p_below != null && p_below.is_user == is_player) {
                         temp[0] = i+1;
                         temp[1] = j;
-                        if(!p_below.getType().equals("Bomb"));
+                        /*if(!p_below.getType().equals("Bomb"));
+                            potential.add(temp.clone());*/
+                        if(p_below.getValue() != 11)
                             potential.add(temp.clone());
                     }
-                    if(p_left != null && !p_left.is_user) {
+                    if(p_left != null && p_left.is_user == is_player) {
                         temp[0] = i;
                         temp[1] = j-1;
-
-                        if(!p_left.getType().equals("Bomb"));
+                        if(p_left.getValue() != 11)
                             potential.add(temp.clone());
+                        /*if(!p_left.getType().equals("Bomb"));
+                            potential.add(temp.clone());*/
                     }
-                    if(p_right != null && !p_right.is_user) {
+                    if(p_right != null && p_right.is_user == is_player) {
                         temp[0] = i;
                         temp[1] = j+1;
-                        if(!p_right.getType().equals("Bomb"));
+                        if(p_right.getValue() != 11)
                             potential.add(temp.clone());
+                        /*if(!p_right.getType().equals("Bomb"));
+                            potential.add(temp.clone());*/
                     }
 
                     p_above = null;
@@ -295,7 +304,7 @@ public class Game{
             int y = opt[1];
             Piece attack_piece = this.board.getBoard_piece(x,y);
 
-            if(attack_piece.getType().equals("Bomb"))
+            if(attack_piece.getType().equals("Bomb") || attack_piece.getValue() == 11)
                 continue;
 
             //Check to see if there are opponent pieces around
@@ -331,12 +340,12 @@ public class Game{
                         //Now check if this point is an enemy point
                         test_piece = this.board.getBoard_piece(i,j);
 
-                        if(test_piece != null && test_piece.is_user){
+                        if(test_piece != null && test_piece.is_user != is_player){
                             //At this point we have a target piece to either attack or runaway
                             System.out.printf("ENEMY FOUND AT %d,%d \n",i,j);
                             int[] moveTo = null;
 
-                            if (!test_piece.isHidden() && !attack_piece.getType().equals("Bomb")) {
+                            if (!test_piece.isHidden() && (!attack_piece.getType().equals("Bomb") || attack_piece.getValue() != 11)) {
 
                                 if (battle(attack_piece, test_piece) == WON ) {
                                     moveTo = moveToward(attack_piece, x, y, i, j);
