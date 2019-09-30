@@ -31,6 +31,7 @@ public class Game{
     public static final String LOST = "LOST";
     public static final String MOVED = "MOVED";
     public static final String DRAW = "DRAW";
+    public Board initialBoard;
 
 
     //Constructor
@@ -86,7 +87,9 @@ public class Game{
         return result;
 
     }*/
-
+    public void setInitialBoard(Board board){
+        this.initialBoard = board;
+    }
 
     public Move move(int[] moveFrom, int[] moveTo,boolean is_player) throws Exception{
 

@@ -53,6 +53,7 @@ public class GameController {
 
         ArrayList<ArrayList<String>> b = new Gson().fromJson(board, new TypeToken<ArrayList<ArrayList<String>>>(){}.getType());
         game.getBoard().postBoard(b);
+        game.setInitialBoard(game.getBoard());
         gameService.save(game);
         account.getGames().add(game.getGameId());
         mongoDBUserDetailsManager.persistAccount(account);
