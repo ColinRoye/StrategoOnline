@@ -95,12 +95,6 @@ function cellClickHandler() {
     }
 }
 
-const indexToLetter = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-
-function indecesToJQ(indeces) {
-    return $('#' + indexToLetter[indeces[0]] + indeces[1]);
-}
-
 function receiveMove(data, textStatus, xhr) {
     $('.selected').removeClass('selected');
     data = JSON.parse(data);
@@ -108,13 +102,7 @@ function receiveMove(data, textStatus, xhr) {
     animatePiece(data.moves[0], animatePiece, data.moves[1]);
 }
 
-function test(optionA, optionB) {
-    optionA('A');
-    if (optionB)
-        optionB('B');
-}
-
-var explosion = $('<img>').attr('src', '/img/explosion.png');
+var explosion = $('<img>').attr('src', '/img/explosion.png').css('position', 'fixed');
 
 function animatePiece(move, callback, callbackArg) {
     let piece = indecesToJQ(move.from).children().first();
@@ -205,7 +193,6 @@ function animatePiece(move, callback, callbackArg) {
                             'height' : defendingPiece.height()
                         });
                         defendingPiece.parent().append(explosion);
-                        defendingPiece.remove();
                     }
                     animatedPiece.animate({
                         'left': animatedPiece.offset().left + animatedPiece.width() / 2,
@@ -257,34 +244,6 @@ function animatePiece(move, callback, callbackArg) {
                 }
             }, 1000);
         });
-    }
-}
-
-function pieceValueToInt(value) {
-    switch (value) {
-        case 'F':
-            return 0;
-        case 'S':
-            return 1;
-        case 'B':
-            return 11;
-        default:
-            return parseInt(value);
-    }
-}
-
-function pieceIntToValue(int) {
-    if (int == 0){
-        return 'F';
-    }
-    else if (int == 1){
-        return 'S';
-    }
-    else if (int == 11){
-        return 'B';
-    }
-    else {
-        return '' + int;
     }
 }
 
