@@ -7,20 +7,29 @@ public class Move {
     String result;
     int[] from;
     int[] to;
+    int moveIndex;
 
 
 
-    public Move(String actor, String subject, String target, int[] from, int[] to, String result){
+    public Move(String actor, String subject, String target, int[] from, int[] to, String result,int moveIndex){
         this.actor = actor;
         this.subject = subject;
         this.target = target;
         this.from = from;
         this.to = to;
         this.result = result;
+        this.moveIndex = moveIndex;
+
     }
 
     public Move() {
 
+    }
+    public void setMoveIndex(int moveIndex){
+        this.moveIndex = moveIndex;
+    }
+    public int getMoveIndex(){
+        return this.moveIndex;
     }
 
     public void setActor(String actor) {
@@ -70,6 +79,8 @@ public class Move {
     public String getResult() {
         return result;
     }
+
+
 
 }
 //    “game_id”: game move is being made to
