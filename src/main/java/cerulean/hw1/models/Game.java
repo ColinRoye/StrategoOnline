@@ -491,10 +491,10 @@ public class Game{
 
         double[] option_dist = new double[4];
         double currentDistanceAway = distanceAway(x1,y1,x2,y2);
-        option_dist[0] = distanceAway(x1+1,y1,x2,y2);
-        option_dist[1] = distanceAway(x1-1,y1,x2,y2);
-        option_dist[2] = distanceAway(x1,y1-1,x2,y2);
-        option_dist[3] = distanceAway(x1,y1+1,x2,y2);
+        option_dist[0] = distanceAway(x1+1,y1,x2,y2); // up
+        option_dist[1] = distanceAway(x1-1,y1,x2,y2); // down
+        option_dist[2] = distanceAway(x1,y1-1,x2,y2); // left
+        option_dist[3] = distanceAway(x1,y1+1,x2,y2); // right
 
         //Not in dof, so we need to move toward the piece
         Piece option_below;
@@ -513,7 +513,7 @@ public class Game{
         //go right
         if(validateRegion(x1,y1+1)){
             option_right = this.board.getBoard_piece(x1,y1+1);
-            if(option_right == null && option_dist[0] > currentDistanceAway){
+            if(option_right == null && option_dist[3] > currentDistanceAway){
                 result[0] = x1;
                 result[1] = y1+1;
                 return result;
@@ -523,7 +523,7 @@ public class Game{
         //go down
         if(validateRegion(x1+1,y1)) {
             option_below = this.board.getBoard_piece(x1 + 1, y1);
-            if(option_below == null && option_dist[0] > currentDistanceAway){
+            if(option_below == null && option_dist[1] > currentDistanceAway){
                 result[0] = x1+1;
                 result[1] = y1;
                 return result;
@@ -532,7 +532,7 @@ public class Game{
         //go up
         if(validateRegion(x1-1,y1)) {
             option_above = this.board.getBoard_piece(x1 - 1, y1);
-            if(option_above == null && option_dist[1]  > currentDistanceAway){
+            if(option_above == null && option_dist[0]  > currentDistanceAway){
                 result[0] = x1-1;
                 result[1] = y1;
                 return result;
