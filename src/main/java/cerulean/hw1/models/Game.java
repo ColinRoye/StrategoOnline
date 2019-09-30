@@ -194,6 +194,7 @@ public class Game{
             }
         }
         this.moveCounter++;
+        move.setMoveIndex(moveCounter);
         moves.add(move);
 
         return move;
