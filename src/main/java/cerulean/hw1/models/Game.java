@@ -153,10 +153,10 @@ public class Game{
             if(battleResult.equals("FLAG CAPTURED")){
                 if(is_player){
                     this.winner = PLAYER_WIN;
-                    move.setResult(PLAYER_WIN);}
+                }
                 else{
                     this.winner = AI_WIN;
-                    move.setResult(AI_WIN);}
+                }
             }
             else if(battleResult.equals(WON)){  //First Piece won the battle
                 this.board.setBoard_piece(x,y,moveFrom_piece);

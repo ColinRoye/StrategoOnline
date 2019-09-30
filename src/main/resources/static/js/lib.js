@@ -32,6 +32,8 @@ function pieceValueToInt(value) {
     }
 }
 
+var explosion = $('<img>').attr('src', '/img/explosion.png').css('position', 'fixed');
+
 function animatePiece(move, callback) {
     let piece = indecesToJQ(move.from).children().first();
     let animatedPiece = piece.clone()

@@ -110,8 +110,6 @@ function receiveMove(data, textStatus, xhr) {
     });
 }
 
-var explosion = $('<img>').attr('src', '/img/explosion.png').css('position', 'fixed');
-
 // used in library function animatePiece()
 function appendBanner(move){
     $('#main').append(
