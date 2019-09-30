@@ -92,109 +92,109 @@ public class Game{
 
         Move move = new Move();
 
-        int i = moveFrom[0];
-        int j = moveFrom[1];
-        move.setFrom(new int[]{i, j});
-
-        int x = moveTo[0];
-        int y = moveTo[1];
-        move.setTo(new int[]{x, y});
-
-        if(is_player)
-            move.setActor("PLAYER");
-        else
-            move.setActor("AI");
-
-
-        //Check to see if piece if being moved into inaccessible part of board
-        if(!validateRegion(x,y))
-            throw new Exception("INACCESSIBLE PART OF BOARD");
-
-        Piece moveFrom_piece = this.board.getBoard_piece(i,j);
-        move = setSubjectOrTarget(move,moveFrom_piece,"Subject");//move.setSubject(moveFrom_piece.getType());
-
-        Piece moveTo_piece = this.board.getBoard_piece(x,y);
-        if(moveTo_piece != null)
-            move = setSubjectOrTarget(move,moveTo_piece,"Target"); //move.setTarget(moveTo_piece.getType());
-        else
-            move.setTarget(null);
-
-        //Check if moveFrom_piece is not null
-        if(moveFrom_piece == null)
-            throw new Exception("Chosen Piece is Null");
-
-        //Check if move is inside P DOF
-        int dof = moveFrom_piece.getDof();
-        double desiredDistance = Math.abs(Math.hypot(x-i,y-j));
-
-        if(desiredDistance > dof || (desiredDistance != Math.floor(desiredDistance)))
-            throw new Exception("Invalid move RE: dof");
-
-        //Running into your own piece
-        if(moveTo_piece != null && (moveFrom_piece.isIs_user() == moveTo_piece.isIs_user()) ){
-            throw new Exception("RUNNING INTO SAME USER PIECE");
-        }
-        //Moving to an empty space
-        else if(moveTo_piece == null){
-            //Set board piece
-            this.board.setBoard_piece(x,y,moveFrom_piece);
-            //set current position to null
-            this.board.setBoard_piece(i,j,null);
-            move.setResult(MOVED);
-
-
-        }
-        else{
-            String battleResult = battle(moveFrom_piece,moveTo_piece);
-            move.setResult(battleResult);
-            if(battleResult.equals(WON)){  //First Piece won the battle
-                this.board.setBoard_piece(x,y,moveFrom_piece);
-                this.board.setBoard_piece(i,j,null);
-                moveFrom_piece.setHidden(false);
-
-                if(moveFrom_piece.is_user == is_player) {
-                    int currentFound = foundPiece_table.get(moveFrom_piece.value);
-                    foundPiece_table.put(moveFrom_piece.value, ++currentFound);
-                    this.board.totalPieces -= 1;
-                }
-
-                move.setResult(WON);
-            }
-            else if(battleResult.equals(LOST)){ //Second Piece won the battle
-                this.board.setBoard_piece(i,j,null);
-                moveTo_piece.setHidden(false);
-
-                //Player lost , AI won , moveFrom piece was player is now known
-                if (moveTo_piece.isIs_user() == is_player) {
-                    int currentFound = foundPiece_table.get(moveFrom_piece.value);
-                    foundPiece_table.put(moveFrom_piece.value, ++currentFound);
-                    totalPiece_table.put(moveFrom_piece.value, totalPiece_table.get(moveFrom_piece.value) - 1);
-                    this.board.totalPieces -= 1;
-                }
-                //AI Lost, Player won, moveTo piece is now revealed to AI
-                else{
-                    int currentFound = foundPiece_table.get(moveTo_piece.value);
-                    foundPiece_table.put(moveTo_piece.value, ++currentFound);
-                    totalPiece_table.put(moveTo_piece.value, totalPiece_table.get(moveTo_piece.value) - 1);
-                }
-
-                move.setResult(LOST);
-
-
-            }
-            else{// Tie
-                this.board.setBoard_piece(i,j,null);
-                this.board.setBoard_piece(x,y,null);
-                int currentFound = foundPiece_table.get(moveFrom_piece.value);
-                foundPiece_table.put(moveFrom_piece.value,++currentFound);
-                totalPiece_table.put(moveFrom_piece.value,totalPiece_table.get(moveFrom_piece.value) - 1);
-                this.board.totalPieces -= 1;
-
-                move.setResult(DRAW);
-            }
-        }
-        this.moveCounter++;
-        moves.add(move);
+//        int i = moveFrom[0];
+//        int j = moveFrom[1];
+//        move.setFrom(new int[]{i, j});
+//
+//        int x = moveTo[0];
+//        int y = moveTo[1];
+//        move.setTo(new int[]{x, y});
+//
+//        if(is_player)
+//            move.setActor("PLAYER");
+//        else
+//            move.setActor("AI");
+//
+//
+//        //Check to see if piece if being moved into inaccessible part of board
+//        if(!validateRegion(x,y))
+//            throw new Exception("INACCESSIBLE PART OF BOARD");
+//
+//        Piece moveFrom_piece = this.board.getBoard_piece(i,j);
+//        move = setSubjectOrTarget(move,moveFrom_piece,"Subject");//move.setSubject(moveFrom_piece.getType());
+//
+//        Piece moveTo_piece = this.board.getBoard_piece(x,y);
+//        if(moveTo_piece != null)
+//            move = setSubjectOrTarget(move,moveTo_piece,"Target"); //move.setTarget(moveTo_piece.getType());
+//        else
+//            move.setTarget(null);
+//
+//        //Check if moveFrom_piece is not null
+//        if(moveFrom_piece == null)
+//            throw new Exception("Chosen Piece is Null");
+//
+//        //Check if move is inside P DOF
+//        int dof = moveFrom_piece.getDof();
+//        double desiredDistance = Math.abs(Math.hypot(x-i,y-j));
+//
+//        if(desiredDistance > dof || (desiredDistance != Math.floor(desiredDistance)))
+//            throw new Exception("Invalid move RE: dof");
+//
+//        //Running into your own piece
+//        if(moveTo_piece != null && (moveFrom_piece.isIs_user() == moveTo_piece.isIs_user()) ){
+//            throw new Exception("RUNNING INTO SAME USER PIECE");
+//        }
+//        //Moving to an empty space
+//        else if(moveTo_piece == null){
+//            //Set board piece
+//            this.board.setBoard_piece(x,y,moveFrom_piece);
+//            //set current position to null
+//            this.board.setBoard_piece(i,j,null);
+//            move.setResult(MOVED);
+//
+//
+//        }
+//        else{
+//            String battleResult = battle(moveFrom_piece,moveTo_piece);
+//            move.setResult(battleResult);
+//            if(battleResult.equals(WON)){  //First Piece won the battle
+//                this.board.setBoard_piece(x,y,moveFrom_piece);
+//                this.board.setBoard_piece(i,j,null);
+//                moveFrom_piece.setHidden(false);
+//
+//                if(moveFrom_piece.is_user == is_player) {
+//                    int currentFound = foundPiece_table.get(moveFrom_piece.value);
+//                    foundPiece_table.put(moveFrom_piece.value, ++currentFound);
+//                    this.board.totalPieces -= 1;
+//                }
+//
+//                move.setResult(WON);
+//            }
+//            else if(battleResult.equals(LOST)){ //Second Piece won the battle
+//                this.board.setBoard_piece(i,j,null);
+//                moveTo_piece.setHidden(false);
+//
+//                //Player lost , AI won , moveFrom piece was player is now known
+//                if (moveTo_piece.isIs_user() == is_player) {
+//                    int currentFound = foundPiece_table.get(moveFrom_piece.value);
+//                    foundPiece_table.put(moveFrom_piece.value, ++currentFound);
+//                    totalPiece_table.put(moveFrom_piece.value, totalPiece_table.get(moveFrom_piece.value) - 1);
+//                    this.board.totalPieces -= 1;
+//                }
+//                //AI Lost, Player won, moveTo piece is now revealed to AI
+//                else{
+//                    int currentFound = foundPiece_table.get(moveTo_piece.value);
+//                    foundPiece_table.put(moveTo_piece.value, ++currentFound);
+//                    totalPiece_table.put(moveTo_piece.value, totalPiece_table.get(moveTo_piece.value) - 1);
+//                }
+//
+//                move.setResult(LOST);
+//
+//
+//            }
+//            else{// Tie
+//                this.board.setBoard_piece(i,j,null);
+//                this.board.setBoard_piece(x,y,null);
+//                int currentFound = foundPiece_table.get(moveFrom_piece.value);
+//                foundPiece_table.put(moveFrom_piece.value,++currentFound);
+//                totalPiece_table.put(moveFrom_piece.value,totalPiece_table.get(moveFrom_piece.value) - 1);
+//                this.board.totalPieces -= 1;
+//
+//                move.setResult(DRAW);
+//            }
+//        }
+//        this.moveCounter++;
+//        moves.add(move);
 
         return move;
     }

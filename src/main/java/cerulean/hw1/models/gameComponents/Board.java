@@ -39,7 +39,7 @@ public class Board{
         this.setBoard_piece(p1_coord[0],p1_coord[1],p2);
         this.setBoard_piece(p2_coord[0],p2_coord[1],p1);
     }
-    public void postBoard(ArrayList<ArrayList<Double>> result) {
+    public void postBoard(ArrayList<ArrayList<String>> result) {
 
         //Player Pieces are rows 6 -> 9
 
@@ -56,13 +56,13 @@ public class Board{
         //new Piece("General",9,1,true)
         //new Piece("Marshal",10,1,true)
         //new Piece("Bomb",11,0,true)
-
+        setDefaultBoard(false,3);
 
         for (int i = 0;i < result.size();i++) {
             for (int j = 0 ;j < result.get(i).size() ; j++) {
                 Piece newPiece = null;
 
-                switch(result.get(i).get(j).intValue()){
+                switch(Integer.parseInt(result.get(i).get(j))){
 
                     case 0:
                         newPiece = new Piece("Flag",0,0,true);
