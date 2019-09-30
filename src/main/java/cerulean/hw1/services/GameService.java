@@ -21,6 +21,7 @@ public class GameService {
     }
     public Game getGameObj(String gameId){
         Gson gson = new Gson();
+        System.out.println(gameId+"\n");
         return (gameRepository.findByGameId(gameId));
     }
     public void save(Game game){

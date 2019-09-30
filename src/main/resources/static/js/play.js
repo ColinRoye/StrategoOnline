@@ -103,7 +103,8 @@ function indecesToJQ(indeces) {
 
 function receiveMove(data, textStatus, xhr) {
     $('.selected').removeClass('selected');
-    animateMove(data.player_move, animateMove, data.ai_move);
+    data=JSON.parse(data);
+    //animateMove(data.moves[0], data.moves[1]);
 }
 
 function test(optionA, optionB){

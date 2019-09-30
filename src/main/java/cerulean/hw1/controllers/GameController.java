@@ -61,7 +61,7 @@ public class GameController {
 
     }
     @RequestMapping(value ="/move", method = RequestMethod.POST)
-    public void move(@RequestBody String req) throws Exception {
+    public String move(@RequestBody String req) throws Exception {
             System.out.println("test" +req + "test");
 
             String[] s = req.split(":");
@@ -80,17 +80,12 @@ public class GameController {
             int[] from = new int[2];
             from[1] = tempArr2[0].intValue();
             from[0] = tempArr2[1].intValue();
-//
+
             Game game = gameService.getGameObj(gameId); //new Gson().fromJson(gameService.getGame(gameId), Game.class);
             System.out.println("from: " +from[0]+" " + from[1]+"\n");
             System.out.println("to: " +to[0]+" " + to[1]+"\n");
 
-//
-////            to = new int[2];
-////            from = new int[2];
-////            if(game ==null){
-////                return;
-////            }
+
             game.board.printToConsole();
             Move playeMove = game.move(from,to, true);
             game.board.printToConsole();
@@ -100,7 +95,9 @@ public class GameController {
             game.board.printToConsole();
             gameService.save(game);
 
-
+            String moves = "{\"moves\": ["+ new Gson().toJson(playeMove) + ',' +new Gson().toJson(aiMove)+"]}";
+            System.out.println("\n"+moves);
+            return moves;
 
     }
 
