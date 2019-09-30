@@ -24,7 +24,13 @@ public class GameService {
         System.out.println(gameId+"\n");
         return (gameRepository.findByGameId(gameId));
     }
+
     public void save(Game game){
+        try{
+            gameRepository.deleteByGameId(game.getGameId());
+        }catch(Exception e){
+
+        }
         gameRepository.save(game);
     }
 
