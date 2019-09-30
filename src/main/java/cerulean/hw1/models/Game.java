@@ -597,16 +597,16 @@ public class Game{
 
         //Exceptions
         //Spy attacks Miner or Flag
-        if(p1_type == "Spy" && (p2_type == "Marshal" || p2_type == "Flag")) {
+        if(p1_type.equals("Spy") && (p2_type.equals("Marshal") || p2_type.equals("Flag"))) {
             System.out.println("SPY DEFEATED Marshal | FLAG ");
             return p1_win;
         }
         //Miner Attacks Bomb
-        else if(p1_type == "Miner" && p2_type == "Bomb"){
+        else if(p1_type.equals("Miner") && p2_type.equals("Bomb")){
             System.out.println("MINER DEFEATED BOMB");
             return p1_win;
         }
-        else if(p2_type == "BOMB") {
+        else if(p2_type.equals("BOMB")) {
             System.out.println("LOST TO BOMB");
             return p2_win;
         }
