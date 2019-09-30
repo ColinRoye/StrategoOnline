@@ -31,8 +31,8 @@ public class Game{
     public static final String LOST = "LOST";
     public static final String MOVED = "MOVED";
     public static final String DRAW = "DRAW";
-    public static final String PLAYER_WIN = "WIN";
-    public static final String AI_WIN = "LOST";
+    public static final String PLAYER_WIN = "PLAYER";
+    public static final String AI_WIN = "COMPUTER";
 
 
     //Constructor
@@ -105,7 +105,7 @@ public class Game{
         if(is_player)
             move.setActor("PLAYER");
         else
-            move.setActor("AI");
+            move.setActor("COMPUTER");
 
 
         //Check to see if piece if being moved into inaccessible part of board
