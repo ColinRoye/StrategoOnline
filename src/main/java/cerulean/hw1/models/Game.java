@@ -34,6 +34,7 @@ public class Game{
     public static final String PLAYER_WIN = "PLAYER";
     public static final String AI_WIN = "COMPUTER";
 
+    public Board initialBoard;
 
     //Constructor
     public Game(){}
@@ -88,7 +89,9 @@ public class Game{
         return result;
 
     }*/
-
+    public void setInitialBoard(Board board){
+        this.initialBoard = board;
+    }
 
     public Move move(int[] moveFrom, int[] moveTo,boolean is_player) throws Exception{
 
@@ -212,7 +215,7 @@ public class Game{
     }
 
 
-    public int[] runAI(){
+    public int[] runAI(boolean is_player){
 
         Piece[][] board = this.board.getBoard_pieces();
         int[] result = new int[4];
@@ -240,36 +243,45 @@ public class Game{
                         p_below = board[i+1][j];
                     if(j-1 > -1 && validateRegion(i,j-1))
                         p_left = board[i][j-1];
-                    if(j+1 < 9 && validateRegion(i,j+1))
+                    if(j+1 < 10 && validateRegion(i,j+1))
                         p_right = board[i][j+1];
 
                     int temp[] = new int[2];
 
-
-                    if(p_above != null && !p_above.is_user) {
+                    if(i == 4 && j == 4)
+                        System.out.println("JAVA ARHARHAGRGAGRA");
+                    if(p_above != null && p_above.is_user == is_player) {
                         temp[0] = i-1;
                         temp[1] = j;
-                        if(!p_above.getType().equals("Bomb"));
+                        if(p_above.getValue() != 11)
                             potential.add(temp.clone());
+                        /*String type = p_above.getType();
+                        if(!type.equalsIgnoreCase("Bomb"));
+                            potential.add(temp.clone());*/
                     }
-                    if(p_below != null && !p_below.is_user) {
+                    if(p_below != null && p_below.is_user == is_player) {
                         temp[0] = i+1;
                         temp[1] = j;
-                        if(!p_below.getType().equals("Bomb"));
+                        /*if(!p_below.getType().equals("Bomb"));
+                            potential.add(temp.clone());*/
+                        if(p_below.getValue() != 11)
                             potential.add(temp.clone());
                     }
-                    if(p_left != null && !p_left.is_user) {
+                    if(p_left != null && p_left.is_user == is_player) {
                         temp[0] = i;
                         temp[1] = j-1;
-
-                        if(!p_left.getType().equals("Bomb"));
+                        if(p_left.getValue() != 11)
                             potential.add(temp.clone());
+                        /*if(!p_left.getType().equals("Bomb"));
+                            potential.add(temp.clone());*/
                     }
-                    if(p_right != null && !p_right.is_user) {
+                    if(p_right != null && p_right.is_user == is_player) {
                         temp[0] = i;
                         temp[1] = j+1;
-                        if(!p_right.getType().equals("Bomb"));
+                        if(p_right.getValue() != 11)
                             potential.add(temp.clone());
+                        /*if(!p_right.getType().equals("Bomb"));
+                            potential.add(temp.clone());*/
                     }
 
                     p_above = null;
@@ -292,7 +304,7 @@ public class Game{
             int y = opt[1];
             Piece attack_piece = this.board.getBoard_piece(x,y);
 
-            if(attack_piece.getType().equals("Bomb"))
+            if(attack_piece.getType().equals("Bomb") || attack_piece.getValue() == 11)
                 continue;
 
             //Check to see if there are opponent pieces around
@@ -328,12 +340,12 @@ public class Game{
                         //Now check if this point is an enemy point
                         test_piece = this.board.getBoard_piece(i,j);
 
-                        if(test_piece != null && test_piece.is_user){
+                        if(test_piece != null && test_piece.is_user != is_player){
                             //At this point we have a target piece to either attack or runaway
                             System.out.printf("ENEMY FOUND AT %d,%d \n",i,j);
                             int[] moveTo = null;
 
-                            if (!test_piece.isHidden() && !attack_piece.getType().equals("Bomb")) {
+                            if (!test_piece.isHidden() && (!attack_piece.getType().equals("Bomb") || attack_piece.getValue() != 11)) {
 
                                 if (battle(attack_piece, test_piece) == WON ) {
                                     moveTo = moveToward(attack_piece, x, y, i, j);
@@ -344,9 +356,11 @@ public class Game{
                             else {
 
                                 double prob_smaller = probabilityEqualOrSmaller(attack_piece.getValue());
-                                if (prob_smaller == 0 || (prob_smaller > (1 - prob_smaller)))
+                                if(attack_piece.getValue() == 2)
                                     moveTo = moveToward(attack_piece, x, y, i, j);
-                                else if ((1 - prob_smaller) > prob_smaller)
+                                else if (prob_smaller == 0 || (prob_smaller >= 0.40) )
+                                    moveTo = moveToward(attack_piece, x, y, i, j);
+                                else if (prob_smaller < 0.40)
                                     moveTo = moveAway(attack_piece, x, y, i, j);
                                 else
                                     moveTo = moveToward(attack_piece, x, y, i, j);
@@ -376,44 +390,51 @@ public class Game{
         result[0] = opt[0];
         result[1] = opt[1];
 
+
         //Look around this point and move to an empty spot
         //below
-        if(validateRegion(result[0]+1,result[1])){
-            Piece p = this.board.getBoard_piece(result[0]+1,result[1]);
-            if(p == null){
-                result[2] = result[0]+1;
-                result[3] = result[1];
-                return result;
+        int rand;
+        while (true) {
+
+            rand = new Random().nextInt(4);
+
+            if (validateRegion(result[0] + 1, result[1]) && rand == 0) {
+                Piece p = this.board.getBoard_piece(result[0] + 1, result[1]);
+                if (p == null) {
+                    result[2] = result[0] + 1;
+                    result[3] = result[1];
+                    return result;
+                }
+            }
+            //left
+            if (validateRegion(result[0], result[1] - 1) && rand == 1) {
+                Piece p = this.board.getBoard_piece(result[0], result[1] - 1);
+                if (p == null) {
+                    result[2] = result[0];
+                    result[3] = result[1] - 1;
+                    return result;
+                }
+            }
+            //right
+            if (validateRegion(result[0], result[1])  && rand == 2) {
+                Piece p = this.board.getBoard_piece(result[0], result[1] + 1);
+                if (p == null) {
+                    result[2] = result[0];
+                    result[3] = result[1] + 1;
+                    return result;
+                }
+            }
+            //up
+            if (validateRegion(result[0] - 1, result[1]) && rand == 3) {
+                Piece p = this.board.getBoard_piece(result[0] - 1, result[1]);
+                if (p == null) {
+                    result[2] = result[0] - 1;
+                    result[3] = result[1];
+                    return result;
+                }
             }
         }
-        //left
-        if(validateRegion(result[0],result[1]-1)){
-            Piece p = this.board.getBoard_piece(result[0],result[1]-1);
-            if(p == null){
-                result[2] = result[0];
-                result[3] = result[1]-1;
-                return result;
-            }
-        }
-        //right
-        if(validateRegion(result[0],result[1])){
-            Piece p = this.board.getBoard_piece(result[0],result[1]+1);
-            if(p == null){
-                result[2] = result[0];
-                result[3] = result[1]+1;
-                return result;
-            }
-        }
-        //up
-        if(validateRegion(result[0]-1,result[1])){
-            Piece p = this.board.getBoard_piece(result[0]-1,result[1]);
-            if(p == null){
-                result[2] = result[0]-1;
-                result[3] = result[1];
-                return result;
-            }
-        }
-        return result;
+        //return result;
     }
 
     public int[] moveToward(Piece attack, int x1,int y1,int x2,int y2){
@@ -577,7 +598,7 @@ public class Game{
     }
     public double probabilityEqualOrSmaller(int k){
         int counter = 0;
-        for(int i = k; k > -1 ; k--){
+        for(int i = k; i > -1 ; i--){
             counter += (totalPiece_table.get(i)-foundPiece_table.get(i));
         }
         //Exceptions

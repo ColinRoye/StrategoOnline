@@ -53,6 +53,7 @@ public class GameController {
 
         ArrayList<ArrayList<String>> b = new Gson().fromJson(board, new TypeToken<ArrayList<ArrayList<String>>>(){}.getType());
         game.getBoard().postBoard(b);
+        game.setInitialBoard(game.getBoard());
         gameService.save(game);
         account.getGames().add(game.getGameId());
         mongoDBUserDetailsManager.persistAccount(account);
@@ -88,12 +89,13 @@ public class GameController {
             System.out.println("------------ORGINAL BOARD-----------");
             game.board.printToConsole();
             System.out.println("------------             -----------");
-            Move playeMove = game.move(from,to, true);
+
+            Move playerMove = game.move(from,to, true);
             System.out.println("------------PLAYER MOVE BOARD-----------");
             game.board.printToConsole();
             System.out.println("------------             -----------");
 
-            int[] ai_coords = game.runAI();
+            int[] ai_coords = game.runAI(false);
 
             Move aiMove = game.move(new int[]{ai_coords[0], ai_coords[1]}, new int[]{ai_coords[2], ai_coords[3]},false);
             System.out.printf("\nAI MOVED FROM %d,%d TO %d,%d \n ",ai_coords[0],ai_coords[1],ai_coords[2],ai_coords[3]);
@@ -103,10 +105,49 @@ public class GameController {
             System.out.println("------------             -----------");
             gameService.save(game);
 
-            String moves = "{\"moves\": ["+ new Gson().toJson(playeMove) + ',' +new Gson().toJson(aiMove)+"]}";
+            String moves = "{\"moves\": ["+ new Gson().toJson(playerMove) + ',' +new Gson().toJson(aiMove)+"]}";
             System.out.println("\n"+moves);
             return moves;
 
     }
+    @RequestMapping(value ="/autoplay", method = RequestMethod.POST)
+    public String autoplay(@RequestBody String req) throws Exception {
+        System.out.println("test" +req + "test");
+
+        String[] s = req.split(":\"");
+        String gameId = s[1].substring(1,s[1].length()-1);
+
+
+        Game game = gameService.getGameObj(gameId); //new Gson().fromJson(gameService.getGame(gameId), Game.class);
+
+        System.out.println("------------ORGINAL BOARD-----------");
+        game.board.printToConsole();
+        System.out.println("------------             -----------");
+
+        int[] player_coords = game.runAI(true);
+        Move playerMove = game.move(new int[]{player_coords[0], player_coords[1]}, new int[]{player_coords[2], player_coords[3]},true);
+
+        System.out.printf("\nPLAYER MOVED FROM %d,%d TO %d,%d \n ",player_coords[0],player_coords[1],player_coords[2],player_coords[3]);
+        System.out.println("------------PLAYER MOVE BOARD-----------");
+        game.board.printToConsole();
+        System.out.println("------------             -----------");
+
+        int[] ai_coords = game.runAI(false);
+        Move aiMove = game.move(new int[]{ai_coords[0], ai_coords[1]}, new int[]{ai_coords[2], ai_coords[3]},false);
+
+        System.out.printf("\nAI MOVED FROM %d,%d TO %d,%d \n ",ai_coords[0],ai_coords[1],ai_coords[2],ai_coords[3]);
+        System.out.println("------------AI MOVE BOARD-----------");
+        game.board.printToConsole();
+        System.out.println("------------             -----------");
+
+
+        gameService.save(game);
+        String moves = "{\"moves\": ["+ new Gson().toJson(playerMove) + ',' +new Gson().toJson(aiMove)+"]}";
+        System.out.println("\n"+moves);
+        return moves;
+
+    }
+
+
 
 }
