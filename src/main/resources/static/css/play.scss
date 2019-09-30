@@ -107,8 +107,8 @@ body {
         #result-banner {
             display: grid;
             grid-template-areas: 
-                'result     result'
-                'play-again watch';
+                'result  result'
+                'first-a second-a';
             position: fixed;
             justify-content: center;
             width: 70vmin;
@@ -184,12 +184,12 @@ body {
                 }
             }
 
-            #play-again{
-                grid-area: play-again;
+            #first-a {
+                grid-area: first-a;
             }
 
-            #watch {
-                grid-area: watch;
+            #second-a {
+                grid-area: second-a;
             }
         }
     }

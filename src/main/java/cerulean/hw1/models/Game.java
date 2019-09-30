@@ -21,7 +21,7 @@ public class Game{
 
     public Account player;
     public int moveCounter;
-    public int winner;
+    public String winner;
     public Board board;
     public Map<Integer, Integer> totalPiece_table = new Hashtable<>();
     public Map<Integer, Integer> foundPiece_table = new Hashtable<>();
@@ -31,8 +31,10 @@ public class Game{
     public static final String LOST = "LOST";
     public static final String MOVED = "MOVED";
     public static final String DRAW = "DRAW";
-    public Board initialBoard;
+    public static final String PLAYER_WIN = "PLAYER";
+    public static final String AI_WIN = "COMPUTER";
 
+    public Board initialBoard;
 
     //Constructor
     public Game(){}
@@ -41,7 +43,7 @@ public class Game{
         this.gameId = gameId;
         //this.player = player;
         this.moveCounter = 0;
-        this.winner = 0;
+
         this.board = new Board(10,10);
 
         //Table for all possible pieces
@@ -106,7 +108,7 @@ public class Game{
         if(is_player)
             move.setActor("PLAYER");
         else
-            move.setActor("AI");
+            move.setActor("COMPUTER");
 
 
         //Check to see if piece if being moved into inaccessible part of board
@@ -149,8 +151,17 @@ public class Game{
         }
         else{
             String battleResult = battle(moveFrom_piece,moveTo_piece);
-            move.setResult(battleResult);
-            if(battleResult.equals(WON)){  //First Piece won the battle
+
+            if(battleResult.equals("FLAG CAPTURED")){
+                if(is_player){
+                    this.winner = PLAYER_WIN;
+                }
+                else{
+                    this.winner = AI_WIN;
+                }
+                move.setResult(WON);
+            }
+            else if(battleResult.equals(WON)){  //First Piece won the battle
                 this.board.setBoard_piece(x,y,moveFrom_piece);
                 this.board.setBoard_piece(i,j,null);
                 moveFrom_piece.setHidden(false);
@@ -327,7 +338,7 @@ public class Game{
 
                             if (!test_piece.isHidden() && !attack_piece.getType().equals("Bomb")) {
 
-                                if (battle(attack_piece, test_piece) == WON) {
+                                if (battle(attack_piece, test_piece) == WON ) {
                                     moveTo = moveToward(attack_piece, x, y, i, j);
                                 }
                                 else
@@ -369,12 +380,11 @@ public class Game{
         result[1] = opt[1];
 
         //Look around this point and move to an empty spot
-
         //below
-        if(validateRegion(result[0]-1,result[1])){
-            Piece p = this.board.getBoard_piece(result[0]-1,result[1]);
+        if(validateRegion(result[0]+1,result[1])){
+            Piece p = this.board.getBoard_piece(result[0]+1,result[1]);
             if(p == null){
-                result[2] = result[0]-1;
+                result[2] = result[0]+1;
                 result[3] = result[1];
                 return result;
             }
@@ -388,7 +398,6 @@ public class Game{
                 return result;
             }
         }
-
         //right
         if(validateRegion(result[0],result[1])){
             Piece p = this.board.getBoard_piece(result[0],result[1]+1);
@@ -398,12 +407,11 @@ public class Game{
                 return result;
             }
         }
-
-        //above
-        if(validateRegion(result[0]+1,result[1])){
-            Piece p = this.board.getBoard_piece(result[0]+1,result[1]);
+        //up
+        if(validateRegion(result[0]-1,result[1])){
+            Piece p = this.board.getBoard_piece(result[0]-1,result[1]);
             if(p == null){
-                result[2] = result[0]+1;
+                result[2] = result[0]-1;
                 result[3] = result[1];
                 return result;
             }
@@ -428,10 +436,10 @@ public class Game{
         }
         double[] option_dist = new double[4];
         double currentDistanceAway = distanceAway(x1,y1,x2,y2);
-        option_dist[0] = distanceAway(x1+1,y1,x2,y2);
-        option_dist[1] = distanceAway(x1-1,y1,x2,y2);
-        option_dist[2] = distanceAway(x1,y1-1,x2,y2);
-        option_dist[3] = distanceAway(x1,y1+1,x2,y2);
+        option_dist[0] = distanceAway(x1+1,y1,x2,y2);//down
+        option_dist[1] = distanceAway(x1-1,y1,x2,y2);//up
+        option_dist[2] = distanceAway(x1,y1-1,x2,y2);//left
+        option_dist[3] = distanceAway(x1,y1+1,x2,y2);//right
 
         //Not in dof, so we need to move toward the piece
         Piece option_below;
@@ -467,7 +475,7 @@ public class Game{
         //right
         if(validateRegion(x1,y1+1)){
             option_right = this.board.getBoard_piece(x1,y1+1);
-            if(option_right == null && option_dist[0] <currentDistanceAway){
+            if(option_right == null && option_dist[3] <currentDistanceAway){
                 result[0] = x1;
                 result[1] = y1+1;
                 return result;
@@ -483,10 +491,10 @@ public class Game{
 
         double[] option_dist = new double[4];
         double currentDistanceAway = distanceAway(x1,y1,x2,y2);
-        option_dist[0] = distanceAway(x1+1,y1,x2,y2);
-        option_dist[1] = distanceAway(x1-1,y1,x2,y2);
-        option_dist[2] = distanceAway(x1,y1-1,x2,y2);
-        option_dist[3] = distanceAway(x1,y1+1,x2,y2);
+        option_dist[0] = distanceAway(x1+1,y1,x2,y2); // down
+        option_dist[1] = distanceAway(x1-1,y1,x2,y2); // up
+        option_dist[2] = distanceAway(x1,y1-1,x2,y2); // left
+        option_dist[3] = distanceAway(x1,y1+1,x2,y2); // right
 
         //Not in dof, so we need to move toward the piece
         Piece option_below;
@@ -505,7 +513,7 @@ public class Game{
         //go right
         if(validateRegion(x1,y1+1)){
             option_right = this.board.getBoard_piece(x1,y1+1);
-            if(option_right == null && option_dist[0] > currentDistanceAway){
+            if(option_right == null && option_dist[3] > currentDistanceAway){
                 result[0] = x1;
                 result[1] = y1+1;
                 return result;
@@ -598,6 +606,10 @@ public class Game{
         String p1_type = p1.getType();
         String p2_type = p2.getType();
 
+        if(p2_type.equals("Flag")){
+            return "FLAG CAPTURED";
+        }
+
         //Exceptions
         //Spy attacks Miner or Flag
         if(p1_type.equals("Spy") && (p2_type.equals("Marshal") || p2_type.equals("Flag"))) {
@@ -668,11 +680,11 @@ public class Game{
         this.moveCounter = moveCounter;
     }
 
-    public int getWinner() {
+    public String getWinner() {
         return winner;
     }
 
-    public void setWinner(int winner) {
+    public void setWinner(String winner) {
         this.winner = winner;
     }
 

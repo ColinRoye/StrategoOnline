@@ -1,0 +1,289 @@
+body #main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0;
+  margin: 0;
+  height: 93vh;
+  background-color: white;
+}
+
+body #main #gameboard {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto auto auto auto auto auto auto auto auto auto;
+      grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+  border-radius: 5vmin;
+  -webkit-box-shadow: 10px 10px 8px #ae95bb9d;
+          box-shadow: 10px 10px 8px #ae95bb9d;
+  width: 80vmin;
+  height: 80vmin;
+  padding: 3vmax 2vmax 2vmax 3vmax;
+  margin: 0;
+  background-image: -webkit-gradient(linear, left top, right bottom, from(#ae95bb), to(#9676a7));
+  background-image: linear-gradient(to bottom right, #ae95bb, #9676a7);
+}
+
+body #main #gameboard .cell {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 7vmin;
+  height: 7vmin;
+  background-color: #858585;
+  cursor: pointer;
+}
+
+body #main #gameboard .piece {
+  width: 6vmin;
+  height: 6vmin;
+  border-radius: 1vmin;
+  text-align: center;
+  vertical-align: center;
+  color: white;
+  font-size: 2em;
+}
+
+@media screen and (max-width: 600px) {
+  body #main #gameboard .piece {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-height: 600px) {
+  body #main #gameboard .piece {
+    font-size: 1em;
+  }
+}
+
+body #main #gameboard .selected {
+  border: 1vmin solid white;
+}
+
+body #main #gameboard .blue-team {
+  background-color: #1DACD6;
+}
+
+body #main #gameboard .red-team {
+  background-color: #990000;
+}
+
+body #main #start-btn {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -25%);
+          transform: translate(-50%, -25%);
+  background-color: white;
+  color: #ae95bb;
+  font-weight: bold;
+  border-radius: 25px;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 5rem;
+}
+
+@media screen and (max-height: 660px) {
+  body #main #start-btn {
+    font-size: 4em;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  body #main #start-btn {
+    font-size: 4em;
+  }
+}
+
+@media screen and (max-height: 550px) {
+  body #main #start-btn {
+    font-size: 3em;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  body #main #start-btn {
+    font-size: 3em;
+  }
+}
+
+@media screen and (max-height: 430px) {
+  body #main #start-btn {
+    font-size: 2em;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  body #main #start-btn {
+    font-size: 2em;
+  }
+}
+
+@media screen and (max-height: 270px) {
+  body #main #start-btn {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  body #main #start-btn {
+    font-size: 1em;
+  }
+}
+
+body #main #result-banner {
+  display: -ms-grid;
+  display: grid;
+      grid-template-areas: 'result  result' 'first-a second-a';
+  position: fixed;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 70vmin;
+  background-image: -webkit-gradient(linear, left top, right bottom, from(#c6b4cf), to(#ae95bb));
+  background-image: linear-gradient(to bottom right, #c6b4cf, #ae95bb);
+  color: white;
+  border-radius: 50px;
+}
+
+body #main #result-banner span {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-area: result;
+  text-align: center;
+  font-weight: bold;
+  font-size: 5rem;
+}
+
+@media screen and (max-height: 660px) {
+  body #main #result-banner span {
+    font-size: 4em;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  body #main #result-banner span {
+    font-size: 4em;
+  }
+}
+
+@media screen and (max-height: 550px) {
+  body #main #result-banner span {
+    font-size: 3em;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  body #main #result-banner span {
+    font-size: 3em;
+  }
+}
+
+@media screen and (max-height: 430px) {
+  body #main #result-banner span {
+    font-size: 2em;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  body #main #result-banner span {
+    font-size: 2em;
+  }
+}
+
+@media screen and (max-height: 270px) {
+  body #main #result-banner span {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  body #main #result-banner span {
+    font-size: 1em;
+  }
+}
+
+body #main #result-banner a {
+  background-color: white;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 25px;
+  text-align: center;
+  text-decoration: none;
+  color: #ae95bb;
+  font-size: 1.25rem;
+}
+
+@media screen and (max-height: 660px) {
+  body #main #result-banner a {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  body #main #result-banner a {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-height: 550px) {
+  body #main #result-banner a {
+    font-size: .75em;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  body #main #result-banner a {
+    font-size: .75em;
+  }
+}
+
+@media screen and (max-height: 430px) {
+  body #main #result-banner a {
+    font-size: .5em;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  body #main #result-banner a {
+    font-size: .5em;
+  }
+}
+
+@media screen and (max-height: 270px) {
+  body #main #result-banner a {
+    font-size: .25em;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  body #main #result-banner a {
+    font-size: .25em;
+  }
+}
+
+body #main #result-banner #first-a {
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+  grid-area: first-a;
+}
+
+body #main #result-banner #second-a {
+  -ms-grid-row: 2;
+  -ms-grid-column: 2;
+  grid-area: second-a;
+}
+/*# sourceMappingURL=play.css.map */

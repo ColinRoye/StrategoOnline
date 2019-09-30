@@ -9,6 +9,7 @@ function fillTable(data) {
     var games = JSON.parse(data);
     console.log(data);
     for (var i=0; i<games.length; i++) {
+        let row = $('<tr>').prependTo($('#games-info'))
         $.ajax({
             url:'/api/games/get/' + games[i],
             type: 'GET',
@@ -17,24 +18,18 @@ function fillTable(data) {
                 if (data == null){
                     $('#games-info').text("Error getting data from server. Please try again later");
                 }
-                appendRow(data.gameId, data.winner);
+                fillRow(row, data.gameId, data.winner);
             }
         });
     }
 }
 
-function appendRow(gameID, winner) {
-    $('#games-info').append(
-        $('<tr>').append(
-            $('<td>').text(gameID)
-        )
-        .append(
-            $('<td>').text(winner === 'player' ? 'WIN' : 'LOSS').addClass(winner === 'player' ? 'blue' : 'red')
-        )
-        .append(
-            $('<td>').append(
-                $('<a>').attr('href', '/game?' + gameID).text('WATCH')
-            )
-        )
-    );
+function fillRow(row, gameID, winner) {
+    row.append(
+        $('<td>').text(gameID))
+    .append(
+        $('<td>').text(winner == 'PLAYER'? 'VICTORY':'DEFEAT').addClass(winner === 'PLAYER' ? 'blue' : 'red'))
+    .append(
+        $('<td>').append(
+            $('<a>').attr('href', '/game?' + gameID).text('WATCH')));
 }

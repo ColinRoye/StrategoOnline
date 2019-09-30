@@ -1,0 +1,196 @@
+$blue: #1DACD6;
+$red: #990000;
+$bg: white;
+$base: #ae95bb;
+$base-transparent: #ae95bb9d;
+$cell-color: #858585;
+
+body {
+
+    #main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+        height: 93vh;
+        background-color: $bg;
+        
+        #gameboard {
+            display: grid;
+            grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+            border-radius: 5vmin;
+            box-shadow: 10px 10px 8px $base-transparent;
+            width: 80vmin;
+            height: 80vmin;
+            padding: 3vmax 2vmax 2vmax 3vmax;
+            margin: 0;
+            background-image: linear-gradient(to bottom right, $base, darken($base, 10%));
+
+            .cell {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 7vmin;
+                height: 7vmin;
+                background-color: $cell-color;
+                cursor: pointer;
+            }
+
+            .piece {
+                width: 6vmin;
+                height: 6vmin;
+                border-radius: 1vmin;
+                text-align: center;
+                vertical-align: center;
+                color: white;
+                font-size: 2em;
+                @media screen and (max-width: 600px){
+                    font-size: 1em;
+                }
+                @media screen and (max-height: 600px){
+                    font-size: 1em;
+                }
+            }
+
+            .selected {
+                border: 1vmin solid white;
+            }
+
+            .blue-team {
+                background-color: $blue;
+            }
+
+            .red-team {
+                background-color: $red;
+            }
+        }
+
+        #start-btn {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -25%);
+            background-color: $bg;
+            color: $base;
+            font-weight: bold;
+            border-radius: 25px;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 5rem;
+            @media screen and (max-height: 660px){
+                font-size: 4em;
+            }
+            @media screen and (max-width: 680px){
+                font-size: 4em;
+            }
+            @media screen and (max-height: 550px){
+                font-size: 3em;
+            }
+            @media screen and (max-width: 540px){
+                font-size: 3em;
+            }
+            @media screen and (max-height: 430px){
+                font-size: 2em;
+            }
+            @media screen and (max-width: 400px){
+                font-size: 2em;
+            }
+            @media screen and (max-height: 270px){
+                font-size: 1em;
+            }
+            @media screen and (max-width: 300px){
+                font-size: 1em;
+            }
+        }
+
+        #result-banner {
+            display: grid;
+            grid-template-areas: 
+                'result  result'
+                'first-a second-a';
+            position: fixed;
+            justify-content: center;
+            width: 70vmin;
+            background-image: linear-gradient(to bottom right, lighten($base, 10%), $base);
+            color: white;
+            border-radius: 50px;
+            
+            span{
+                grid-area: result;
+                text-align: center;
+                font-weight: bold;
+
+                font-size: 5rem;
+                @media screen and (max-height: 660px){
+                    font-size: 4em;
+                }
+                @media screen and (max-width: 680px){
+                    font-size: 4em;
+                }
+                @media screen and (max-height: 550px){
+                    font-size: 3em;
+                }
+                @media screen and (max-width: 540px){
+                    font-size: 3em;
+                }
+                @media screen and (max-height: 430px){
+                    font-size: 2em;
+                }
+                @media screen and (max-width: 400px){
+                    font-size: 2em;
+                }
+                @media screen and (max-height: 270px){
+                    font-size: 1em;
+                }
+                @media screen and (max-width: 300px){
+                    font-size: 1em;
+                }
+            }
+
+            a {
+                background-color: $bg;
+                margin: 5px;
+                padding: 5px;
+                border-radius: 25px;
+                text-align: center;
+                text-decoration: none;
+                color: $base;
+
+                font-size: 1.25rem;
+                @media screen and (max-height: 660px){
+                    font-size: 1em;
+                }
+                @media screen and (max-width: 680px){
+                    font-size: 1em;
+                }
+                @media screen and (max-height: 550px){
+                    font-size: .75em;
+                }
+                @media screen and (max-width: 540px){
+                    font-size: .75em;
+                }
+                @media screen and (max-height: 430px){
+                    font-size: .5em;
+                }
+                @media screen and (max-width: 400px){
+                    font-size: .5em;
+                }
+                @media screen and (max-height: 270px){
+                    font-size: .25em;
+                }
+                @media screen and (max-width: 300px){
+                    font-size: .25em;
+                }
+            }
+
+            #first-a {
+                grid-area: first-a;
+            }
+
+            #second-a {
+                grid-area: second-a;
+            }
+        }
+    }
+}
