@@ -1,3 +1,5 @@
+$blue: #1DACD6;
+$red: #990000;
 $bg: white;
 $base: #ae95bb;
 $base-transparent: #ae95bb9d;
@@ -18,14 +20,47 @@ body {
             border-radius: 25px;
             box-shadow: 10px 10px 8px $base-transparent;
 
-            thead th {
-                padding: 3px;
-                background-color: $bg;
-                border-radius: 20px;
+            thead {
+                padding: 10px;
+                th {
+                    padding: 3px;
+                    background-color: $bg;
+                    border-radius: 20px;
+                }
             }
 
-            tbody {
-                color: white; 
+            #games-info {
+                color: white;
+                
+                tr{
+                    
+                    td {
+                        padding: 10px;
+                        text-align: center;
+                        a {
+                            padding: 5px;
+                            width: 100%;
+                            border-radius: 25px;
+                            background-color: $bg;
+                            justify-self: center;
+                            color: $base;
+                            text-decoration: none;
+                            font-weight: bold;
+                        }
+                    }
+                    
+                    .result {
+                        font-weight: bold;
+                    }
+                    
+                    .red {
+                        color: $red;
+                    }
+
+                    .blue {
+                        color: $blue;
+                    }
+                }
             }
         }
     }
