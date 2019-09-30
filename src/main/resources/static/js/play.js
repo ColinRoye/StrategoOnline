@@ -103,7 +103,7 @@ function indecesToJQ(indeces) {
 
 function receiveMove(data, textStatus, xhr) {
     $('.selected').removeClass('selected');
-    animateMove(data.player_move, animateMove, data.ai_move);
+    animatePiece(data.player_move, animatePiece, data.ai_move);
 }
 
 function test(optionA, optionB){
