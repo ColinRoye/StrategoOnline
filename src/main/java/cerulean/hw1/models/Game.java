@@ -377,12 +377,11 @@ public class Game{
         result[1] = opt[1];
 
         //Look around this point and move to an empty spot
-
         //below
-        if(validateRegion(result[0]-1,result[1])){
-            Piece p = this.board.getBoard_piece(result[0]-1,result[1]);
+        if(validateRegion(result[0]+1,result[1])){
+            Piece p = this.board.getBoard_piece(result[0]+1,result[1]);
             if(p == null){
-                result[2] = result[0]-1;
+                result[2] = result[0]+1;
                 result[3] = result[1];
                 return result;
             }
@@ -396,7 +395,6 @@ public class Game{
                 return result;
             }
         }
-
         //right
         if(validateRegion(result[0],result[1])){
             Piece p = this.board.getBoard_piece(result[0],result[1]+1);
@@ -406,12 +404,11 @@ public class Game{
                 return result;
             }
         }
-
-        //above
-        if(validateRegion(result[0]+1,result[1])){
-            Piece p = this.board.getBoard_piece(result[0]+1,result[1]);
+        //up
+        if(validateRegion(result[0]-1,result[1])){
+            Piece p = this.board.getBoard_piece(result[0]-1,result[1]);
             if(p == null){
-                result[2] = result[0]+1;
+                result[2] = result[0]-1;
                 result[3] = result[1];
                 return result;
             }
@@ -436,8 +433,8 @@ public class Game{
         }
         double[] option_dist = new double[4];
         double currentDistanceAway = distanceAway(x1,y1,x2,y2);
-        option_dist[0] = distanceAway(x1+1,y1,x2,y2);//up
-        option_dist[1] = distanceAway(x1-1,y1,x2,y2);//down
+        option_dist[0] = distanceAway(x1+1,y1,x2,y2);//down
+        option_dist[1] = distanceAway(x1-1,y1,x2,y2);//up
         option_dist[2] = distanceAway(x1,y1-1,x2,y2);//left
         option_dist[3] = distanceAway(x1,y1+1,x2,y2);//right
 
@@ -449,7 +446,7 @@ public class Game{
         //down
         if(validateRegion(x1+1,y1)) {
             option_below = this.board.getBoard_piece(x1 + 1, y1);
-            if(option_below == null && option_dist[1] <currentDistanceAway){
+            if(option_below == null && option_dist[0] <currentDistanceAway){
                 result[0] = x1+1;
                 result[1] = y1;
                 return result;
@@ -458,7 +455,7 @@ public class Game{
         //up
         if(validateRegion(x1-1,y1)) {
             option_above = this.board.getBoard_piece(x1 - 1, y1);
-            if(option_above == null && option_dist[0] <currentDistanceAway){
+            if(option_above == null && option_dist[1] <currentDistanceAway){
                 result[0] = x1-1;
                 result[1] = y1;
                 return result;
@@ -491,8 +488,8 @@ public class Game{
 
         double[] option_dist = new double[4];
         double currentDistanceAway = distanceAway(x1,y1,x2,y2);
-        option_dist[0] = distanceAway(x1+1,y1,x2,y2); // up
-        option_dist[1] = distanceAway(x1-1,y1,x2,y2); // down
+        option_dist[0] = distanceAway(x1+1,y1,x2,y2); // down
+        option_dist[1] = distanceAway(x1-1,y1,x2,y2); // up
         option_dist[2] = distanceAway(x1,y1-1,x2,y2); // left
         option_dist[3] = distanceAway(x1,y1+1,x2,y2); // right
 
@@ -523,7 +520,7 @@ public class Game{
         //go down
         if(validateRegion(x1+1,y1)) {
             option_below = this.board.getBoard_piece(x1 + 1, y1);
-            if(option_below == null && option_dist[1] > currentDistanceAway){
+            if(option_below == null && option_dist[0] > currentDistanceAway){
                 result[0] = x1+1;
                 result[1] = y1;
                 return result;
@@ -532,7 +529,7 @@ public class Game{
         //go up
         if(validateRegion(x1-1,y1)) {
             option_above = this.board.getBoard_piece(x1 - 1, y1);
-            if(option_above == null && option_dist[0]  > currentDistanceAway){
+            if(option_above == null && option_dist[1]  > currentDistanceAway){
                 result[0] = x1-1;
                 result[1] = y1;
                 return result;
