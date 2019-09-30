@@ -356,7 +356,9 @@ public class Game{
                             else {
 
                                 double prob_smaller = probabilityEqualOrSmaller(attack_piece.getValue());
-                                if (prob_smaller == 0 || (prob_smaller >= 0.40) )
+                                if(attack_piece.getValue() == 2)
+                                    moveTo = moveToward(attack_piece, x, y, i, j);
+                                else if (prob_smaller == 0 || (prob_smaller >= 0.40) )
                                     moveTo = moveToward(attack_piece, x, y, i, j);
                                 else if (prob_smaller < 0.40)
                                     moveTo = moveAway(attack_piece, x, y, i, j);
