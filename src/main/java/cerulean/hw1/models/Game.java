@@ -434,7 +434,7 @@ public class Game{
         Piece option_above;
         Piece option_right;
         Piece option_left;
-
+        //down
         if(validateRegion(x1+1,y1)) {
             option_below = this.board.getBoard_piece(x1 + 1, y1);
             if(option_below == null && option_dist[0] <currentDistanceAway){
@@ -443,7 +443,7 @@ public class Game{
                 return result;
             }
         }
-
+        //up
         if(validateRegion(x1-1,y1)) {
             option_above = this.board.getBoard_piece(x1 - 1, y1);
             if(option_above == null && option_dist[1] <currentDistanceAway){
@@ -452,18 +452,20 @@ public class Game{
                 return result;
             }
         }
-        if(validateRegion(x1-1,y1)){
+        //left
+        if(validateRegion(x1,y1-1)){
             option_left = this.board.getBoard_piece(x1,y1-1);
             if(option_left == null && option_dist[2] <currentDistanceAway){
                 result[0] = x1;
                 result[1] = y1-1;
                 return result;
             }}
-        if(validateRegion(x1-1,y1)){
+        //right
+        if(validateRegion(x1,y1+1)){
             option_right = this.board.getBoard_piece(x1,y1+1);
             if(option_right == null && option_dist[0] <currentDistanceAway){
-                result[0] = x1+1;
-                result[1] = y1;
+                result[0] = x1;
+                result[1] = y1+1;
                 return result;
             }
         }
