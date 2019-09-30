@@ -98,7 +98,7 @@ function cellClickHandler() {
 const indexToLetter = ['A','B','C','D','E','F','G','H','I','J'];
 
 function indecesToJQ(indeces) {
-    return $('#' + indexToLetter[indeces[1]] + indeces[0]);
+    return $('#' + indexToLetter[indeces[0]] + indeces[1]);
 }
 
 function receiveMove(data, textStatus, xhr) {
