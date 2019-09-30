@@ -356,9 +356,9 @@ public class Game{
                             else {
 
                                 double prob_smaller = probabilityEqualOrSmaller(attack_piece.getValue());
-                                if (prob_smaller == 0 || (prob_smaller > (1 - prob_smaller)))
+                                if (prob_smaller == 0 || (prob_smaller >= 0.40) )
                                     moveTo = moveToward(attack_piece, x, y, i, j);
-                                else if ((1 - prob_smaller) > prob_smaller)
+                                else if (prob_smaller < 0.40)
                                     moveTo = moveAway(attack_piece, x, y, i, j);
                                 else
                                     moveTo = moveToward(attack_piece, x, y, i, j);
@@ -388,44 +388,51 @@ public class Game{
         result[0] = opt[0];
         result[1] = opt[1];
 
+
         //Look around this point and move to an empty spot
         //below
-        if(validateRegion(result[0]+1,result[1])){
-            Piece p = this.board.getBoard_piece(result[0]+1,result[1]);
-            if(p == null){
-                result[2] = result[0]+1;
-                result[3] = result[1];
-                return result;
+        int rand;
+        while (true) {
+
+            rand = new Random().nextInt(4);
+
+            if (validateRegion(result[0] + 1, result[1]) && rand == 0) {
+                Piece p = this.board.getBoard_piece(result[0] + 1, result[1]);
+                if (p == null) {
+                    result[2] = result[0] + 1;
+                    result[3] = result[1];
+                    return result;
+                }
+            }
+            //left
+            if (validateRegion(result[0], result[1] - 1) && rand == 1) {
+                Piece p = this.board.getBoard_piece(result[0], result[1] - 1);
+                if (p == null) {
+                    result[2] = result[0];
+                    result[3] = result[1] - 1;
+                    return result;
+                }
+            }
+            //right
+            if (validateRegion(result[0], result[1])  && rand == 2) {
+                Piece p = this.board.getBoard_piece(result[0], result[1] + 1);
+                if (p == null) {
+                    result[2] = result[0];
+                    result[3] = result[1] + 1;
+                    return result;
+                }
+            }
+            //up
+            if (validateRegion(result[0] - 1, result[1]) && rand == 3) {
+                Piece p = this.board.getBoard_piece(result[0] - 1, result[1]);
+                if (p == null) {
+                    result[2] = result[0] - 1;
+                    result[3] = result[1];
+                    return result;
+                }
             }
         }
-        //left
-        if(validateRegion(result[0],result[1]-1)){
-            Piece p = this.board.getBoard_piece(result[0],result[1]-1);
-            if(p == null){
-                result[2] = result[0];
-                result[3] = result[1]-1;
-                return result;
-            }
-        }
-        //right
-        if(validateRegion(result[0],result[1])){
-            Piece p = this.board.getBoard_piece(result[0],result[1]+1);
-            if(p == null){
-                result[2] = result[0];
-                result[3] = result[1]+1;
-                return result;
-            }
-        }
-        //up
-        if(validateRegion(result[0]-1,result[1])){
-            Piece p = this.board.getBoard_piece(result[0]-1,result[1]);
-            if(p == null){
-                result[2] = result[0]-1;
-                result[3] = result[1];
-                return result;
-            }
-        }
-        return result;
+        //return result;
     }
 
     public int[] moveToward(Piece attack, int x1,int y1,int x2,int y2){
@@ -589,7 +596,7 @@ public class Game{
     }
     public double probabilityEqualOrSmaller(int k){
         int counter = 0;
-        for(int i = k; k > -1 ; k--){
+        for(int i = k; i > -1 ; i--){
             counter += (totalPiece_table.get(i)-foundPiece_table.get(i));
         }
         //Exceptions
