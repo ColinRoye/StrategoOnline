@@ -91,11 +91,16 @@ public class GameController {
 ////            if(game ==null){
 ////                return;
 ////            }
+            game.board.printToConsole();
             Move playeMove = game.move(from,to, true);
+            game.board.printToConsole();
 
             int[] ai_coords = game.runAI();
             Move aiMove = game.move(new int[]{ai_coords[0], ai_coords[1]}, new int[]{ai_coords[2], ai_coords[3]},false);
+            game.board.printToConsole();
             gameService.save(game);
+
+
 
     }
 
