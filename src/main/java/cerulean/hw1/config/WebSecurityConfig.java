@@ -55,8 +55,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/register").permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/css/**").permitAll()
-                .antMatchers("js/**").permitAll()
+                .antMatchers("/js/**").permitAll()
                 .antMatchers("/img/**").permitAll()
+                .antMatchers("/favicon.ico").permitAll()
+                .antMatchers("/game").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 // TODO: Replace this with REST login if you wanna be fancy
