@@ -81,7 +81,7 @@ function cellClickHandler() {
             contentType: 'application/json',
             success: receiveMove,
             data: JSON.stringify({
-                'game_id' : window.gameID,
+                'gameId' : window.gameId,
                 'from' : [fromXIndex, fromYIndex],
                 'to' : [toXIndex, toYIndex]
             }),
@@ -246,7 +246,7 @@ function startButtonHandler() {
         contentType: 'application/json',
         data: JSON.stringify(postObject),
         success: function(data) {
-            window.gameID = data.game_id;
+            window.gameId = data.gameId;
             $('.player-piece').on('click', playerPieceMove);
             $('.cell').on('click', cellClickHandler);
             $('#start-btn').remove();
@@ -255,6 +255,7 @@ function startButtonHandler() {
             // TODO: toast player with error message
         }
     });
+    console.log(window.gameId);
     console.log(postObject);
 }
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/games")
@@ -43,7 +44,8 @@ public class GameController {
         UserDetails principalUser = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = principalUser.getUsername();
         Account account = mongoDBUserDetailsManager.loadAccountByUsername(username);
-        Game game = new Game(username);
+        String id = UUID.randomUUID().toString();
+        Game game = new Game(id);
         //return new Gson().toJson(s);
         System.out.println(board);
 //        board = board.split(":")[2].replace("}", " ");
@@ -51,28 +53,29 @@ public class GameController {
 
         ArrayList<ArrayList<String>> b = new Gson().fromJson(board, new TypeToken<ArrayList<ArrayList<String>>>(){}.getType());
         game.getBoard().postBoard(b);
-        gameService.save(new Game(username));
+        gameService.save(game);
         account.getGames().add(game.getGameId());
         mongoDBUserDetailsManager.persistAccount(account);
-        return new Gson().toJson(game.getBoard());
+        return game.getGameId();
+
 
     }
     @RequestMapping(value ="/move", method = RequestMethod.POST)
-    public void move(@RequestBody String gameId, int[] to, int[] from) throws Exception {
-            System.out.print(gameId);
-            Game game = new Gson().fromJson(gameService.getGame(gameId), Game.class);
-
-
-//            to = new int[2];
-//            from = new int[2];
-//            if(game ==null){
-//                return;
-//            }
-            Move playeMove = game.move(new int[]{2,3}, new int[]{4,3}, true);
-
-            int[] ai_coords = game.runAI();
-            Move aiMove = game.move(new int[]{ai_coords[0], ai_coords[1]}, new int[]{ai_coords[2], ai_coords[3]},false);
-            gameService.save(game);
+    public void move(@RequestBody String req) throws Exception {
+            System.out.println("test" +req + "test");
+//            Game game = gameService.getGameObj(gameId); //new Gson().fromJson(gameService.getGame(gameId), Game.class);
+//
+//
+////            to = new int[2];
+////            from = new int[2];
+////            if(game ==null){
+////                return;
+////            }
+//            Move playeMove = game.move(new int[]{2,3}, new int[]{4,3}, true);
+//
+//            int[] ai_coords = game.runAI();
+//            Move aiMove = game.move(new int[]{ai_coords[0], ai_coords[1]}, new int[]{ai_coords[2], ai_coords[3]},false);
+//            gameService.save(game);
 
     }
 

@@ -19,6 +19,10 @@ public class GameService {
         Gson gson = new Gson();
         return gson.toJson(gameRepository.findByGameId(gameId));
     }
+    public Game getGameObj(String gameId){
+        Gson gson = new Gson();
+        return (gameRepository.findByGameId(gameId));
+    }
     public void save(Game game){
         gameRepository.save(game);
     }

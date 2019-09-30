@@ -56,7 +56,7 @@ public class Board{
         //new Piece("General",9,1,true)
         //new Piece("Marshal",10,1,true)
         //new Piece("Bomb",11,0,true)
-        setDefaultBoard(false,3);
+        setDefaultBoard(false,0);
 
         for (int i = 0;i < result.size();i++) {
             for (int j = 0 ;j < result.get(i).size() ; j++) {
