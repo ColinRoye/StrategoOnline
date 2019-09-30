@@ -1,14 +1,24 @@
 var rowTemplate;
 
 $(function() {
-    $.get('/api/games', fillTable);
+    console.log('init');
+    $.get('/api/games/', fillTable);
 });
 
-function fillTable(games) {
-    console.log(games);
-    for (game in games) {
-        $.get('/api/games/get/' + game, function(data){
-            appendRow(game, data.winner);
+function fillTable(data) {
+    var games = JSON.parse(data);
+    console.log(data);
+    for (var i=0; i<games.length; i++) {
+        $.ajax({
+            url:'/api/games/get/' + games[i],
+            type: 'GET',
+            dataType: 'json',
+            success: function(data){
+                if (data == null){
+                    $('#games-info').text("Error getting data from server. Please try again later");
+                }
+                appendRow(data.gameId, data.winner);
+            }
         });
     }
 }
