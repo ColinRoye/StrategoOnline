@@ -127,7 +127,7 @@ public class GameController {
         int[] player_coords = game.runAI(true);
         Move playerMove = game.move(new int[]{player_coords[0], player_coords[1]}, new int[]{player_coords[2], player_coords[3]},true);
 
-        System.out.printf("\nAI MOVED FROM %d,%d TO %d,%d \n ",player_coords[0],player_coords[1],player_coords[2],player_coords[3]);
+        System.out.printf("\nPLAYER MOVED FROM %d,%d TO %d,%d \n ",player_coords[0],player_coords[1],player_coords[2],player_coords[3]);
         System.out.println("------------PLAYER MOVE BOARD-----------");
         game.board.printToConsole();
         System.out.println("------------             -----------");
