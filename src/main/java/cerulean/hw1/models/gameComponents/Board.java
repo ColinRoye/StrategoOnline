@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Board{
 
     public Piece[][] board_pieces;
+    public Piece[][] initial_board_pieces;
     public int num_row;
     public int num_col;
     public int totalPieces = 40; //player pieces
@@ -15,6 +16,7 @@ public class Board{
     public Board(int i, int j) {
 
         this.board_pieces = new Piece[i][j];
+        this.initial_board_pieces = new Piece[i][j];
         this.num_col = j;
         this.num_row = i;
     }
@@ -102,6 +104,15 @@ public class Board{
                         break;
                 }
                 this.setBoard_piece(i+6,j,newPiece);
+            }
+        }
+        setInitialBoard();
+    }
+
+    public void setInitialBoard(){
+        for (int i=0; i<this.num_row; i++){
+            for (int j=0; j<this.num_col; j++){
+                this.initial_board_pieces[i][j] = this.board_pieces[i][j];
             }
         }
     }

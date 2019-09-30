@@ -75,6 +75,8 @@ function cellClickHandler() {
         let fromYIndex = parseInt(selectedPiece.parent().attr('data-row'));
         let toXIndex = parseInt(cell.getAttribute('data-col'));
         let toYIndex = parseInt(cell.getAttribute('data-row'));
+        $('.cell').off('click');
+        $('.player-piece').off('click');
         $.ajax({
             url: '/api/games/move',
             type: 'POST',
@@ -86,6 +88,8 @@ function cellClickHandler() {
                 'to': [toXIndex, toYIndex]
             }),
             error: function () {
+                $('.player-piece').on('click', playerPieceMove);
+                $('.cell').on('click', cellClickHandler);
                 // TODO: toast player with error message
             }
         });
@@ -96,6 +100,8 @@ function cellClickHandler() {
 }
 
 function receiveMove(data, textStatus, xhr) {
+    $('.player-piece').on('click', playerPieceMove);
+    $('.cell').on('click', cellClickHandler);
     $('.selected').removeClass('selected');
     data = JSON.parse(data);
 
@@ -180,6 +186,16 @@ function animatePiece(move, callback, callbackArg) {
                                 if (callback && callbackArg) {
                                     callback(callbackArg);
                                 }
+                                console.log(move.target)
+                                if (move.target == 0){
+                                    $('.player-piece').off('click');
+                                    $('.cell').off('click');
+                                    $('#main').append(
+                                        $('<div>').attr('id', 'result-banner')
+                                            .append($('<span>').text((move.actor === 'PLAYER')? 'VICTORY':'DEFEAT'))
+                                            .append($('<a>').attr('id', 'play-again').attr('href', '/play').text('PLAY AGAIN'))
+                                            .append($('<a>').attr('id', 'watch').attr('href', '/game?' + gameId).text('WATCH GAME')));
+                                }
                             });
                         });
                         defendingPiece.remove();
@@ -242,15 +258,6 @@ function animatePiece(move, callback, callbackArg) {
                         }
                     });
                 }
-                if (move.target === 0){
-                    $('.player-piece').off('click');
-                    $('.cell').off('click');
-                    $('#main').append(
-                        $('<div>').attr('id', 'result-banner')
-                            .append($('<span>').text((move.actor === 'PLAYER')? 'VICTORY':'DEFEAT'))
-                            .append($('<a>').attr('id', 'play-again').attr('href', '/play').text('PLAY AGAIN'))
-                            .append($('<a>').attr('id', 'watch').attr('href', '/game?' + gameID).text('WATCH GAME')));
-                }
             }, 1000);
         });
     }
@@ -280,8 +287,6 @@ function startButtonHandler() {
             // TODO: toast player with error message
         }
     });
-    console.log(window.gameId);
-    console.log(postObject);
 }
 
 $(function () {
