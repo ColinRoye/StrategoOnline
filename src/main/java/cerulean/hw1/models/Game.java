@@ -296,9 +296,23 @@ public class Game{
 
 
         int numberOfOptions = potential.size();
+        int rand_var = new Random().nextInt(2);
+        int start;
+        int stop;
+        int increment;
+        if(rand_var == 1){
+            start = numberOfOptions - 1;
+            stop = -1;
+            increment = -1;
+        }
+        else{
+            start = 0;
+            stop = numberOfOptions;
+            increment = 1;
+        }
         //Look for enemy pieces around potential pieces
         outerloop:
-        for(int k = 0; k < numberOfOptions; k++){
+        for(int k = start; k < stop; k += increment){
             int[] opt = potential.get(k);
             int x = opt[0];
             int y = opt[1];
