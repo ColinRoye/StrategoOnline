@@ -246,7 +246,7 @@ function startButtonHandler() {
         contentType: 'application/json',
         data: JSON.stringify(postObject),
         success: function(data) {
-            window.gameId = data.gameId;
+            window.gameId = data;
             $('.player-piece').on('click', playerPieceMove);
             $('.cell').on('click', cellClickHandler);
             $('#start-btn').remove();

@@ -63,19 +63,39 @@ public class GameController {
     @RequestMapping(value ="/move", method = RequestMethod.POST)
     public void move(@RequestBody String req) throws Exception {
             System.out.println("test" +req + "test");
-//            Game game = gameService.getGameObj(gameId); //new Gson().fromJson(gameService.getGame(gameId), Game.class);
+
+            String[] s = req.split(":");
+            String gameId = s[1].substring(1,s[1].length()-8);
+            String fromStr = s[2].substring(0,s[2].length()-5);
+            String toStr = s[3].substring(0,s[3].length()-1);
+
+            ArrayList<Integer> temp = (new Gson().fromJson(toStr, new TypeToken<ArrayList<Integer>>(){}.getType()));
+            Integer[] tempArr = temp.toArray(new Integer[temp.size()]);
+            int[] to = new int[2];
+            to[0] = tempArr[0].intValue();
+            to[1] = tempArr[1].intValue();
+
+            ArrayList<Integer> temp2 = (new Gson().fromJson(fromStr, new TypeToken<ArrayList<Integer>>(){}.getType()));
+            Integer[] tempArr2 = temp2.toArray(new Integer[temp2.size()]);
+            int[] from = new int[2];
+            from[0] = tempArr2[0].intValue();
+            from[1] = tempArr2[1].intValue();
 //
+            Game game = gameService.getGameObj(gameId); //new Gson().fromJson(gameService.getGame(gameId), Game.class);
+            System.out.println("from: " +from[0]+" " + from[1]+"\n");
+            System.out.println("to: " +to[0]+" " + to[1]+"\n");
+
 //
 ////            to = new int[2];
 ////            from = new int[2];
 ////            if(game ==null){
 ////                return;
 ////            }
-//            Move playeMove = game.move(new int[]{2,3}, new int[]{4,3}, true);
-//
-//            int[] ai_coords = game.runAI();
-//            Move aiMove = game.move(new int[]{ai_coords[0], ai_coords[1]}, new int[]{ai_coords[2], ai_coords[3]},false);
-//            gameService.save(game);
+            Move playeMove = game.move(from,to, true);
+
+            int[] ai_coords = game.runAI();
+            Move aiMove = game.move(new int[]{ai_coords[0], ai_coords[1]}, new int[]{ai_coords[2], ai_coords[3]},false);
+            gameService.save(game);
 
     }
 
