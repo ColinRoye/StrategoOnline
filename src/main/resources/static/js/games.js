@@ -7,7 +7,7 @@ $(function() {
 function fillTable(games) {
     console.log(games);
     for (game in games) {
-        $.get('/api/games/' + game, function(data){
+        $.get('/api/games/get/' + game, function(data){
             appendRow(game, data.winner);
         });
     }
