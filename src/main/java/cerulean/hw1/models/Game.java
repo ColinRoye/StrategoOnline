@@ -197,6 +197,7 @@ public class Game{
             }
         }
         this.moveCounter++;
+        move.setMoveIndex(moveCounter);
         moves.add(move);
 
         return move;
@@ -437,7 +438,7 @@ public class Game{
         Piece option_above;
         Piece option_right;
         Piece option_left;
-
+        //down
         if(validateRegion(x1+1,y1)) {
             option_below = this.board.getBoard_piece(x1 + 1, y1);
             if(option_below == null && option_dist[0] <currentDistanceAway){
@@ -446,7 +447,7 @@ public class Game{
                 return result;
             }
         }
-
+        //up
         if(validateRegion(x1-1,y1)) {
             option_above = this.board.getBoard_piece(x1 - 1, y1);
             if(option_above == null && option_dist[1] <currentDistanceAway){
@@ -455,18 +456,20 @@ public class Game{
                 return result;
             }
         }
-        if(validateRegion(x1-1,y1)){
+        //left
+        if(validateRegion(x1,y1-1)){
             option_left = this.board.getBoard_piece(x1,y1-1);
             if(option_left == null && option_dist[2] <currentDistanceAway){
                 result[0] = x1;
                 result[1] = y1-1;
                 return result;
             }}
-        if(validateRegion(x1-1,y1)){
+        //right
+        if(validateRegion(x1,y1+1)){
             option_right = this.board.getBoard_piece(x1,y1+1);
             if(option_right == null && option_dist[0] <currentDistanceAway){
-                result[0] = x1+1;
-                result[1] = y1;
+                result[0] = x1;
+                result[1] = y1+1;
                 return result;
             }
         }
@@ -597,16 +600,16 @@ public class Game{
 
         //Exceptions
         //Spy attacks Miner or Flag
-        if(p1_type == "Spy" && (p2_type == "Marshal" || p2_type == "Flag")) {
+        if(p1_type.equals("Spy") && (p2_type.equals("Marshal") || p2_type.equals("Flag"))) {
             System.out.println("SPY DEFEATED Marshal | FLAG ");
             return p1_win;
         }
         //Miner Attacks Bomb
-        else if(p1_type == "Miner" && p2_type == "Bomb"){
+        else if(p1_type.equals("Miner") && p2_type.equals("Bomb")){
             System.out.println("MINER DEFEATED BOMB");
             return p1_win;
         }
-        else if(p2_type == "BOMB") {
+        else if(p2_type.equals("BOMB")) {
             System.out.println("LOST TO BOMB");
             return p2_win;
         }

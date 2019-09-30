@@ -11,10 +11,10 @@ function playerPieceSwap() {
         $('.player-piece').removeClass('selected');
         return;
     }
-    
+
     let selectedPiece = $('.selected');
     $('.piece').removeClass('selected');
-    if (selectedPiece.length === 0){
+    if (selectedPiece.length === 0) {
         $(this).addClass('selected');
     }
     else {
@@ -29,63 +29,63 @@ function playerPieceSwap() {
             .appendTo('#gameboard')
             .css('position', 'fixed')
             .css('left', thisX)
-            .css('top',  thisY)
+            .css('top', thisY)
             .animate({
                 'left': selectedX,
                 'top': selectedY
-            }, 
-            {
-                queue: false,
-                complete : function() {
-                    thisPiece.appendTo(selectedParent);
-                    thisPiece.show();
-                    thisAnimated.remove();
-                }
-            });
+            },
+                {
+                    queue: false,
+                    complete: function () {
+                        thisPiece.appendTo(selectedParent);
+                        thisPiece.show();
+                        thisAnimated.remove();
+                    }
+                });
         let selectedAnimated = selectedPiece.clone()
             .appendTo('#gameboard')
             .css('position', 'fixed')
             .css('left', selectedX)
-            .css('top',  selectedY)
+            .css('top', selectedY)
             .animate({
                 'left': thisX,
                 'top': thisY
-            }, 
-            {
-                queue: false,
-                complete: function() {
-                    selectedPiece.appendTo(thisParent);
-                    selectedPiece.show();
-                    selectedAnimated.remove();
-                }
-            });
+            },
+                {
+                    queue: false,
+                    complete: function () {
+                        selectedPiece.appendTo(thisParent);
+                        selectedPiece.show();
+                        selectedAnimated.remove();
+                    }
+                });
         thisPiece.hide();
         selectedPiece.hide();
-    }   
+    }
 }
 
 function cellClickHandler() {
     let cell = this;
-    if ($(cell).children().length > 0 && $(cell).children().first().hasClass('player-piece')){
+    if ($(cell).children().length > 0 && $(cell).children().first().hasClass('player-piece')) {
         return;
     }
     let selectedPiece = $('.selected');
-    if (selectedPiece.length){
+    if (selectedPiece.length) {
         let fromXIndex = parseInt(selectedPiece.parent().attr('data-col'));
         let fromYIndex = parseInt(selectedPiece.parent().attr('data-row'));
-        let toXIndex   = parseInt(cell.getAttribute('data-col'));
-        let toYIndex   = parseInt(cell.getAttribute('data-row'));
+        let toXIndex = parseInt(cell.getAttribute('data-col'));
+        let toYIndex = parseInt(cell.getAttribute('data-row'));
         $.ajax({
             url: '/api/games/move',
             type: 'POST',
             contentType: 'application/json',
             success: receiveMove,
             data: JSON.stringify({
-                'gameId' : window.gameId,
-                'from' : [fromXIndex, fromYIndex],
-                'to' : [toXIndex, toYIndex]
+                'gameId': window.gameId,
+                'from': [fromXIndex, fromYIndex],
+                'to': [toXIndex, toYIndex]
             }),
-            error: function() {
+            error: function () {
                 // TODO: toast player with error message
             }
         });
@@ -95,47 +95,37 @@ function cellClickHandler() {
     }
 }
 
-const indexToLetter = ['A','B','C','D','E','F','G','H','I','J'];
-
-function indecesToJQ(indeces) {
-    return $('#' + indexToLetter[indeces[0]] + indeces[1]);
-}
-
 function receiveMove(data, textStatus, xhr) {
     $('.selected').removeClass('selected');
-    data=JSON.parse(data);
+    data = JSON.parse(data);
 
     animatePiece(data.moves[0], animatePiece, data.moves[1]);
 }
 
-function test(optionA, optionB){
-    optionA('A');
-    if (optionB)
-        optionB('B');
-}
+var explosion = $('<img>').attr('src', '/img/explosion.png').css('position', 'fixed');
 
-function animatePiece(move, callback, callbackArg){
+function animatePiece(move, callback, callbackArg) {
     let piece = indecesToJQ(move.from).children().first();
     let animatedPiece = piece.clone()
         .appendTo('#gameboard')
         .css('position', 'fixed')
         .css('left', piece.offset().left)
         .css('top', piece.offset().top);
-    if (move.result === "MOVED"){
+    if (move.result === "MOVED") {
         piece.appendTo(indecesToJQ(move.to));
         animatedPiece.animate({
             'left': piece.offset().left,
             'top': piece.offset().top
         },
-        function() {
-            piece.show();
-            animatedPiece.remove();
-            setTimeout(function() {
-                if (callback && callbackArg){
-                    callback(callbackArg);
-                }
+            function () {
+                piece.show();
+                animatedPiece.remove();
+                setTimeout(function () {
+                    if (callback && callbackArg) {
+                        callback(callbackArg);
+                    }
+                });
             });
-        });
         piece.hide()
     }
     else {
@@ -166,28 +156,28 @@ function animatePiece(move, callback, callbackArg){
         animatedPiece.animate({
             'left': interumX,
             'top': interumY
-        }, function() {
+        }, function () {
             piece.text(move.subject);
-            animatedPiece.text(move.subject);
-            defendingPiece.text(move.target);
-            setTimeout(function() {
-                if (move.result === 'WON'){
+            animatedPiece.text(pieceIntToValue(move.subject));
+            defendingPiece.text(pieceIntToValue(move.target));
+            setTimeout(function () {
+                if (move.result === 'WON') {
                     x = defendingPiece.offset().left;
                     y = defendingPiece.offset().top;
                     defendingPiece.animate({
-                        'left': defendingPiece.offset().left + defendingPiece.width() / 2,
-                        'top': defendingPiece.offset().top + defendingPiece.height() / 2,
-                        'width' : 0, 
-                        'height' : 0
-                    }, function() {
+                        'left': x + defendingPiece.width() / 2,
+                        'top': y + defendingPiece.height() / 2,
+                        'width': 0,
+                        'height': 0
+                    }, function () {
                         animatedPiece.animate({
                             'left': x,
                             'top': y
-                        }, function() {
+                        }, function () {
                             piece.show();
                             animatedPiece.remove();
-                            setTimeout(function() {
-                                if (callback && callbackArg){
+                            setTimeout(function () {
+                                if (callback && callbackArg) {
                                     callback(callbackArg);
                                 }
                             });
@@ -197,22 +187,59 @@ function animatePiece(move, callback, callbackArg){
                     });
                 }
                 if (move.result === 'LOST') {
+                    if (move.target == 11) {
+                        explosion.css({
+                            'width': defendingPiece.width(),
+                            'height' : defendingPiece.height()
+                        });
+                        defendingPiece.parent().append(explosion);
+                    }
                     animatedPiece.animate({
-                        'left' : animatedPiece.offset().left + animatedPiece.width() / 2,
-                        'top' : animatedPiece.offset().top + animatedPiece.height() / 2,
-                        'width' : 0, 
-                        'height' : 0
-                    }, function() {
+                        'left': animatedPiece.offset().left + animatedPiece.width() / 2,
+                        'top': animatedPiece.offset().top + animatedPiece.height() / 2,
+                        'width': 0,
+                        'height': 0
+                    }, function () {
+                        if (move.target == 11){
+                            explosion.remove();
+                        }
                         animatedPiece.remove();
                         piece.remove();
-                        if (move.target === 'B') {
-                            defendingPiece.remove();
-                        }
-                        setTimeout(function() {
-                            if (callback && callbackArg){
+                        setTimeout(function () {
+                            if (callback && callbackArg) {
                                 callback(callbackArg);
                             }
                         });
+                    });
+                }
+                if (move.result === "DRAW"){
+                    animatedPiece.animate({
+                        'left': animatedPiece.offset().left + animatedPiece.width() / 2,
+                        'top': animatedPiece.offset().top + animatedPiece.height() / 2,
+                        'width': 0,
+                        'height': 0
+                    }, {
+                        queue: false,
+                        complete: function() {
+                            animatedPiece.remove();
+                            piece.remove();
+                            setTimeout(function () {
+                                if (callback && callbackArg) {
+                                    callback(callbackArg);
+                                }
+                            });
+                        }
+                    });
+                    defendingPiece.animate({
+                        'left': defendingPiece.offset().left + defendingPiece.width() / 2,
+                        'top': defendingPiece.offset().top + defendingPiece.height() / 2,
+                        'width': 0,
+                        'height': 0
+                    }, {
+                        queue: false,
+                        complete: function() {
+                            defendingPiece.remove();
+                        }
                     });
                 }
             }, 1000);
@@ -220,25 +247,12 @@ function animatePiece(move, callback, callbackArg){
     }
 }
 
-function pieceValueToInt(value){
-    switch (value){
-        case 'F':
-            return 0;
-        case 'S':
-            return 1;
-        case 'B':
-            return 11;
-        default:
-            return parseInt(value);
-    }
-}
-
 function startButtonHandler() {
     $('.player-piece').off('click');
-    let JQrows = [ $('.G'), $('.H'), $('.I'), $('.J') ];
+    let JQrows = [$('.G'), $('.H'), $('.I'), $('.J')];
     let postObject = [new Array(10), new Array(10), new Array(10), new Array(10)];
-    for (let i=0; i<4; i++){
-        for (let j=0; j<10; j++){
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 10; j++) {
             postObject[i][j] = pieceValueToInt($(JQrows[i][j]).children().first().text());
         }
     }
@@ -247,13 +261,13 @@ function startButtonHandler() {
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(postObject),
-        success: function(data) {
+        success: function (data) {
             window.gameId = data;
             $('.player-piece').on('click', playerPieceMove);
             $('.cell').on('click', cellClickHandler);
             $('#start-btn').remove();
         },
-        error: function() {
+        error: function () {
             // TODO: toast player with error message
         }
     });
@@ -261,7 +275,7 @@ function startButtonHandler() {
     console.log(postObject);
 }
 
-$(function() {
+$(function () {
     $('#start-btn').on('click', startButtonHandler);
     $('.player-piece').on('click', playerPieceSwap);
 });
