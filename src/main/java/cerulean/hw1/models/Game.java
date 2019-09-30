@@ -21,7 +21,7 @@ public class Game{
 
     public Account player;
     public int moveCounter;
-    public int winner;
+    public String winner;
     public Board board;
     public Map<Integer, Integer> totalPiece_table = new Hashtable<>();
     public Map<Integer, Integer> foundPiece_table = new Hashtable<>();
@@ -31,6 +31,8 @@ public class Game{
     public static final String LOST = "LOST";
     public static final String MOVED = "MOVED";
     public static final String DRAW = "DRAW";
+    public static final String PLAYER_WIN = "WIN";
+    public static final String AI_WIN = "LOST";
 
 
     //Constructor
@@ -40,7 +42,7 @@ public class Game{
         this.gameId = gameId;
         //this.player = player;
         this.moveCounter = 0;
-        this.winner = 0;
+
         this.board = new Board(10,10);
 
         //Table for all possible pieces
@@ -147,7 +149,16 @@ public class Game{
         else{
             String battleResult = battle(moveFrom_piece,moveTo_piece);
             move.setResult(battleResult);
-            if(battleResult.equals(WON)){  //First Piece won the battle
+
+            if(battleResult.equals("FLAG CAPTURED")){
+                if(is_player){
+                    this.winner = PLAYER_WIN;
+                    move.setResult(PLAYER_WIN);}
+                else{
+                    this.winner = AI_WIN;
+                    move.setResult(AI_WIN);}
+            }
+            else if(battleResult.equals(WON)){  //First Piece won the battle
                 this.board.setBoard_piece(x,y,moveFrom_piece);
                 this.board.setBoard_piece(i,j,null);
                 moveFrom_piece.setHidden(false);
@@ -324,7 +335,7 @@ public class Game{
 
                             if (!test_piece.isHidden() && !attack_piece.getType().equals("Bomb")) {
 
-                                if (battle(attack_piece, test_piece) == WON) {
+                                if (battle(attack_piece, test_piece) == WON ) {
                                     moveTo = moveToward(attack_piece, x, y, i, j);
                                 }
                                 else
@@ -595,6 +606,10 @@ public class Game{
         String p1_type = p1.getType();
         String p2_type = p2.getType();
 
+        if(p2_type.equals("Flag")){
+            return "FLAG CAPTURED";
+        }
+
         //Exceptions
         //Spy attacks Miner or Flag
         if(p1_type.equals("Spy") && (p2_type.equals("Marshal") || p2_type.equals("Flag"))) {
@@ -665,11 +680,11 @@ public class Game{
         this.moveCounter = moveCounter;
     }
 
-    public int getWinner() {
+    public String getWinner() {
         return winner;
     }
 
-    public void setWinner(int winner) {
+    public void setWinner(String winner) {
         this.winner = winner;
     }
 
