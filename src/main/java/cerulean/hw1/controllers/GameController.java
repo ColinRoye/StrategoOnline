@@ -72,14 +72,14 @@ public class GameController {
             ArrayList<Integer> temp = (new Gson().fromJson(toStr, new TypeToken<ArrayList<Integer>>(){}.getType()));
             Integer[] tempArr = temp.toArray(new Integer[temp.size()]);
             int[] to = new int[2];
-            to[0] = tempArr[0].intValue();
-            to[1] = tempArr[1].intValue();
+            to[1] = tempArr[0].intValue();
+            to[0] = tempArr[1].intValue();
 
             ArrayList<Integer> temp2 = (new Gson().fromJson(fromStr, new TypeToken<ArrayList<Integer>>(){}.getType()));
             Integer[] tempArr2 = temp2.toArray(new Integer[temp2.size()]);
             int[] from = new int[2];
-            from[0] = tempArr2[0].intValue();
-            from[1] = tempArr2[1].intValue();
+            from[1] = tempArr2[0].intValue();
+            from[0] = tempArr2[1].intValue();
 //
             Game game = gameService.getGameObj(gameId); //new Gson().fromJson(gameService.getGame(gameId), Game.class);
             System.out.println("from: " +from[0]+" " + from[1]+"\n");
