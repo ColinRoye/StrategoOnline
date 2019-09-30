@@ -71,7 +71,7 @@ body {
             left: 50%;
             top: 50%;
             transform: translate(-50%, -25%);
-            background-color: white;
+            background-color: $bg;
             color: $base;
             font-weight: bold;
             border-radius: 25px;
@@ -101,6 +101,95 @@ body {
             }
             @media screen and (max-width: 300px){
                 font-size: 1em;
+            }
+        }
+
+        #result-banner {
+            display: grid;
+            grid-template-areas: 
+                'result     result'
+                'play-again watch';
+            position: fixed;
+            justify-content: center;
+            width: 70vmin;
+            background-image: linear-gradient(to bottom right, lighten($base, 10%), $base);
+            color: white;
+            border-radius: 50px;
+            
+            span{
+                grid-area: result;
+                text-align: center;
+                font-weight: bold;
+
+                font-size: 5rem;
+                @media screen and (max-height: 660px){
+                    font-size: 4em;
+                }
+                @media screen and (max-width: 680px){
+                    font-size: 4em;
+                }
+                @media screen and (max-height: 550px){
+                    font-size: 3em;
+                }
+                @media screen and (max-width: 540px){
+                    font-size: 3em;
+                }
+                @media screen and (max-height: 430px){
+                    font-size: 2em;
+                }
+                @media screen and (max-width: 400px){
+                    font-size: 2em;
+                }
+                @media screen and (max-height: 270px){
+                    font-size: 1em;
+                }
+                @media screen and (max-width: 300px){
+                    font-size: 1em;
+                }
+            }
+
+            a {
+                background-color: $bg;
+                margin: 5px;
+                padding: 5px;
+                border-radius: 25px;
+                text-align: center;
+                text-decoration: none;
+                color: $base;
+
+                font-size: 1.25rem;
+                @media screen and (max-height: 660px){
+                    font-size: 1em;
+                }
+                @media screen and (max-width: 680px){
+                    font-size: 1em;
+                }
+                @media screen and (max-height: 550px){
+                    font-size: .75em;
+                }
+                @media screen and (max-width: 540px){
+                    font-size: .75em;
+                }
+                @media screen and (max-height: 430px){
+                    font-size: .5em;
+                }
+                @media screen and (max-width: 400px){
+                    font-size: .5em;
+                }
+                @media screen and (max-height: 270px){
+                    font-size: .25em;
+                }
+                @media screen and (max-width: 300px){
+                    font-size: .25em;
+                }
+            }
+
+            #play-again{
+                grid-area: play-again;
+            }
+
+            #watch {
+                grid-area: watch;
             }
         }
     }

@@ -242,6 +242,15 @@ function animatePiece(move, callback, callbackArg) {
                         }
                     });
                 }
+                if (move.target === 0){
+                    $('.player-piece').off('click');
+                    $('.cell').off('click');
+                    $('#main').append(
+                        $('<div>').attr('id', 'result-banner')
+                            .append($('<span>').text((move.actor === 'PLAYER')? 'VICTORY':'DEFEAT'))
+                            .append($('<a>').attr('id', 'play-again').attr('href', '/play').text('PLAY AGAIN'))
+                            .append($('<a>').attr('id', 'watch').attr('href', '/game?' + gameID).text('WATCH GAME')));
+                }
             }, 1000);
         });
     }
