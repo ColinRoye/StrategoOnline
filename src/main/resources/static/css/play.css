@@ -84,6 +84,10 @@ body #main #gameboard .piece {
   }
 }
 
+body #main #gameboard .hidden {
+  font-style: italic;
+}
+
 body #main #gameboard .selected {
   border: 1vmin solid white;
 }

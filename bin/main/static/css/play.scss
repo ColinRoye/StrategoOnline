@@ -63,6 +63,10 @@ body {
                 }
             }
 
+            .hidden {
+                font-style: italic;
+            }
+
             .selected {
                 border: 1vmin solid white;
             }
