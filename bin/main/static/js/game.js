@@ -30,6 +30,7 @@ function createPiece(backendPieceRep) {
     if (backendPieceRep.is_user){
         piece.addClass('player-piece');
         piece.addClass('blue-team');
+        piece.addClass('hidden');
         piece.text(pieceIntToValue(backendPieceRep.value));
     }
     else {

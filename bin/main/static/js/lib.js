@@ -90,6 +90,15 @@ function animatePiece(move, callback) {
             piece.text(move.subject);
             animatedPiece.text(pieceIntToValue(move.subject));
             defendingPiece.text(pieceIntToValue(move.target));
+            if (piece.hasClass('hidden')){
+                piece.removeClass('hidden');
+            }
+            if (animatedPiece.hasClass('hidden')){
+                animatedPiece.removeClass('hidden');
+            }
+            if (defendingPiece.hasClass('hidden')){
+                defendingPiece.removeClass('hidden');
+            }
             setTimeout(function () {
                 if (move.result === 'WON') {
                     x = defendingPiece.offset().left;
