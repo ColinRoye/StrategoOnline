@@ -231,7 +231,7 @@ public class Game{
         /* Check board for empty spaces
            if empty space is found, look for AI piece around it
          */
-        //TODO: Switch from looking for empty space to looking all pieces and looking to see if empty space is there as well enemy piece
+
         for(int i = 0 ; i < this.board.num_row ;i++){
             for(int j = 0; j< this.board.num_col;j++){
                 Piece p = board[i][j];
