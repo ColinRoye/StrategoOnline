@@ -57,6 +57,7 @@ public class GameController {
         gameService.save(game);
         account.getGames().add(game.getGameId());
         mongoDBUserDetailsManager.persistAccount(account);
+        System.out.println("GAME ID: "+ game.getGameId());
         return game.getGameId();
 
 
@@ -112,10 +113,9 @@ public class GameController {
     }
     @RequestMapping(value ="/autoplay", method = RequestMethod.POST)
     public String autoplay(@RequestBody String req) throws Exception {
-        System.out.println("test" +req + "test");
+        System.out.println("CLIENT ID: " +req);
 
-        String[] s = req.split(":\"");
-        String gameId = s[1].substring(1,s[1].length()-1);
+        String gameId = req.substring(0, req.length()-1);
 
 
         Game game = gameService.getGameObj(gameId); //new Gson().fromJson(gameService.getGame(gameId), Game.class);

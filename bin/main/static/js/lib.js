@@ -122,7 +122,7 @@ function animatePiece(move, callback) {
                         piece.appendTo(indecesToJQ(move.to));
                     });
                 }
-                if (move.result === 'LOST') {
+                else if (move.result === 'LOST') {
                     if (move.target == 11) {
                         explosion.css({
                             'width': defendingPiece.width(),
@@ -148,7 +148,7 @@ function animatePiece(move, callback) {
                         });
                     });
                 }
-                if (move.result === "DRAW"){
+                else if (move.result === "DRAW"){
                     animatedPiece.animate({
                         'left': animatedPiece.offset().left + animatedPiece.width() / 2,
                         'top': animatedPiece.offset().top + animatedPiece.height() / 2,
@@ -177,6 +177,9 @@ function animatePiece(move, callback) {
                             defendingPiece.remove();
                         }
                     });
+                }
+                else if (callback) {
+                    callback();
                 }
             }, 1000);
         });

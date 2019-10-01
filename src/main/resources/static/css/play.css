@@ -2,6 +2,10 @@ body #main {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -24,6 +28,8 @@ body #main #gameboard {
           box-shadow: 10px 10px 8px #ae95bb9d;
   width: 80vmin;
   height: 80vmin;
+  max-width: 70vh;
+  max-height: 70vh;
   padding: 3vmax 2vmax 2vmax 3vmax;
   margin: 0;
   background-image: -webkit-gradient(linear, left top, right bottom, from(#ae95bb), to(#9676a7));
@@ -42,6 +48,8 @@ body #main #gameboard .cell {
           justify-content: center;
   width: 7vmin;
   height: 7vmin;
+  max-width: 6.125vh;
+  max-height: 6.125vh;
   background-color: #858585;
   cursor: pointer;
 }
@@ -49,6 +57,8 @@ body #main #gameboard .cell {
 body #main #gameboard .piece {
   width: 6vmin;
   height: 6vmin;
+  max-width: 5.25vh;
+  max-height: 5.25vh;
   border-radius: 1vmin;
   text-align: center;
   vertical-align: center;
@@ -62,9 +72,15 @@ body #main #gameboard .piece {
   }
 }
 
-@media screen and (max-height: 600px) {
+@media screen and (max-height: 680px) {
   body #main #gameboard .piece {
     font-size: 1em;
+  }
+}
+
+@media screen and (max-height: 330px) {
+  body #main #gameboard .piece {
+    font-size: .5em;
   }
 }
 
@@ -84,8 +100,8 @@ body #main #start-btn {
   position: fixed;
   left: 50%;
   top: 50%;
-  -webkit-transform: translate(-50%, -25%);
-          transform: translate(-50%, -25%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
   background-color: white;
   color: #ae95bb;
   font-weight: bold;
@@ -95,7 +111,7 @@ body #main #start-btn {
   font-size: 5rem;
 }
 
-@media screen and (max-height: 660px) {
+@media screen and (max-height: 750px) {
   body #main #start-btn {
     font-size: 4em;
   }
@@ -107,7 +123,7 @@ body #main #start-btn {
   }
 }
 
-@media screen and (max-height: 550px) {
+@media screen and (max-height: 600px) {
   body #main #start-btn {
     font-size: 3em;
   }
@@ -119,7 +135,7 @@ body #main #start-btn {
   }
 }
 
-@media screen and (max-height: 430px) {
+@media screen and (max-height: 500px) {
   body #main #start-btn {
     font-size: 2em;
   }
@@ -131,7 +147,7 @@ body #main #start-btn {
   }
 }
 
-@media screen and (max-height: 270px) {
+@media screen and (max-height: 350px) {
   body #main #start-btn {
     font-size: 1em;
   }
@@ -140,6 +156,42 @@ body #main #start-btn {
 @media screen and (max-width: 300px) {
   body #main #start-btn {
     font-size: 1em;
+  }
+}
+
+body #main #auto-play {
+  margin-top: 1vh;
+  color: #ae95bb;
+  background-color: white;
+  border: solid;
+  border-color: #ae95bb;
+  border-radius: 25px;
+  -webkit-box-shadow: 5px 5px 8px #ae95bb9d;
+          box-shadow: 5px 5px 8px #ae95bb9d;
+  font-size: 1.5em;
+}
+
+@media screen and (max-height: 500px) {
+  body #main #auto-play {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  body #main #auto-play {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-height: 270px) {
+  body #main #auto-play {
+    font-size: .5em;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  body #main #auto-play {
+    font-size: .5em;
   }
 }
 
