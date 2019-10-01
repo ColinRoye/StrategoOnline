@@ -135,12 +135,18 @@ public class Game{
         if(desiredDistance > dof || (desiredDistance != Math.floor(desiredDistance)))
             throw new Exception("Invalid move RE: dof");
 
+        if(moveFrom_piece.getValue() == 2 && is_player){
+            if(!validateScoutMove(moveFrom,moveTo))
+                throw new Exception("SCOUT CANNOT LEAP, You're not superman. ");
+        }
         //Running into your own piece
         if(moveTo_piece != null && (moveFrom_piece.isIs_user() == moveTo_piece.isIs_user()) ){
             throw new Exception("RUNNING INTO SAME USER PIECE");
         }
+
+
         //Moving to an empty space
-        else if(moveTo_piece == null){
+        if(moveTo_piece == null){
             //Set board piece
             this.board.setBoard_piece(x,y,moveFrom_piece);
             //set current position to null
@@ -690,6 +696,64 @@ public class Game{
             m.setTarget(output);
         return m;
 
+    }
+    public boolean validateScoutMove(int[] from,int[] to){
+
+        //first figure out which direction scout is going in
+        int x1 = from[0];
+        int x2 = to[0];
+
+        int y1 = from[1];
+        int y2 = to[1];
+
+        int startCondtion;
+        int stopCondition;
+
+        int row_inc = 0;
+        int col_inc = 0;
+        int i;
+        if(x1 - x2 == 0) {
+
+            startCondtion = y1;
+            stopCondition = y2;
+            if(startCondtion < stopCondition)
+                i = 1;
+            else
+                i = -1;
+            col_inc = i;
+        }
+        else if(y2-y1 == 0) {
+
+            startCondtion = x1;
+            stopCondition = x2;
+            if(startCondtion < stopCondition)
+                i = 1;
+            else
+                i = -1;
+            row_inc = i;
+        }
+        else
+            return false;
+
+        // [0,0] -> [0,5]
+        // or
+        // [0,5] -> [0,0]
+
+        //don't want actual piece
+        x1 += row_inc;
+        y1 += col_inc;
+
+        while(startCondtion != stopCondition - i){
+
+            Piece p = this.board.getBoard_piece(x1,y1);
+            if(p != null)
+                return false;
+            startCondtion += i;
+            x1 += row_inc;
+            y1 += col_inc;
+        }
+
+        return true;
     }
 
 
