@@ -77,11 +77,12 @@ function cellClickHandler() {
         let toYIndex = parseInt(cell.getAttribute('data-row'));
         $('.cell').off('click');
         $('.player-piece').off('click');
+        $('#auto-play').off('click').prop('disabled', true);
         $.ajax({
             url: '/api/games/move',
             type: 'POST',
             contentType: 'application/json',
-            success: receiveMove,
+            success: receiveMoves,
             data: JSON.stringify({
                 'gameId': window.gameId,
                 'from': [fromXIndex, fromYIndex],
@@ -90,6 +91,7 @@ function cellClickHandler() {
             error: function () {
                 $('.player-piece').on('click', playerPieceMove);
                 $('.cell').on('click', cellClickHandler);
+                $('#auto-play').on('click', autoplay).prop('disabled', false);
                 // TODO: toast player with error message
             }
         });
@@ -99,7 +101,7 @@ function cellClickHandler() {
     }
 }
 
-function receiveMove(data, textStatus, xhr) {
+function receiveMoves(data, textStatus, xhr) {
     $('.selected').removeClass('selected');
     data = JSON.parse(data);
 
@@ -107,6 +109,7 @@ function receiveMove(data, textStatus, xhr) {
         animatePiece(data.moves[1], function(){
             $('.player-piece').on('click', playerPieceMove);
             $('.cell').on('click', cellClickHandler);
+            $('#auto-play').on('click', autoplay).prop('disabled', false);
         });
     });
 }
@@ -138,6 +141,7 @@ function startButtonHandler() {
             window.gameId = data;
             $('.player-piece').on('click', playerPieceMove);
             $('.cell').on('click', cellClickHandler);
+            $('#auto-play').on('click', autoplay).prop('disabled', false);
             $('#start-btn').remove();
         },
         error: function () {
@@ -146,7 +150,27 @@ function startButtonHandler() {
     });
 }
 
+function autoplay(){
+    $('.cell').off('click');
+    $('.player-piece').off('click');
+    $('#auto-play').off('click').prop('disabled', true);
+    $.ajax({
+        url: '/api/games/autoplay',
+        type: 'POST',
+        data: gameId,
+        success: receiveMoves,
+        error: function(xhr, status,error){
+            console.log(xhr.responseText);
+            $('.player-piece').on('click', playerPieceMove);
+            $('.cell').on('click', cellClickHandler);
+            $('#auto-play').on('click', autoplay).prop('disabled', false);
+            // TODO: toast player with error message
+        }
+    });
+}
+
 $(function () {
+    $('#auto-play').prop('disabled', true);
     $('#start-btn').on('click', startButtonHandler);
     $('.player-piece').on('click', playerPieceSwap);
 });

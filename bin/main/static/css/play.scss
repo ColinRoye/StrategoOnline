@@ -9,6 +9,7 @@ body {
 
     #main {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         padding: 0;
@@ -23,6 +24,8 @@ body {
             box-shadow: 10px 10px 8px $base-transparent;
             width: 80vmin;
             height: 80vmin;
+            max-width: 70vh;
+            max-height: 70vh;
             padding: 3vmax 2vmax 2vmax 3vmax;
             margin: 0;
             background-image: linear-gradient(to bottom right, $base, darken($base, 10%));
@@ -33,6 +36,8 @@ body {
                 justify-content: center;
                 width: 7vmin;
                 height: 7vmin;
+                max-width: 6.125vh;
+                max-height: 6.125vh;
                 background-color: $cell-color;
                 cursor: pointer;
             }
@@ -40,6 +45,8 @@ body {
             .piece {
                 width: 6vmin;
                 height: 6vmin;
+                max-width: 5.25vh;
+                max-height: 5.25vh;
                 border-radius: 1vmin;
                 text-align: center;
                 vertical-align: center;
@@ -48,8 +55,11 @@ body {
                 @media screen and (max-width: 600px){
                     font-size: 1em;
                 }
-                @media screen and (max-height: 600px){
+                @media screen and (max-height: 680px){
                     font-size: 1em;
+                }
+                @media screen and (max-height: 330px){
+                    font-size: .5em;
                 }
             }
 
@@ -70,7 +80,7 @@ body {
             position: fixed;
             left: 50%;
             top: 50%;
-            transform: translate(-50%, -25%);
+            transform: translate(-50%, -50%);
             background-color: $bg;
             color: $base;
             font-weight: bold;
@@ -78,29 +88,53 @@ body {
             white-space: nowrap;
             cursor: pointer;
             font-size: 5rem;
-            @media screen and (max-height: 660px){
+            @media screen and (max-height: 750px){
                 font-size: 4em;
             }
             @media screen and (max-width: 680px){
                 font-size: 4em;
             }
-            @media screen and (max-height: 550px){
+            @media screen and (max-height: 600px){
                 font-size: 3em;
             }
             @media screen and (max-width: 540px){
                 font-size: 3em;
             }
-            @media screen and (max-height: 430px){
+            @media screen and (max-height: 500px){
                 font-size: 2em;
             }
             @media screen and (max-width: 400px){
                 font-size: 2em;
             }
-            @media screen and (max-height: 270px){
+            @media screen and (max-height: 350px){
                 font-size: 1em;
             }
             @media screen and (max-width: 300px){
                 font-size: 1em;
+            }
+        }
+
+        #auto-play {
+            margin-top: 1vh;
+            color: $base;
+            background-color: $bg;
+            border: solid;
+            border-color: $base;
+            border-radius: 25px;
+            box-shadow: 5px 5px 8px $base-transparent;
+
+            font-size: 1.5em;
+            @media screen and (max-height: 500px){
+                font-size: 1em;
+            }
+            @media screen and (max-width: 400px){
+                font-size: 1em;
+            }
+            @media screen and (max-height: 270px){
+                font-size: .5em;
+            }
+            @media screen and (max-width: 300px){
+                font-size: .5em;
             }
         }
 
